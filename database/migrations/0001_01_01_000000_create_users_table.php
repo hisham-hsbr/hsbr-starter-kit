@@ -18,6 +18,20 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+
+            // default
+            $table->string('description')->nullable();
+            $table->string('edit_description')->nullable();
+            $table->boolean('default')->nullable();
+            $table->boolean('status')->nullable();
+            $table->unsignedBigInteger('created_by')->unsigned()->index()->nullable();
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('updated_by')->unsigned()->index()->nullable();
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
+
+            $table->softDeletes();
+
             $table->timestamps();
         });
 
