@@ -1,15 +1,14 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Http\Controllers\AppControllers;
 
 use App\Http\Controllers\Controller;
-use {{ namespacedModel }};
-use {{ rootNamespace }}Http\Controllers\Controller;
-use {{ namespacedRequests }}
+use App\Models\AppModels\TestDemo;
+use Illuminate\Http\Request;
 
-class {{ class }} extends Controller
+class TestDemoController extends Controller
 {
-   private $headName = 'Test Demo';
+    private $headName = 'Test Demo';
     private $routeName = 'test-demos';
     private $permissionName = 'Test Demo';
     private $snakeName = 'test_demo';
@@ -17,7 +16,9 @@ class {{ class }} extends Controller
 
     public function index()
     {
-        //
+        return view('backend.test_demos.index')->with(
+            []
+        );
     }
 
     /**
@@ -31,7 +32,7 @@ class {{ class }} extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store({{ storeRequest }} $request)
+    public function store(Request $request)
     {
         //
     }
@@ -39,7 +40,7 @@ class {{ class }} extends Controller
     /**
      * Display the specified resource.
      */
-    public function show({{ model }} ${{ modelVariable }})
+    public function show(TestDemo $testDemo)
     {
         //
     }
@@ -47,7 +48,7 @@ class {{ class }} extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit({{ model }} ${{ modelVariable }})
+    public function edit(TestDemo $testDemo)
     {
         //
     }
@@ -55,7 +56,7 @@ class {{ class }} extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
+    public function update(Request $request, TestDemo $testDemo)
     {
         //
     }
@@ -63,7 +64,7 @@ class {{ class }} extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy({{ model }} ${{ modelVariable }})
+    public function destroy(TestDemo $testDemo)
     {
         //
     }
