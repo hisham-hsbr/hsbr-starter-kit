@@ -244,7 +244,7 @@
                     <img src="{{ asset('backend/dashtrap/assets/images/users/avatar-4.jpg') }}" alt="user-image"
                         class="rounded-circle">
                     <span class="ms-1 d-none d-md-inline-block">
-                        Jamie D. <i class="mdi mdi-chevron-down"></i>
+                        {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -274,11 +274,22 @@
                     <div class="dropdown-divider"></div>
 
                     <!-- item-->
-                    <a href="pages-login.html" class="dropdown-item notify-item">
-                        <i class="fe-log-out"></i>
-                        <span>Logout</span>
-                    </a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
 
+                        {{-- <x-dropdown-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-dropdown-link> --}}
+
+                        <a href="{{ route('logout') }}" class="dropdown-item notify-item"
+                            onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            <i class="fe-log-out"></i>
+                            <span>Logout</span>
+                        </a>
+                    </form>
                 </div>
             </li>
 

@@ -4,27 +4,30 @@
 
 
 @section('main_content')
-    <!-- Sign In Section Start -->
     <div class="signin-section ptb-100">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-6 col-md-8 ">
-                    <form class="signin-form">
+                    <form method="POST" action="{{ route('login') }}" class="signin-form">
+                        @csrf
                         <div class="form-group">
                             <label>Enter Email</label>
-                            <input type="email" class="form-control" placeholder="Enter Your Email" required>
+                            <input type="email" name="email" class="form-control" placeholder="Enter Your Email" required>
+                            <x-frontend.input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
 
                         <div class="form-group">
                             <label>Enter Password</label>
-                            <input type="password" class="form-control" placeholder="Enter Your Password" required>
+                            <input type="password" name="password" class="form-control" placeholder="Enter Your Password"
+                                required>
+                            <x-frontend.input-error :messages="$errors->get('password')" class="mt-2" />
                         </div>
 
                         <div class="text-center signin-btn">
                             <button type="submit">Sign In</button>
                         </div>
 
-                        <div class="text-center other-signin">
+                        {{-- <div class="text-center other-signin">
                             <span>Or sign in with</span>
                             <ul>
                                 <li>
@@ -48,7 +51,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
 
                         <div class="text-center create-btn">
                             <p>Not have an account?
@@ -63,5 +66,4 @@
             </div>
         </div>
     </div>
-    <!-- Sign In Section End -->
 @endsection

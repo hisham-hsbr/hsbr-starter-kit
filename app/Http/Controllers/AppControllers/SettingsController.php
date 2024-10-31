@@ -1,16 +1,19 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Http\Controllers\AppControllers;
 
 use App\Http\Controllers\Controller;
-use {{ rootNamespace }}Http\Controllers\Controller;
+use App\Models\AppModels\Settings;
 use Illuminate\Http\Request;
 
-class {{ class }} extends Controller
+class SettingsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private $headName = 'Test Demo';
+    private $routeName = 'test-demos';
+    private $permissionName = 'Test Demo';
+    private $snakeName = 'test_demo';
+
+
     public function index()
     {
         //
@@ -35,7 +38,7 @@ class {{ class }} extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Settings $settings)
     {
         //
     }
@@ -43,7 +46,7 @@ class {{ class }} extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Settings $settings)
     {
         //
     }
@@ -51,7 +54,7 @@ class {{ class }} extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Settings $settings)
     {
         //
     }
@@ -59,7 +62,7 @@ class {{ class }} extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Settings $settings)
     {
         //
     }
