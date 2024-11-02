@@ -1,13 +1,10 @@
 <!-- start page title -->
-@props(['pageTitle'])
 <div class="py-3 py-lg-4">
     <div class="row">
-        @section('pageTitle')
-        @show
+        @yield('page_title')
         <div class="col-lg-6">
             <div class="d-none d-lg-block">
-                @section('page_breadcrumb')
-                @show
+                @yield('page_breadcrumb')
             </div>
         </div>
     </div>
@@ -15,10 +12,4 @@
 <!-- end page title -->
 
 
-
-
-
-
-@section('main_content')
-
-@show
+@yield('main_content')

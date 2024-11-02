@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(DeveloperUserSeeder::class);
         $this->call(SettingsSeeder::class);
+        $this->call(TimeZoneSeeder::class);
         $this->call(TestDemoSeeder::class);
     }
 }

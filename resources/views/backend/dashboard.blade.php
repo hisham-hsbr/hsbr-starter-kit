@@ -2,7 +2,7 @@
 @section('page_head', 'Dashboard')
 @section('head_links')
 @endsection
-@section('pageTitle')
+@section('page_title')
     <x-backend.layout_partials.page-title pageTitle=Dashboard />
 @endsection
 @section('page_breadcrumb')

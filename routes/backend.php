@@ -2,9 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
 
     Route::redirect('/admin', destination: '/admin/dashboard');
+    Route::redirect('/dashboard', destination: '/admin/dashboard');
     Route::get('/admin/dashboard', 'App\Http\Controllers\AppControllers\BackendController@dashboard')->name('backend.dashboard');
 
     //test demo
