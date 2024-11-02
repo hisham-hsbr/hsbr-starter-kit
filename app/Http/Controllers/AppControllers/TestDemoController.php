@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AppControllers;
 use App\Http\Controllers\Controller;
 use App\Models\AppModels\TestDemo;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class TestDemoController extends Controller
 {
@@ -26,7 +27,24 @@ class TestDemoController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.test_demos.create')->with(
+            []
+        );
+    }
+    public function getTestDemos(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = TestDemo::select(['id', 'name', 'email', 'created_at']);
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Edit</a>';
+                    $btn .= '<a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
     /**

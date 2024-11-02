@@ -368,8 +368,6 @@
     <!--end row-->
 @endsection
 @section('footer_links')
-    <!-- Knob charts js -->
-    <script src="{{ asset('backend/dashtrap/assets/libs/jquery-knob/jquery.knob.min.js') }}"></script>
 
     <!-- Sparkline Js-->
     <script src="{{ asset('backend/dashtrap/assets/libs/jquery-sparkline/jquery.sparkline.min.js') }}"></script>

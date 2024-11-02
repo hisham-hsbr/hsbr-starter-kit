@@ -23,13 +23,14 @@
         <ul class="app-menu">
 
             <x-backend.sidebar.sidebar_partials.app-menu />
-            <x-backend.sidebar.menu-title menuTitle="User" />
+            <x-backend.sidebar.sidebar_partials.test-menu />
+            {{-- <x-backend.sidebar.menu-title menuTitle="User" />
             <x-backend.sidebar.menu-item menuName="User" menuBadge="" menuIcon="bx bx-calendar"
                 menuHref="{{ route('backend.dashboard') }}" />
             <x-backend.sidebar.menu-item-group menuName="My New" menuBadge="" menuIcon="bx bx-file">
                 <x-backend.sidebar.menu-item-single itemName="My New" itemBadge="23" itemIcon="bx bx-calendar"
                     itemHref="/" />
-            </x-backend.sidebar.menu-item-group>
+            </x-backend.sidebar.menu-item-group> --}}
 
 
         </ul>

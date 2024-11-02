@@ -14,4 +14,10 @@ class BackendController extends Controller
             []
         );
     }
+    public function starter()
+    {
+        return view('backend.start')->with(
+            []
+        );
+    }
 }

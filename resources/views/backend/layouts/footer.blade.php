@@ -5,12 +5,12 @@
                 <div>
                     <script>
                         document.write(new Date().getFullYear())
-                    </script> © Dashtrap
+                    </script> © HSK v1.02
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="gap-4 d-none d-md-flex align-item-center justify-content-md-end">
-                    <p class="mb-0">Design & Develop by <a href="https://myrathemes.com/" target="_blank">MyraStudio</a>
+                    <p class="mb-0">Design & Develop by <a href="https://hsbr.app" target="_blank">HSBR-Apps</a>
                     </p>
                 </div>
             </div>

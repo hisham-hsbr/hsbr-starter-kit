@@ -7,6 +7,7 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/admin', destination: '/admin/dashboard');
     Route::redirect('/dashboard', destination: '/admin/dashboard');
     Route::get('/admin/dashboard', 'App\Http\Controllers\AppControllers\BackendController@dashboard')->name('backend.dashboard');
+    Route::get('/admin/start', 'App\Http\Controllers\AppControllers\BackendController@starter')->name('backend.starter');
 
     //test demo
     Route::controller('App\Http\Controllers\AppControllers\TestDemoController')->prefix('/test/demos')->name('test-demos.')->group(function () {
