@@ -1,0 +1,2580 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Font Awesome Icon Samples with Search and Copy Option</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+      #searchInput {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        font-size: 1em;
+        border: 1px solid #ddd;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .icon-sample {
+        font-size: 1.5em;
+      }
+      .copy-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      .copy-button:hover {
+        background-color: #45a049;
+      }
+    </style>
+    <script>
+      function copyToClipboard(classCode) {
+        navigator.clipboard.writeText(classCode).then(
+          function () {
+            alert("Copied to clipboard: " + classCode);
+          },
+          function (err) {
+            alert("Failed to copy: ", err);
+          }
+        );
+      }
+
+      function searchIcons() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let table = document.getElementById("iconTable");
+        let tr = table.getElementsByTagName("tr");
+
+        for (let i = 1; i < tr.length; i++) {
+          // Start from 1 to skip header row
+          let tdName = tr[i].getElementsByTagName("td")[2];
+          let tdClass = tr[i].getElementsByTagName("td")[3];
+          if (tdName || tdClass) {
+            let nameValue = tdName.textContent || tdName.innerText;
+            let classValue = tdClass.textContent || tdClass.innerText;
+            if (
+              nameValue.toLowerCase().indexOf(input) > -1 ||
+              classValue.toLowerCase().indexOf(input) > -1
+            ) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Font Awesome Icon Samples with Search and Copy Option</h1>
+    <input
+      type="text"
+      id="searchInput"
+      onkeyup="searchIcons()"
+      placeholder="Search for icons by name or class..."
+    />
+
+    <table id="iconTable">
+      <tr>
+        <th>S.No</th>
+        <th>Icon</th>
+        <th>Icon Name</th>
+        <th>Font Awesome Class</th>
+        <th>Action</th>
+      </tr>
+
+      <tr>
+        <td>1</td>
+        <td class="icon-sample"><i class="fas fa-home"></i></td>
+        <td>Home</td>
+        <td>fas fa-home</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-home')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>2</td>
+        <td class="icon-sample"><i class="fas fa-search"></i></td>
+        <td>Search</td>
+        <td>fas fa-search</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-search')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>3</td>
+        <td class="icon-sample"><i class="fas fa-envelope"></i></td>
+        <td>Envelope</td>
+        <td>fas fa-envelope</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-envelope')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>4</td>
+        <td class="icon-sample"><i class="fas fa-bell"></i></td>
+        <td>Bell</td>
+        <td>fas fa-bell</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-bell')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>5</td>
+        <td class="icon-sample"><i class="fas fa-user"></i></td>
+        <td>User</td>
+        <td>fas fa-user</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-user')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>6</td>
+        <td class="icon-sample"><i class="fas fa-users"></i></td>
+        <td>Users</td>
+        <td>fas fa-users</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-users')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>7</td>
+        <td class="icon-sample"><i class="fas fa-cog"></i></td>
+        <td>Settings</td>
+        <td>fas fa-cog</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-cog')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>8</td>
+        <td class="icon-sample"><i class="fas fa-lock"></i></td>
+        <td>Lock</td>
+        <td>fas fa-lock</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-lock')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>9</td>
+        <td class="icon-sample"><i class="fas fa-unlock"></i></td>
+        <td>Unlock</td>
+        <td>fas fa-unlock</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-unlock')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>10</td>
+        <td class="icon-sample"><i class="fas fa-comment"></i></td>
+        <td>Comment</td>
+        <td>fas fa-comment</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-comment')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>11</td>
+        <td class="icon-sample"><i class="fas fa-heart"></i></td>
+        <td>Heart</td>
+        <td>fas fa-heart</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-heart')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>12</td>
+        <td class="icon-sample"><i class="fas fa-bookmark"></i></td>
+        <td>Bookmark</td>
+        <td>fas fa-bookmark</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-bookmark')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>13</td>
+        <td class="icon-sample"><i class="fas fa-share"></i></td>
+        <td>Share</td>
+        <td>fas fa-share</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-share')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>14</td>
+        <td class="icon-sample"><i class="fas fa-link"></i></td>
+        <td>Link</td>
+        <td>fas fa-link</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-link')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>15</td>
+        <td class="icon-sample"><i class="fas fa-file"></i></td>
+        <td>File</td>
+        <td>fas fa-file</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-file')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>16</td>
+        <td class="icon-sample"><i class="fas fa-file-alt"></i></td>
+        <td>Text File</td>
+        <td>fas fa-file-alt</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-file-alt')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>17</td>
+        <td class="icon-sample"><i class="fas fa-file-pdf"></i></td>
+        <td>PDF File</td>
+        <td>fas fa-file-pdf</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-file-pdf')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>18</td>
+        <td class="icon-sample"><i class="fas fa-file-word"></i></td>
+        <td>Word Document</td>
+        <td>fas fa-file-word</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-file-word')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>19</td>
+        <td class="icon-sample"><i class="fas fa-file-excel"></i></td>
+        <td>Excel Document</td>
+        <td>fas fa-file-excel</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-file-excel')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>20</td>
+        <td class="icon-sample"><i class="fas fa-file-image"></i></td>
+        <td>Image File</td>
+        <td>fas fa-file-image</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-file-image')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>21</td>
+        <td class="icon-sample"><i class="fas fa-copy"></i></td>
+        <td>Copy</td>
+        <td>fas fa-copy</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-copy')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>22</td>
+        <td class="icon-sample"><i class="fas fa-folder"></i></td>
+        <td>Folder</td>
+        <td>fas fa-folder</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-folder')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>23</td>
+        <td class="icon-sample"><i class="fas fa-folder-open"></i></td>
+        <td>Open Folder</td>
+        <td>fas fa-folder-open</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-folder-open')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>24</td>
+        <td class="icon-sample"><i class="fas fa-thumbs-up"></i></td>
+        <td>Thumbs Up</td>
+        <td>fas fa-thumbs-up</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-thumbs-up')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>25</td>
+        <td class="icon-sample"><i class="fas fa-thumbs-down"></i></td>
+        <td>Thumbs Down</td>
+        <td>fas fa-thumbs-down</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-thumbs-down')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>26</td>
+        <td class="icon-sample"><i class="fas fa-phone"></i></td>
+        <td>Phone</td>
+        <td>fas fa-phone</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-phone')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>27</td>
+        <td class="icon-sample"><i class="fas fa-camera"></i></td>
+        <td>Camera</td>
+        <td>fas fa-camera</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-camera')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>28</td>
+        <td class="icon-sample"><i class="fas fa-shopping-cart"></i></td>
+        <td>Shopping Cart</td>
+        <td>fas fa-shopping-cart</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-shopping-cart')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>29</td>
+        <td class="icon-sample"><i class="fas fa-shopping-bag"></i></td>
+        <td>Shopping Bag</td>
+        <td>fas fa-shopping-bag</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-shopping-bag')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>30</td>
+        <td class="icon-sample"><i class="fas fa-tag"></i></td>
+        <td>Price Tag</td>
+        <td>fas fa-tag</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-tag')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>31</td>
+        <td class="icon-sample"><i class="fas fa-credit-card"></i></td>
+        <td>Credit Card</td>
+        <td>fas fa-credit-card</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-credit-card')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>32</td>
+        <td class="icon-sample"><i class="fas fa-money-bill"></i></td>
+        <td>Money Bill</td>
+        <td>fas fa-money-bill</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-money-bill')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>33</td>
+        <td class="icon-sample"><i class="fas fa-wallet"></i></td>
+        <td>Wallet</td>
+        <td>fas fa-wallet</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-wallet')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>34</td>
+        <td class="icon-sample"><i class="fas fa-map"></i></td>
+        <td>Map</td>
+        <td>fas fa-map</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-map')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>35</td>
+        <td class="icon-sample"><i class="fas fa-map-marker-alt"></i></td>
+        <td>Location</td>
+        <td>fas fa-map-marker-alt</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-map-marker-alt')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>36</td>
+        <td class="icon-sample"><i class="fas fa-plane"></i></td>
+        <td>Plane</td>
+        <td>fas fa-plane</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-plane')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>37</td>
+        <td class="icon-sample"><i class="fas fa-car"></i></td>
+        <td>Car</td>
+        <td>fas fa-car</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-car')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>38</td>
+        <td class="icon-sample"><i class="fas fa-globe"></i></td>
+        <td>Globe</td>
+        <td>fas fa-globe</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-globe')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>39</td>
+        <td class="icon-sample"><i class="fas fa-calendar"></i></td>
+        <td>Calendar</td>
+        <td>fas fa-calendar</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-calendar')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>40</td>
+        <td class="icon-sample"><i class="fas fa-clock"></i></td>
+        <td>Clock</td>
+        <td>fas fa-clock</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-clock')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>41</td>
+        <td class="icon-sample"><i class="fas fa-download"></i></td>
+        <td>Download</td>
+        <td>fas fa-download</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-download')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>42</td>
+        <td class="icon-sample"><i class="fas fa-upload"></i></td>
+        <td>Upload</td>
+        <td>fas fa-upload</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-upload')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>43</td>
+        <td class="icon-sample"><i class="fas fa-trash"></i></td>
+        <td>Trash</td>
+        <td>fas fa-trash</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-trash')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>44</td>
+        <td class="icon-sample"><i class="fas fa-edit"></i></td>
+        <td>Edit</td>
+        <td>fas fa-edit</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-edit')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>45</td>
+        <td class="icon-sample"><i class="fas fa-eye"></i></td>
+        <td>Eye</td>
+        <td>fas fa-eye</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-eye')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>46</td>
+        <td class="icon-sample"><i class="fas fa-eye-slash"></i></td>
+        <td>Eye Slash</td>
+        <td>fas fa-eye-slash</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-eye-slash')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>47</td>
+        <td class="icon-sample"><i class="fas fa-info-circle"></i></td>
+        <td>Info Circle</td>
+        <td>fas fa-info-circle</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-info-circle')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>48</td>
+        <td class="icon-sample"><i class="fas fa-exclamation-triangle"></i></td>
+        <td>Exclamation Triangle</td>
+        <td>fas fa-exclamation-triangle</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-exclamation-triangle')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>49</td>
+        <td class="icon-sample"><i class="fas fa-question-circle"></i></td>
+        <td>Question Circle</td>
+        <td>fas fa-question-circle</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-question-circle')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>50</td>
+        <td class="icon-sample"><i class="fas fa-check"></i></td>
+        <td>Check</td>
+        <td>fas fa-check</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-check')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>51</td>
+        <td class="icon-sample"><i class="fas fa-times"></i></td>
+        <td>Times</td>
+        <td>fas fa-times</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-times')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>52</td>
+        <td class="icon-sample"><i class="fas fa-arrow-right"></i></td>
+        <td>Arrow Right</td>
+        <td>fas fa-arrow-right</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-arrow-right')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>53</td>
+        <td class="icon-sample"><i class="fas fa-arrow-left"></i></td>
+        <td>Arrow Left</td>
+        <td>fas fa-arrow-left</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-arrow-left')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>54</td>
+        <td class="icon-sample"><i class="fas fa-arrow-up"></i></td>
+        <td>Arrow Up</td>
+        <td>fas fa-arrow-up</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-arrow-up')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>55</td>
+        <td class="icon-sample"><i class="fas fa-arrow-down"></i></td>
+        <td>Arrow Down</td>
+        <td>fas fa-arrow-down</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-arrow-down')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>56</td>
+        <td class="icon-sample"><i class="fas fa-star"></i></td>
+        <td>Star</td>
+        <td>fas fa-star</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-star')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>57</td>
+        <td class="icon-sample"><i class="fas fa-star-half"></i></td>
+        <td>Star Half</td>
+        <td>fas fa-star-half</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-star-half')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>58</td>
+        <td class="icon-sample"><i class="fas fa-sync"></i></td>
+        <td>Sync</td>
+        <td>fas fa-sync</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-sync')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>59</td>
+        <td class="icon-sample"><i class="fas fa-battery-full"></i></td>
+        <td>Battery Full</td>
+        <td>fas fa-battery-full</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-battery-full')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>60</td>
+        <td class="icon-sample"><i class="fas fa-battery-half"></i></td>
+        <td>Battery Half</td>
+        <td>fas fa-battery-half</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-battery-half')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>61</td>
+        <td class="icon-sample"><i class="fas fa-battery-empty"></i></td>
+        <td>Battery Empty</td>
+        <td>fas fa-battery-empty</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-battery-empty')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>62</td>
+        <td class="icon-sample"><i class="fas fa-music"></i></td>
+        <td>Music</td>
+        <td>fas fa-music</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-music')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>63</td>
+        <td class="icon-sample"><i class="fas fa-folder-plus"></i></td>
+        <td>Folder Plus</td>
+        <td>fas fa-folder-plus</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-folder-plus')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>64</td>
+        <td class="icon-sample"><i class="fas fa-folder-minus"></i></td>
+        <td>Folder Minus</td>
+        <td>fas fa-folder-minus</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-folder-minus')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>65</td>
+        <td class="icon-sample"><i class="fas fa-envelope-open"></i></td>
+        <td>Envelope Open</td>
+        <td>fas fa-envelope-open</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-envelope-open')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>66</td>
+        <td class="icon-sample"><i class="fas fa-paper-plane"></i></td>
+        <td>Paper Plane</td>
+        <td>fas fa-paper-plane</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-paper-plane')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>67</td>
+        <td class="icon-sample"><i class="fas fa-paperclip"></i></td>
+        <td>Paperclip</td>
+        <td>fas fa-paperclip</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-paperclip')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>68</td>
+        <td class="icon-sample"><i class="fas fa-cloud"></i></td>
+        <td>Cloud</td>
+        <td>fas fa-cloud</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-cloud')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>69</td>
+        <td class="icon-sample"><i class="fas fa-cloud-upload-alt"></i></td>
+        <td>Cloud Upload</td>
+        <td>fas fa-cloud-upload-alt</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-cloud-upload-alt')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>70</td>
+        <td class="icon-sample"><i class="fas fa-cloud-download-alt"></i></td>
+        <td>Cloud Download</td>
+        <td>fas fa-cloud-download-alt</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-cloud-download-alt')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>71</td>
+        <td class="icon-sample"><i class="fas fa-wifi"></i></td>
+        <td>Wifi</td>
+        <td>fas fa-wifi</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-wifi')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>72</td>
+        <td class="icon-sample"><i class="fas fa-battery-quarter"></i></td>
+        <td>Battery Quarter</td>
+        <td>fas fa-battery-quarter</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-battery-quarter')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>73</td>
+        <td class="icon-sample">
+          <i class="fas fa-battery-three-quarters"></i>
+        </td>
+        <td>Battery Three-Quarters</td>
+        <td>fas fa-battery-three-quarters</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-battery-three-quarters')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>74</td>
+        <td class="icon-sample"><i class="fas fa-bolt"></i></td>
+        <td>Bolt</td>
+        <td>fas fa-bolt</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-bolt')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>75</td>
+        <td class="icon-sample"><i class="fas fa-sun"></i></td>
+        <td>Sun</td>
+        <td>fas fa-sun</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-sun')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>76</td>
+        <td class="icon-sample"><i class="fas fa-moon"></i></td>
+        <td>Moon</td>
+        <td>fas fa-moon</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-moon')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>77</td>
+        <td class="icon-sample"><i class="fas fa-snowflake"></i></td>
+        <td>Snowflake</td>
+        <td>fas fa-snowflake</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-snowflake')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>78</td>
+        <td class="icon-sample"><i class="fas fa-code"></i></td>
+        <td>Code</td>
+        <td>fas fa-code</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-code')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>79</td>
+        <td class="icon-sample"><i class="fas fa-laptop"></i></td>
+        <td>Laptop</td>
+        <td>fas fa-laptop</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-laptop')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>80</td>
+        <td class="icon-sample"><i class="fas fa-desktop"></i></td>
+        <td>Desktop</td>
+        <td>fas fa-desktop</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-desktop')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>81</td>
+        <td class="icon-sample"><i class="fas fa-database"></i></td>
+        <td>Database</td>
+        <td>fas fa-database</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-database')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>82</td>
+        <td class="icon-sample"><i class="fas fa-fingerprint"></i></td>
+        <td>Fingerprint</td>
+        <td>fas fa-fingerprint</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-fingerprint')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>83</td>
+        <td class="icon-sample"><i class="fas fa-key"></i></td>
+        <td>Key</td>
+        <td>fas fa-key</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-key')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>84</td>
+        <td class="icon-sample"><i class="fas fa-mobile"></i></td>
+        <td>Mobile</td>
+        <td>fas fa-mobile</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-mobile')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>85</td>
+        <td class="icon-sample"><i class="fas fa-tablet"></i></td>
+        <td>Tablet</td>
+        <td>fas fa-tablet</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-tablet')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>86</td>
+        <td class="icon-sample"><i class="fas fa-printer"></i></td>
+        <td>Printer</td>
+        <td>fas fa-printer</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-printer')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>87</td>
+        <td class="icon-sample"><i class="fas fa-battery-charging"></i></td>
+        <td>Battery Charging</td>
+        <td>fas fa-battery-charging</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-battery-charging')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>88</td>
+        <td class="icon-sample"><i class="fas fa-microphone"></i></td>
+        <td>Microphone</td>
+        <td>fas fa-microphone</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-microphone')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>89</td>
+        <td class="icon-sample"><i class="fas fa-microphone-slash"></i></td>
+        <td>Microphone Slash</td>
+        <td>fas fa-microphone-slash</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-microphone-slash')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>90</td>
+        <td class="icon-sample"><i class="fas fa-volume-down"></i></td>
+        <td>Volume Down</td>
+        <td>fas fa-volume-down</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-volume-down')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>91</td>
+        <td class="icon-sample"><i class="fas fa-volume-off"></i></td>
+        <td>Volume Off</td>
+        <td>fas fa-volume-off</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-volume-off')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>92</td>
+        <td class="icon-sample"><i class="fas fa-camera-retro"></i></td>
+        <td>Camera Retro</td>
+        <td>fas fa-camera-retro</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-camera-retro')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>93</td>
+        <td class="icon-sample"><i class="fas fa-gift"></i></td>
+        <td>Gift</td>
+        <td>fas fa-gift</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-gift')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>94</td>
+        <td class="icon-sample"><i class="fas fa-globe-americas"></i></td>
+        <td>Globe Americas</td>
+        <td>fas fa-globe-americas</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-globe-americas')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>95</td>
+        <td class="icon-sample"><i class="fas fa-thermometer-full"></i></td>
+        <td>Thermometer Full</td>
+        <td>fas fa-thermometer-full</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-thermometer-full')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>96</td>
+        <td class="icon-sample"><i class="fas fa-thermometer-half"></i></td>
+        <td>Thermometer Half</td>
+        <td>fas fa-thermometer-half</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-thermometer-half')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>97</td>
+        <td class="icon-sample"><i class="fas fa-thermometer-empty"></i></td>
+        <td>Thermometer Empty</td>
+        <td>fas fa-thermometer-empty</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-thermometer-empty')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>98</td>
+        <td class="icon-sample"><i class="fas fa-shield-alt"></i></td>
+        <td>Shield Alt</td>
+        <td>fas fa-shield-alt</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-shield-alt')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>99</td>
+        <td class="icon-sample"><i class="fas fa-angle-double-up"></i></td>
+        <td>Angle Double Up</td>
+        <td>fas fa-angle-double-up</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-angle-double-up')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>100</td>
+        <td class="icon-sample"><i class="fas fa-angle-double-down"></i></td>
+        <td>Angle Double Down</td>
+        <td>fas fa-angle-double-down</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-angle-double-down')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>101</td>
+        <td class="icon-sample"><i class="fas fa-angle-double-left"></i></td>
+        <td>Angle Double Left</td>
+        <td>fas fa-angle-double-left</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-angle-double-left')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>102</td>
+        <td class="icon-sample"><i class="fas fa-angle-double-right"></i></td>
+        <td>Angle Double Right</td>
+        <td>fas fa-angle-double-right</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-angle-double-right')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>103</td>
+        <td class="icon-sample"><i class="fas fa-handshake"></i></td>
+        <td>Handshake</td>
+        <td>fas fa-handshake</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-handshake')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>104</td>
+        <td class="icon-sample"><i class="fas fa-handshake-alt-slash"></i></td>
+        <td>Handshake Alt Slash</td>
+        <td>fas fa-handshake-alt-slash</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-handshake-alt-slash')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>105</td>
+        <td class="icon-sample"><i class="fas fa-shopping-basket"></i></td>
+        <td>Shopping Basket</td>
+        <td>fas fa-shopping-basket</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-shopping-basket')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>106</td>
+        <td class="icon-sample"><i class="fas fa-skull"></i></td>
+        <td>Skull</td>
+        <td>fas fa-skull</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-skull')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>107</td>
+        <td class="icon-sample"><i class="fas fa-sitemap"></i></td>
+        <td>Sitemap</td>
+        <td>fas fa-sitemap</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-sitemap')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>108</td>
+        <td class="icon-sample"><i class="fas fa-truck"></i></td>
+        <td>Truck</td>
+        <td>fas fa-truck</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-truck')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>109</td>
+        <td class="icon-sample"><i class="fas fa-undo"></i></td>
+        <td>Undo</td>
+        <td>fas fa-undo</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-undo')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>110</td>
+        <td class="icon-sample"><i class="fas fa-redo"></i></td>
+        <td>Redo</td>
+        <td>fas fa-redo</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-redo')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>111</td>
+        <td class="icon-sample"><i class="fas fa-user-plus"></i></td>
+        <td>User Plus</td>
+        <td>fas fa-user-plus</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-user-plus')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>112</td>
+        <td class="icon-sample"><i class="fas fa-user-minus"></i></td>
+        <td>User Minus</td>
+        <td>fas fa-user-minus</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-user-minus')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>113</td>
+        <td class="icon-sample"><i class="fas fa-bell-slash"></i></td>
+        <td>Bell Slash</td>
+        <td>fas fa-bell-slash</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-bell-slash')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>114</td>
+        <td class="icon-sample"><i class="fas fa-bug"></i></td>
+        <td>Bug</td>
+        <td>fas fa-bug</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-bug')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>115</td>
+        <td class="icon-sample"><i class="fas fa-chart-line"></i></td>
+        <td>Chart Line</td>
+        <td>fas fa-chart-line</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-chart-line')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>116</td>
+        <td class="icon-sample"><i class="fas fa-chart-bar"></i></td>
+        <td>Chart Bar</td>
+        <td>fas fa-chart-bar</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-chart-bar')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>117</td>
+        <td class="icon-sample"><i class="fas fa-hospital"></i></td>
+        <td>Hospital</td>
+        <td>fas fa-hospital</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-hospital')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>118</td>
+        <td class="icon-sample"><i class="fas fa-clinic-medical"></i></td>
+        <td>Clinic Medical</td>
+        <td>fas fa-clinic-medical</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-clinic-medical')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>119</td>
+        <td class="icon-sample"><i class="fas fa-stethoscope"></i></td>
+        <td>Stethoscope</td>
+        <td>fas fa-stethoscope</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-stethoscope')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>120</td>
+        <td class="icon-sample"><i class="fas fa-medkit"></i></td>
+        <td>Medkit</td>
+        <td>fas fa-medkit</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-medkit')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>121</td>
+        <td class="icon-sample"><i class="fas fa-prescription-bottle"></i></td>
+        <td>Prescription Bottle</td>
+        <td>fas fa-prescription-bottle</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-prescription-bottle')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>122</td>
+        <td class="icon-sample"><i class="fas fa-heartbeat"></i></td>
+        <td>Heartbeat</td>
+        <td>fas fa-heartbeat</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-heartbeat')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>123</td>
+        <td class="icon-sample"><i class="fas fa-ambulance"></i></td>
+        <td>Ambulance</td>
+        <td>fas fa-ambulance</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-ambulance')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>124</td>
+        <td class="icon-sample"><i class="fas fa-wheelchair"></i></td>
+        <td>Wheelchair</td>
+        <td>fas fa-wheelchair</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-wheelchair')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>125</td>
+        <td class="icon-sample"><i class="fas fa-anchor"></i></td>
+        <td>Anchor</td>
+        <td>fas fa-anchor</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-anchor')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>126</td>
+        <td class="icon-sample"><i class="fas fa-fan"></i></td>
+        <td>Fan</td>
+        <td>fas fa-fan</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-fan')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>127</td>
+        <td class="icon-sample"><i class="fas fa-atom"></i></td>
+        <td>Atom</td>
+        <td>fas fa-atom</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-atom')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>128</td>
+        <td class="icon-sample"><i class="fas fa-balance-scale"></i></td>
+        <td>Balance Scale</td>
+        <td>fas fa-balance-scale</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-balance-scale')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>129</td>
+        <td class="icon-sample"><i class="fas fa-biking"></i></td>
+        <td>Biking</td>
+        <td>fas fa-biking</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-biking')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>130</td>
+        <td class="icon-sample"><i class="fas fa-biohazard"></i></td>
+        <td>Biohazard</td>
+        <td>fas fa-biohazard</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-biohazard')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>131</td>
+        <td class="icon-sample"><i class="fas fa-bowling-ball"></i></td>
+        <td>Bowling Ball</td>
+        <td>fas fa-bowling-ball</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-bowling-ball')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>132</td>
+        <td class="icon-sample"><i class="fas fa-brain"></i></td>
+        <td>Brain</td>
+        <td>fas fa-brain</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-brain')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>133</td>
+        <td class="icon-sample"><i class="fas fa-bread-slice"></i></td>
+        <td>Bread Slice</td>
+        <td>fas fa-bread-slice</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-bread-slice')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>134</td>
+        <td class="icon-sample"><i class="fas fa-broadcast-tower"></i></td>
+        <td>Broadcast Tower</td>
+        <td>fas fa-broadcast-tower</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-broadcast-tower')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>135</td>
+        <td class="icon-sample"><i class="fas fa-burn"></i></td>
+        <td>Burn</td>
+        <td>fas fa-burn</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-burn')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>136</td>
+        <td class="icon-sample"><i class="fas fa-campground"></i></td>
+        <td>Campground</td>
+        <td>fas fa-campground</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-campground')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>137</td>
+        <td class="icon-sample"><i class="fas fa-candy-cane"></i></td>
+        <td>Candy Cane</td>
+        <td>fas fa-candy-cane</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-candy-cane')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>138</td>
+        <td class="icon-sample"><i class="fas fa-carrot"></i></td>
+        <td>Carrot</td>
+        <td>fas fa-carrot</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-carrot')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>139</td>
+        <td class="icon-sample"><i class="fas fa-charging-station"></i></td>
+        <td>Charging Station</td>
+        <td>fas fa-charging-station</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-charging-station')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>140</td>
+        <td class="icon-sample"><i class="fas fa-chess"></i></td>
+        <td>Chess</td>
+        <td>fas fa-chess</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-chess')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>141</td>
+        <td class="icon-sample"><i class="fas fa-chess-bishop"></i></td>
+        <td>Chess Bishop</td>
+        <td>fas fa-chess-bishop</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-chess-bishop')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>142</td>
+        <td class="icon-sample"><i class="fas fa-chess-king"></i></td>
+        <td>Chess King</td>
+        <td>fas fa-chess-king</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-chess-king')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>143</td>
+        <td class="icon-sample"><i class="fas fa-chess-knight"></i></td>
+        <td>Chess Knight</td>
+        <td>fas fa-chess-knight</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-chess-knight')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>144</td>
+        <td class="icon-sample"><i class="fas fa-chess-pawn"></i></td>
+        <td>Chess Pawn</td>
+        <td>fas fa-chess-pawn</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-chess-pawn')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>145</td>
+        <td class="icon-sample"><i class="fas fa-chess-queen"></i></td>
+        <td>Chess Queen</td>
+        <td>fas fa-chess-queen</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-chess-queen')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>146</td>
+        <td class="icon-sample"><i class="fas fa-chess-rook"></i></td>
+        <td>Chess Rook</td>
+        <td>fas fa-chess-rook</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-chess-rook')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>147</td>
+        <td class="icon-sample"><i class="fas fa-child"></i></td>
+        <td>Child</td>
+        <td>fas fa-child</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-child')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>148</td>
+        <td class="icon-sample"><i class="fas fa-church"></i></td>
+        <td>Church</td>
+        <td>fas fa-church</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-church')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>149</td>
+        <td class="icon-sample"><i class="fas fa-city"></i></td>
+        <td>City</td>
+        <td>fas fa-city</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-city')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>150</td>
+        <td class="icon-sample"><i class="fas fa-cocktail"></i></td>
+        <td>Cocktail</td>
+        <td>fas fa-cocktail</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-cocktail')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>151</td>
+        <td class="icon-sample"><i class="fas fa-coffee"></i></td>
+        <td>Coffee</td>
+        <td>fas fa-coffee</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-coffee')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>152</td>
+        <td class="icon-sample"><i class="fas fa-compact-disc"></i></td>
+        <td>Compact Disc</td>
+        <td>fas fa-compact-disc</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-compact-disc')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>153</td>
+        <td class="icon-sample"><i class="fas fa-couch"></i></td>
+        <td>Couch</td>
+        <td>fas fa-couch</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-couch')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>154</td>
+        <td class="icon-sample"><i class="fas fa-crutch"></i></td>
+        <td>Crutch</td>
+        <td>fas fa-crutch</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-crutch')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>155</td>
+        <td class="icon-sample"><i class="fas fa-dice"></i></td>
+        <td>Dice</td>
+        <td>fas fa-dice</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-dice')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>156</td>
+        <td class="icon-sample"><i class="fas fa-dog"></i></td>
+        <td>Dog</td>
+        <td>fas fa-dog</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-dog')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>157</td>
+        <td class="icon-sample"><i class="fas fa-dragon"></i></td>
+        <td>Dragon</td>
+        <td>fas fa-dragon</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-dragon')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>158</td>
+        <td class="icon-sample"><i class="fas fa-drum"></i></td>
+        <td>Drum</td>
+        <td>fas fa-drum</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-drum')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>159</td>
+        <td class="icon-sample"><i class="fas fa-drumstick-bite"></i></td>
+        <td>Drumstick Bite</td>
+        <td>fas fa-drumstick-bite</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-drumstick-bite')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>160</td>
+        <td class="icon-sample"><i class="fas fa-egg"></i></td>
+        <td>Egg</td>
+        <td>fas fa-egg</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-egg')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>161</td>
+        <td class="icon-sample"><i class="fas fa-faucet"></i></td>
+        <td>Faucet</td>
+        <td>fas fa-faucet</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-faucet')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>162</td>
+        <td class="icon-sample"><i class="fas fa-feather"></i></td>
+        <td>Feather</td>
+        <td>fas fa-feather</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-feather')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>163</td>
+        <td class="icon-sample"><i class="fas fa-fish"></i></td>
+        <td>Fish</td>
+        <td>fas fa-fish</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-fish')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>164</td>
+        <td class="icon-sample"><i class="fas fa-flask"></i></td>
+        <td>Flask</td>
+        <td>fas fa-flask</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-flask')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>165</td>
+        <td class="icon-sample"><i class="fas fa-frog"></i></td>
+        <td>Frog</td>
+        <td>fas fa-frog</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-frog')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>166</td>
+        <td class="icon-sample"><i class="fas fa-ghost"></i></td>
+        <td>Ghost</td>
+        <td>fas fa-ghost</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-ghost')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>167</td>
+        <td class="icon-sample"><i class="fas fa-glass-cheers"></i></td>
+        <td>Glass Cheers</td>
+        <td>fas fa-glass-cheers</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-glass-cheers')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>168</td>
+        <td class="icon-sample"><i class="fas fa-guitar"></i></td>
+        <td>Guitar</td>
+        <td>fas fa-guitar</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-guitar')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>169</td>
+        <td class="icon-sample"><i class="fas fa-hammer"></i></td>
+        <td>Hammer</td>
+        <td>fas fa-hammer</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-hammer')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>170</td>
+        <td class="icon-sample"><i class="fas fa-hard-hat"></i></td>
+        <td>Hard Hat</td>
+        <td>fas fa-hard-hat</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-hard-hat')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>171</td>
+        <td class="icon-sample"><i class="fas fa-hat-wizard"></i></td>
+        <td>Hat Wizard</td>
+        <td>fas fa-hat-wizard</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-hat-wizard')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>172</td>
+        <td class="icon-sample"><i class="fas fa-helicopter"></i></td>
+        <td>Helicopter</td>
+        <td>fas fa-helicopter</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-helicopter')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>173</td>
+        <td class="icon-sample"><i class="fas fa-horse"></i></td>
+        <td>Horse</td>
+        <td>fas fa-horse</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-horse')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>174</td>
+        <td class="icon-sample"><i class="fas fa-ice-cream"></i></td>
+        <td>Ice Cream</td>
+        <td>fas fa-ice-cream</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-ice-cream')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>175</td>
+        <td class="icon-sample"><i class="fas fa-joint"></i></td>
+        <td>Joint</td>
+        <td>fas fa-joint</td>
+        <td>
+          <button class="copy-button" onclick="copyToClipboard('fas fa-joint')">
+            Copy
+          </button>
+        </td>
+      </tr>
+
+      <tr>
+        <td>176</td>
+        <td class="icon-sample"><i class="fas fa-kiwi-bird"></i></td>
+        <td>Kiwi Bird</td>
+        <td>fas fa-kiwi-bird</td>
+        <td>
+          <button
+            class="copy-button"
+            onclick="copyToClipboard('fas fa-kiwi-bird')"
+          >
+            Copy
+          </button>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

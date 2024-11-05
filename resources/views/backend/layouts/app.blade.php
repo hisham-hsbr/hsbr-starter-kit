@@ -1,54 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" data-menu-color="dark" data-bs-theme="light" data-menu-color="brand" data-topbar-color="light">
-
-{{-- data-menu-color="dark" --}}
-{{-- <html lang="en" data-menu-color="dark" data-menu-color="brand" data-topbar-color="light"> --}}
-{{-- <html lang="en" data-menu-color="light" data-topbar-color="light"> --}}
+<html lang="en">
 
 <head>
     @include('backend.layouts.head')
     @include('backend.layouts.head_links')
+
 </head>
 
-<body>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        @include('backend.layouts.navbar')
+        <!-- /.navbar -->
 
-    <!-- Begin page -->
-    <div class="layout-wrapper">
+        <!-- Main Sidebar Container -->
 
-        <!-- ========== Left Sidebar ========== -->
         @include('backend.layouts.sidebar')
 
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            @include('backend.layouts.main_content')
 
-
-        <!-- Start Page Content here -->
-        <div class="page-content">
-
-            <!-- ========== Topbar Start ========== -->
-            @include('backend.layouts.navbar')
-            <!-- ========== Topbar End ========== -->
-
-            <div class="px-3">
-
-                <!-- Start Content-->
-                <div class="container-fluid">
-
-                    @include('backend.layouts.main_content')
-
-                </div> <!-- container -->
-
-            </div> <!-- content -->
-
-            <!-- Footer Start -->
+            <!-- /.content-wrapper -->
             @include('backend.layouts.footer')
-            <!-- end Footer -->
 
+
+
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Control sidebar content goes here -->
+            </aside>
+            <!-- /.control-sidebar -->
         </div>
-        <!-- End Page content -->
+        <!-- ./wrapper -->
+        @include('backend.layouts.footer_links')
 
-
-    </div>
-    <!-- END wrapper -->
-    @include('backend.layouts.footer_links')
 
 </body>
 

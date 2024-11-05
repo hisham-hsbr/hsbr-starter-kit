@@ -1,9 +1,10 @@
-<x-backend.sidebar.menu-title menuTitle="Test" />
-<x-backend.sidebar.menu-item menuName="Test" menuBadge="" menuIcon="bx bx-calendar"
-    menuHref="{{ route('backend.dashboard') }}" />
-<x-backend.sidebar.menu-item-group menuName="Test Demo" menuBadge="" menuIcon="bx bx-file" menuId="id2">
-    <x-backend.sidebar.menu-item-single itemName="Index" itemBadge="23" itemIcon="bx bx-calendar"
-        itemHref="{{ route('test-demos.index') }}" />
-    <x-backend.sidebar.menu-item-single itemName="Create" itemBadge="23" itemIcon="bx bx-calendar"
-        itemHref="{{ route('test-demos.create') }}" />
-</x-backend.sidebar.menu-item-group>
+<x-backend.sidebar.sidebar-level-single navTitle="Test"
+    menu_open="{{ request()->is('admin/test/demos*') ? 'menu-open' : '' }}"
+    active="{{ request()->is('admin/test/demos*') ? 'active' : '' }}" :angleLeft="true" navBadge="" navBadgeClass=""
+    navIcon="fas fa-users">
+    <x-backend.sidebar.sidebar-level-multi navTitle="Demo 1"
+        menu_open="{{ request()->is('admin/test/demos') ? 'menu-open' : '' }}"
+        active="{{ request()->is('admin/test/demos') ? 'active' : '' }}" :angleLeft="false" navBadge="" navBadgeClass=""
+        navIcon="fas fa-bolt" href="{{ route('test-demos.index') }}">
+    </x-backend.sidebar.sidebar-level-multi>
+</x-backend.sidebar.sidebar-level-single>

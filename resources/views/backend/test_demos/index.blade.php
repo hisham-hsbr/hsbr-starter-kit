@@ -1,165 +1,100 @@
 @extends('backend.layouts.app')
-@section('page_head', 'Dashboard')
+@section('page_title', 'Test Demos')
+@section('page_header_name', 'Demo')
 @section('head_links')
+    <x-backend.links.datatable-head-links />
 @endsection
-@section('page_title')
-    <x-backend.layout_partials.page-title pageTitle="Test Demo" />
-@endsection
-@section('page_breadcrumb')
-    <x-backend.layout_partials.page-breadcrumb activePage="Test Demo">
-        <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}" />
-    </x-backend.layout_partials.page-breadcrumb>
+@section('breadcrumbs')
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}"
+        :active="false" />
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Test Demos" pageHref="{{ route('test-demos.index') }}"
+        :active="false" />
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Index" pageHref="" :active="true" />
 @endsection
 
 @section('main_content')
-    <div class="row">
-        <div class="col-lg-12">
-            <x-backend.layout_partials.page-card cardHeader="Test Demo" cardSubHeader="Index">
-                {{-- data filter --}}
-                @can('{{ $permissionName }} Filter')
-                    <div class="col-md-12">
-                        <div class="card card-success collapsed-card">
-                            <div class="card-header">
-
-                                <h3 class="card-title"><i class="fa-solid fa-filter"></i> Filter</h3>
-                                <div class="card-tools">
-                                    <button type="" class="btn btn-tool" onClick="Reset()"><i
-                                            class="fa-solid fa-filter-circle-xmark"></i> Reset
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                            class="fas fa-plus"></i>
-                                    </button>
-                                </div><!-- /.card-tools filter -->
-                            </div><!-- /.card-header filter -->
-                            <div class="card-body">
-                                <div id="myFilter" class="row">
-                                    @can('{{ $permissionName }} Read Code')
-                                        <div class="form-group col-sm-4">
-                                            <label class="col-form-label">Code</label>
-                                            <input type="text" class="form-control filter-input" id="code"
-                                                placeholder="Search Code" data-column="1" />
-                                        </div>
-                                    @endcan
-                                    @can('{{ $permissionName }} Read Name')
-                                        <div class="form-group col-sm-4">
-                                            <label class="col-form-label">Name</label>
-                                            <input type="text" class="form-control filter-input" id="name"
-                                                placeholder="Search Name" data-column="2" />
-                                        </div>
-                                    @endcan
-                                    @can('{{ $permissionName }} Read Created By')
-                                        <div class="form-group col-sm-4">
-                                            <label class="col-form-label">Created By</label>
-                                            <select data-column="6" class="form-control select2 filter-select">
-                                                <option value="">Select Created By</option>
-                                                @foreach ($createdByUsers as $createdByUser)
-                                                    <option value="{{ $createdByUser }}">
-                                                        {{ $createdByUser }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    @endcan
-                                    @can('{{ $permissionName }} Read Updated By')
-                                        <div class="form-group col-sm-4">
-                                            <label class="col-form-label">Updated By</label>
-                                            <select data-column="7" class="form-control select2 filter-select">
-                                                <option value="">Select Updated By</option>
-                                                @foreach ($updatedByUsers as $updatedByUser)
-                                                    <option value="{{ $updatedByUser }}">
-                                                        {{ $updatedByUser }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    @endcan
-                                </div>
-                            </div><!-- /.card-body filter -->
-                        </div><!-- /.card filter -->
-                    </div>
-                @endcan
-                @can('{{ $permissionName }} Table')
-                    <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                @can('{{ $permissionName }} Read')
-                                    <th>Sn</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Action')
-                                    <th width="20%">Action</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Code')
-                                    <th width="20%">Code</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Name')
-                                    <th width="20%">Name</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Local Name')
-                                    <th width="20%">Local Name</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Status')
-                                    <th width="10%">Status</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Created At')
-                                    <th width="20%">Created At</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Updated At')
-                                    <th width="20%">Updated At</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Created By')
-                                    <th width="20%">Created By</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Updated By')
-                                    <th width="20%">Updated By</th>
-                                @endcan
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{-- data --}}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                @can('{{ $permissionName }} Read')
-                                    <th>Sn</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Action')
-                                    <th width="20%">Action</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Code')
-                                    <th width="20%">Code</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Name')
-                                    <th width="20%">Name</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Local Name')
-                                    <th width="20%">Local Name</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Status')
-                                    <th width="10%">Status</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Created At')
-                                    <th width="20%">Created At</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Updated At')
-                                    <th width="20%">Updated At</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Created By')
-                                    <th width="20%">Created By</th>
-                                @endcan
-                                @can('{{ $permissionName }} Read Updated By')
-                                    <th width="20%">Updated By</th>
-                                @endcan
-                            </tr>
-                        </tfoot>
-                    </table>
-                @endcan <!-- /.Table end -->
-            </x-backend.layout_partials.page-card>
-        </div>
-
-    </div>
+    <x-backend.layout_partials.card card_title="Dashboard" card_footer="ftr">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    @can('{{ $permissionName }} Read')
+                        <th>Sn</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Action')
+                        <th width="20%">Action</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Code')
+                        <th width="20%">Code</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Name')
+                        <th width="20%">Name</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Local Name')
+                        <th width="20%">Local Name</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Status')
+                        <th width="10%">Status</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Created At')
+                        <th width="20%">Created At</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Updated At')
+                        <th width="20%">Updated At</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Created By')
+                        <th width="20%">Created By</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Updated By')
+                        <th width="20%">Updated By</th>
+                    @endcan
+                </tr>
+            </thead>
+            <tbody>
+                {{-- data --}}
+            </tbody>
+            <tfoot>
+                <tr>
+                    @can('{{ $permissionName }} Read')
+                        <th>Sn</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Action')
+                        <th width="20%">Action</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Code')
+                        <th width="20%">Code</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Name')
+                        <th width="20%">Name</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Local Name')
+                        <th width="20%">Local Name</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Status')
+                        <th width="10%">Status</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Created At')
+                        <th width="20%">Created At</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Updated At')
+                        <th width="20%">Updated At</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Created By')
+                        <th width="20%">Created By</th>
+                    @endcan
+                    @can('{{ $permissionName }} Read Updated By')
+                        <th width="20%">Updated By</th>
+                    @endcan
+                </tr>
+            </tfoot>
+        </table>
+    </x-backend.layout_partials.card>
 @endsection
+
 @section('footer_links')
 
+    <x-backend.links.datatable-footer-links />
+    <x-backend.script.delete-confirmation />
+    <x-backend.script.force-delete-confirmation />
     <script>
         $(function() {
 

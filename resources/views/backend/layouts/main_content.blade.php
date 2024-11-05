@@ -1,15 +1,31 @@
-<!-- start page title -->
-<div class="py-3 py-lg-4">
-    <div class="row">
-        @yield('page_title')
-        <div class="col-lg-6">
-            <div class="d-none d-lg-block">
-                @yield('page_breadcrumb')
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="mb-2 row">
+            <div class="col-sm-6">
+                <h1>@yield('page_header_name')</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    @yield('breadcrumbs')
+
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                @yield('main_content')
+                <!-- /.card -->
             </div>
         </div>
     </div>
+</section>
+<!-- /.content -->
 </div>
-<!-- end page title -->
-
-
-@yield('main_content')

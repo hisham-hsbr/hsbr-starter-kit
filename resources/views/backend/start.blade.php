@@ -1,25 +1,17 @@
 @extends('backend.layouts.app')
-@section('page_head', 'Dashboard')
-@section('head_links')
-@endsection
-@section('page_title')
-    <x-backend.layout_partials.page-title pageTitle=Dashboard />
-@endsection
-@section('page_breadcrumb')
-    <x-backend.layout_partials.page-breadcrumb activePage="Dashboard">
-        <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}" />
-    </x-backend.layout_partials.page-breadcrumb>
+@section('page_title', 'Title Dashboard')
+@section('page_header_name', 'My Page Head')
+@section('breadcrumbs')
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="/" :active="false" />
+    <x-backend.layout_partials.page-breadcrumb-item pageName="User Index" pageHref="/" :active="false" />
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Create" pageHref="" :active="true" />
 @endsection
 
 @section('main_content')
-    <div class="row">
-        <div class="col-lg-12">
-            <x-backend.layout_partials.page-card cardHeader="Starter" cardSubHeader="First">
-
-            </x-backend.layout_partials.page-card>
-        </div>
-
-    </div>
-@endsection
-@section('footer_links')
+    <x-backend.layout_partials.card card_title="Dashboard" card_footer="ftr">
+        <h1>Hisham</h1>
+    </x-backend.layout_partials.card>
+    <x-backend.layout_partials.card card_title="Dashboard" card_footer="ftr">
+        <h1>Hisham</h1>
+    </x-backend.layout_partials.card>
 @endsection

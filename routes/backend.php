@@ -9,8 +9,12 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/dashboard', 'App\Http\Controllers\AppControllers\BackendController@dashboard')->name('backend.dashboard');
     Route::get('/admin/start', 'App\Http\Controllers\AppControllers\BackendController@starter')->name('backend.starter');
 
+    Route::get('/users', ['App\Http\Controllers\AppControllers\UserController@index'])->name('users.index');
+    Route::get('/users/get', ['App\Http\Controllers\AppControllers\UserController@getUsers'])->name('users.get');
+
+
     //test demo
-    Route::controller('App\Http\Controllers\AppControllers\TestDemoController')->prefix('/test/demos')->name('test-demos.')->group(function () {
+    Route::controller('App\Http\Controllers\AppControllers\TestDemoController')->prefix('/admin/test/demos')->name('test-demos.')->group(function () {
         Route::get('/', 'index')->name('index'); //->middleware('permission:Customer Read');
         Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');

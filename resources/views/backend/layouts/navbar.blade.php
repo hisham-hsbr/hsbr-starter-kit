@@ -1,298 +1,189 @@
-<div class="navbar-custom">
-    <div class="topbar">
-        <div class="gap-1 topbar-menu d-flex align-items-center gap-lg-2">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="../../index3.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Contact</a>
+        </li>
+    </ul>
 
-            <!-- Brand Logo -->
-            <div class="logo-box">
-                <!-- Brand Logo Light -->
-                <a href="index.html" class="logo-light">
-                    <img src="{{ asset('backend/dashtrap/assets/images/logo-light.png') }}" alt="logo" class="logo-lg"
-                        height="22">
-                    <img src="{{ asset('backend/dashtrap/assets/images/logo-sm.png') }}" alt="small logo"
-                        class="logo-sm" height="22">
-                </a>
-
-                <!-- Brand Logo Dark -->
-                <a href="index.html" class="logo-dark">
-                    <img src="{{ asset('backend/dashtrap/assets/images/logo-dark.png') }}" alt="dark logo"
-                        class="logo-lg" height="22">
-                    <img src="{{ asset('backend/dashtrap/assets/images/logo-sm.png') }}" alt="small logo"
-                        class="logo-sm" height="22">
-                </a>
+    <!-- Right navbar links -->
+    <ul class="ml-auto navbar-nav">
+        <!-- Navbar Search -->
+        <li class="nav-item">
+            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                <i class="fas fa-search"></i>
+            </a>
+            <div class="navbar-search-block">
+                <form class="form-inline">
+                    <div class="input-group input-group-sm">
+                        <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                            aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-navbar" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
+        </li>
 
-            <!-- Sidebar Menu Toggle Button -->
-            <button class="button-toggle-menu">
-                <i class="mdi mdi-menu"></i>
-            </button>
-        </div>
-
-        <ul class="gap-4 topbar-menu d-flex align-items-center">
-
-            <li class="d-none d-md-inline-block">
-                <a class="nav-link" href="" data-bs-toggle="fullscreen">
-                    <i class="mdi mdi-fullscreen font-size-24"></i>
-                </a>
-            </li>
-
-            <li class="dropdown">
-                <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown"
-                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="mdi mdi-magnify font-size-24"></i>
-                </a>
-                <div class="p-0 dropdown-menu dropdown-menu-animated dropdown-menu-end dropdown-lg">
-                    <form class="p-3">
-                        <input type="search" class="form-control" placeholder="Search ..."
-                            aria-label="Recipient's username">
-                    </form>
-                </div>
-            </li>
-
-
-            <li class="dropdown d-none d-md-inline-block">
-                <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown"
-                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ asset('backend/dashtrap/assets/images/flags/us.jpg') }}" alt="user-image"
-                        class="me-0 me-sm-1" height="18">
-                </a>
-                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated">
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="{{ asset('backend/dashtrap/assets/images/flags/germany.jpg') }}" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">German</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="{{ asset('backend/dashtrap/assets/images/flags/italy.jpg') }}" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">Italian</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="{{ asset('backend/dashtrap/assets/images/flags/spain.jpg') }}" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">Spanish</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item">
-                        <img src="{{ asset('backend/dashtrap/assets/images/flags/russia.jpg') }}" alt="user-image"
-                            class="me-1" height="12"> <span class="align-middle">Russian</span>
-                    </a>
-
-                </div>
-            </li>
-
-            <li class="dropdown notification-list">
-                <a class="nav-link dropdown-toggle waves-effect waves-light arrow-none" data-bs-toggle="dropdown"
-                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <i class="mdi mdi-bell font-size-24"></i>
-                    <span class="badge bg-danger rounded-circle noti-icon-badge">9</span>
-                </a>
-                <div class="py-0 dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg">
-                    <div class="p-2 border border-dashed border-top-0 border-start-0 border-end-0">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h6 class="m-0 font-size-16 fw-semibold"> Notification</h6>
-                            </div>
-                            <div class="col-auto">
-                                <a href="javascript: void(0);" class="text-dark text-decoration-underline">
-                                    <small>Clear All</small>
-                                </a>
-                            </div>
+        <!-- Messages Dropdown Menu -->
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="far fa-comments"></i>
+                <span class="badge badge-danger navbar-badge">3</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <a href="#" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                        <img src="{{ asset('backend/admin_lte/dist/img/user1-128x128.jpg') }}" alt="User Avatar"
+                            class="mr-3 img-size-50 img-circle">
+                        <div class="media-body">
+                            <h3 class="dropdown-item-title">
+                                Brad Diesel
+                                <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                            </h3>
+                            <p class="text-sm">Call me whenever you can...</p>
+                            <p class="text-sm text-muted"><i class="mr-1 far fa-clock"></i> 4 Hours Ago</p>
                         </div>
                     </div>
-
-                    <div class="px-1" style="max-height: 300px;" data-simplebar>
-
-                        <h5 class="mt-2 text-muted font-size-13 fw-normal">Today</h5>
-                        <!-- item-->
-
-                        <a href="javascript:void(0);"
-                            class="p-0 mb-1 shadow-none dropdown-item notify-item card unread-noti">
-                            <div class="card-body">
-                                <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <div class="notify-icon bg-primary">
-                                            <i class="mdi mdi-comment-account-outline"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <h5 class="noti-item-title fw-semibold font-size-14">Datacorp
-                                            <small class="fw-normal text-muted ms-1">1 min ago</small>
-                                        </h5>
-                                        <small class="noti-item-subtitle text-muted">Caleb Flakelar
-                                            commented on Admin</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);"
-                            class="p-0 mb-1 shadow-none dropdown-item notify-item card read-noti">
-                            <div class="card-body">
-                                <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <div class="notify-icon bg-info">
-                                            <i class="mdi mdi-account-plus"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <h5 class="noti-item-title fw-semibold font-size-14">Admin <small
-                                                class="fw-normal text-muted ms-1">1 hours ago</small></h5>
-                                        <small class="noti-item-subtitle text-muted">New user
-                                            registered</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <h5 class="mt-0 text-muted font-size-13 fw-normal">Yesterday</h5>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);"
-                            class="p-0 mb-1 shadow-none dropdown-item notify-item card read-noti">
-                            <div class="card-body">
-                                <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <div class="notify-icon">
-                                            <img src="{{ asset('backend/dashtrap/assets/images/users/avatar-2.jpg') }}"
-                                                class="img-fluid rounded-circle" alt="" />
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <h5 class="noti-item-title fw-semibold font-size-14">Cristina Pride
-                                            <small class="fw-normal text-muted ms-1">1 day ago</small>
-                                        </h5>
-                                        <small class="noti-item-subtitle text-muted">Hi, How are you? What
-                                            about our next meeting</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <h5 class="mt-0 text-muted font-size-13 fw-normal">30 Dec 2021</h5>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);"
-                            class="p-0 mb-1 shadow-none dropdown-item notify-item card read-noti">
-                            <div class="card-body">
-                                <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <div class="notify-icon bg-primary">
-                                            <i class="mdi mdi-comment-account-outline"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <h5 class="noti-item-title fw-semibold font-size-14">Datacorp</h5>
-                                        <small class="noti-item-subtitle text-muted">Caleb Flakelar
-                                            commented on Admin</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);"
-                            class="p-0 mb-1 shadow-none dropdown-item notify-item card read-noti">
-                            <div class="card-body">
-                                <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <div class="notify-icon">
-                                            <img src="{{ asset('backend/dashtrap/assets/images/users/avatar-4.jpg') }}"
-                                                class="img-fluid rounded-circle" alt="" />
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1 text-truncate ms-2">
-                                        <h5 class="noti-item-title fw-semibold font-size-14">Karen Robinson
-                                        </h5>
-                                        <small class="noti-item-subtitle text-muted">Wow ! this admin looks
-                                            good and awesome design</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <div class="text-center">
-                            <i class="mt-0 mdi mdi-dots-circle mdi-spin text-muted h3"></i>
+                    <!-- Message End -->
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                        <img src="{{ asset('backend/admin_lte/dist/img/user8-128x128.jpg') }}" alt="User Avatar"
+                            class="mr-3 img-size-50 img-circle">
+                        <div class="media-body">
+                            <h3 class="dropdown-item-title">
+                                John Pierce
+                                <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                            </h3>
+                            <p class="text-sm">I got your message bro</p>
+                            <p class="text-sm text-muted"><i class="mr-1 far fa-clock"></i> 4 Hours Ago</p>
                         </div>
                     </div>
-
-                    <!-- All-->
-                    <a href="javascript:void(0);"
-                        class="py-2 text-center dropdown-item text-primary notify-item border-top border-light">
-                        View All
-                    </a>
-
-                </div>
-            </li>
-
-            <li class="nav-link" id="theme-mode">
-                <i class="bx bx-moon font-size-24"></i>
-            </li>
-
-            <li class="dropdown">
-                <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown"
-                    href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="{{ asset('backend/dashtrap/assets/images/users/avatar-4.jpg') }}" alt="user-image"
-                        class="rounded-circle">
-                    <span class="ms-1 d-none d-md-inline-block">
-                        {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
-                    </span>
+                    <!-- Message End -->
                 </a>
-                <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
-                    <!-- item-->
-                    <div class="dropdown-header noti-title">
-                        <h6 class="m-0 text-overflow">Welcome !</h6>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                        <img src="{{ asset('backend/admin_lte/dist/img/user3-128x128.jpg') }}" alt="User Avatar"
+                            class="mr-3 img-size-50 img-circle">
+                        <div class="media-body">
+                            <h3 class="dropdown-item-title">
+                                Nora Silvester
+                                <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                            </h3>
+                            <p class="text-sm">The subject goes here</p>
+                            <p class="text-sm text-muted"><i class="mr-1 far fa-clock"></i> 4 Hours Ago</p>
+                        </div>
                     </div>
+                    <!-- Message End -->
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+            </div>
+        </li>
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="far fa-bell"></i>
+                <span class="badge badge-warning navbar-badge">15</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <span class="dropdown-item dropdown-header">15 Notifications</span>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <i class="mr-2 fas fa-envelope"></i> 4 new messages
+                    <span class="float-right text-sm text-muted">3 mins</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <i class="mr-2 fas fa-users"></i> 8 friend requests
+                    <span class="float-right text-sm text-muted">12 hours</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <i class="mr-2 fas fa-file"></i> 3 new reports
+                    <span class="float-right text-sm text-muted">2 days</span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown user-menu">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                {{-- <x-back-end.app.user-profile-image class="user-image img-circle elevation-2" /> --}}
+                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                <i class="fa-solid fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <!-- User image -->
+                <li class="user-header bg-primary">
+                    {{-- <x-back-end.app.user-profile-image class="img-circle elevation-2" /> --}}
+                    <p>
+                        {{ Auth::user()->name }} {{ Auth::user()->last_name }}
+                        <small>{{ Auth::user()->email }}</small>
+                        <small>
+                            Time-Zone :
+                            {{-- {{ Auth::user()->timeZone->time_zone }} --}}
+                            {{-- ({{ Auth::user()->timeZone->utc_code }}) --}}
+                        </small>
+                    </p>
+                </li>
+                <!-- Menu Body -->
+                <li class="user-body">
+                    <div class="row">
+                        <div class="text-center col-4">
+                            <a href="#">Followers</a>
+                        </div>
+                        <div class="text-center col-4">
+                            <a href="#">Sales</a>
+                        </div>
+                        <div class="text-center col-4">
+                            <a href="#">Friends</a>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <a href="" class="btn btn-default btn-flat">Profile</a>
 
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-user"></i>
-                        <span>My Account</span>
+                    <a class="float-right btn btn-default btn-flat" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
                     </a>
 
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-settings"></i>
-                        <span>Settings</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="pages-lock-screen.html" class="dropdown-item notify-item">
-                        <i class="fe-lock"></i>
-                        <span>Lock Screen</span>
-                    </a>
-
-                    <div class="dropdown-divider"></div>
-
-                    <!-- item-->
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
-
-                        {{-- <x-dropdown-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                            this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </x-dropdown-link> --}}
-
-                        <a href="{{ route('logout') }}" class="dropdown-item notify-item"
-                            onclick="event.preventDefault();
-                                            this.closest('form').submit();">
-                            <i class="fe-log-out"></i>
-                            <span>Logout</span>
-                        </a>
                     </form>
-                </div>
-            </li>
-
-        </ul>
-    </div>
-</div>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                <i class="fas fa-th-large"></i>
+            </a>
+        </li>
+    </ul>
+</nav>

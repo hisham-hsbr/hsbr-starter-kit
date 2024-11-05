@@ -1,19 +1,7 @@
-<footer class="footer">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                <div>
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script> © HSK v1.02
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="gap-4 d-none d-md-flex align-item-center justify-content-md-end">
-                    <p class="mb-0">Design & Develop by <a href="https://hsbr.app" target="_blank">HSBR-Apps</a>
-                    </p>
-                </div>
-            </div>
-        </div>
+<footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+        <b>Version</b> 3.2.0
     </div>
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+    reserved.
 </footer>
