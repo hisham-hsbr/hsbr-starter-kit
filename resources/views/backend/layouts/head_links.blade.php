@@ -13,4 +13,5 @@
 <link rel="stylesheet" href="{{ asset('backend/pageloader/style.css') }}">
 
 
+
 @yield('head_links')

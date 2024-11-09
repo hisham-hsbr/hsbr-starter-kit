@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\AppControllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AppRequests\StoreAndUpdateTestDemoRequest;
 use App\Models\AppModels\TestDemo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class TestDemoController extends Controller
@@ -52,15 +54,36 @@ class TestDemoController extends Controller
         );
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
+    public function demo()
+    {
+        // dd('ddd');
+        return view('backend.test_demos.test')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                // 'testDemos' => $testDemos,
+            ]
+        );
+    }
     public function create()
     {
         return view('backend.test_demos.create')->with(
-            []
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                // 'testDemos' => $testDemos,
+            ]
         );
     }
+
+
+
     public function testDemosGet(Request $request)
     {
         $defaultCount = TestDemo::withTrashed()->where('default', 1)->count();
@@ -76,7 +99,7 @@ class TestDemoController extends Controller
             ->setRowClass(function ($testDemo) use ($defaultCount) {
                 return ($defaultCount > 1 && $testDemo->default == 1) ? 'text-danger' : '';
             })
-
+            ->addIndexColumn()
             ->addColumn('action', function (TestDemo $testDemo) {
 
                 $action = '
@@ -112,12 +135,44 @@ class TestDemoController extends Controller
             ->toJson();
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAndUpdateTestDemoRequest $request)
     {
-        //
+        $testDemo = new TestDemo();
+
+
+        $testDemo->code  = $request->code;
+        $testDemo->name = $request->name;
+        $testDemo->local_name = $request->local_name;
+
+        if ($request->default) {
+            TestDemo::where('default', 1)->update(['default' => null]);
+        }
+
+        $testDemo->default = $request->default;
+        // checking default -->
+
+
+        if ($request->status == 0) {
+            $testDemo->status == 0;
+        }
+
+        $testDemo->status = $request->status;
+
+        $testDemo->created_by = Auth::user()->id;
+        $testDemo->updated_by = Auth::user()->id;
+
+        $testDemo->save();
+
+        return redirect()->route('test-demos.index')->with(
+            [
+                'message_store' => 'TestDemo Created Successfully'
+            ]
+        );
     }
 
     /**
@@ -147,8 +202,50 @@ class TestDemoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TestDemo $testDemo)
+    public function destroy($id)
     {
-        //
+        try {
+            // Decrypt the ID and find the TestDemo model
+            $testDemo = TestDemo::findOrFail(decrypt($id));
+
+            if (is_null($testDemo->default)) {
+                $testDemo->delete();
+                return response()->json(['success' => true, 'message' => 'TestDemo Soft Deleted Successfully']);
+            }
+
+            // If there's an issue with the default value
+            return response()->json(['success' => false, 'error' => 'Please change the Default value before "Soft Deleting".']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => 'An error occurred. Please try again later.']);
+        }
+    }
+
+    public function forceDestroy($id)
+    {
+        try {
+            // Decrypt the ID and find the TestDemo model
+            $testDemo = TestDemo::withTrashed()->findOrFail(decrypt($id));
+
+            if (is_null($testDemo->default)) {
+                $testDemo->forceDelete();
+                return response()->json(['success' => true, 'message' => 'TestDemo Hard Deleted Successfully']);
+            }
+
+            // If there's an issue with the default value
+            return response()->json(['success' => false, 'error' => 'Please change the Default value before "Hard Deleting".']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => 'An error occurred. Please try again later.']);
+        }
+    }
+    public function restore($id)
+    {
+
+        $testDemo  = TestDemo::withTrashed()->findOrFail(decrypt($id));
+        $testDemo->restore();
+        return redirect()->route('test-demos.index')->with(
+            [
+                'message_update' => 'TestDemo Restored Successfully'
+            ]
+        );
     }
 }

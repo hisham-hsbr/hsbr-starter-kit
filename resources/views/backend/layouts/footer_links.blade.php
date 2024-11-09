@@ -10,6 +10,10 @@
 <script src="{{ asset('backend/admin_lte/dist/js/demo.js') }}"></script>
 <!-- Toastr -->
 <script src="{{ asset('backend/admin_lte/plugins/toastr/toastr.min.js') }}"></script>
+<!-- jquery-validation -->
+<script src="{{ asset('backend/admin_lte/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('backend/admin_lte/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+
 
 <x-app.message.message />
 

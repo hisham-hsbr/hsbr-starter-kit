@@ -14,13 +14,15 @@
             @if ($navIcon)
                 <i class="nav-icon {{ $navIcon }}"></i>
             @endif
-            {{ $navTitle }}
-            @if ($angleLeft)
-                <i class="right fas fa-angle-left"></i>
-            @endif
-            @if ($navBadgeClass)
-                <span class="right badge badge-{{ $navBadgeClass }}">{{ $navBadge }}</span>
-            @endif
+            <p>
+                {{ $navTitle }}
+                @if ($angleLeft)
+                    <i class="right fas fa-angle-left"></i>
+                @endif
+                @if ($navBadgeClass)
+                    <span class="right badge badge-{{ $navBadgeClass }}">{{ $navBadge }}</span>
+                @endif
+            </p>
         </a>
         {{ $slot }}
     </li>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AppControllers;
 use App\Http\Controllers\Controller;
 use App\Models\AppModels\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -55,7 +56,46 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            // 'password' => 'required|min:6|confirmed'
+        ]);
+        $user = new User();
+
+
+        $user->name  = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+
+        if ($request->default) {
+            User::where('default', 1)->update(['default' => null]);
+        }
+
+        $user->default = $request->default;
+        // checking default -->
+
+
+        if ($request->status == 0) {
+            $user->status == 0;
+        }
+
+        $user->status = $request->status;
+
+        $user->created_by = Auth::user()->id;
+        $user->updated_by = Auth::user()->id;
+
+        $user->save();
+
+
+
+
+        return response()->json(data: ['message_store' => 'Form submitted successfully!']);
+        // return redirect()->route('test-demos.index')->with(
+        //     [
+        //         'message_store' => 'TestDemo Created Successfully'
+        //     ]
+        // );
     }
 
     /**

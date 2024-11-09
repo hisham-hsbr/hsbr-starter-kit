@@ -14,46 +14,6 @@
 
     @section('main_content')
         <x-backend.layout_partials.card card_title="Dashboard" card_footer="ftr">
-
-            <x-backend.model.page-info-model model_title="Customer Create" icon_class="fa-solid fa-circle-info"
-                model_class="modal-lg">
-                <p><u>Keyboard Shortcuts</u></p>
-                <x-backend.form.model-table-code>
-                    <x-backend.form.model-table-code-tr action="Add Customer" code="Ctrl+Alt + A" />
-                    <x-backend.form.model-table-code-tr action="Import Customer" code="Ctrl+Alt + I" />
-                    <x-backend.form.model-table-code-tr action="Customer Settings" code="Ctrl+Alt + S" />
-                    <x-backend.form.model-table-code-tr action="Customer Table Refresh" code="Alt + R" />
-                </x-backend.form.model-table-code>
-            </x-backend.model.page-info-model>
-
-
-
-            <div id="indexPageButtons" style="margin-bottom: 5px">
-                <!-- Add Button -->
-                <a href="{{ route($routeName . '.create') }}" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> Add
-                </a>
-
-                <!-- Export Button -->
-                <a href="{{ route($routeName . '.create') }}" class="btn btn-success">
-                    <i class="fas fa-file-export"></i> Export
-                </a>
-
-                <!-- Import Button -->
-                <a href="{{ route($routeName . '.create') }}" class="btn btn-info">
-                    <i class="fas fa-file-import"></i> Import
-                </a>
-
-                <!-- Settings Button -->
-                <a href="{{ route($routeName . '.create') }}" class="btn btn-secondary">
-                    <i class="fas fa-cog"></i> Settings
-                </a>
-
-                <!-- Refresh Button -->
-                <a onclick="Refresh()" class="btn btn-warning">
-                    <i class="fas fa-sync-alt"></i> Refresh
-                </a>
-            </div>
             <div id="filteredData" class="callout callout-info" style="display: none;">
                 <h5>Filter Applyed For!</h5>
 
@@ -89,14 +49,6 @@
                     <i class="fas fa-filter"></i>
                 </button>
             </div>
-            <!-- Button to open the modal with Font Awesome filter icon aligned to the right -->
-            <div class="mb-3 text-right">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalForm">
-                    <i class="fas fa-filter">add</i>
-                </button>
-            </div>
-            <x-backend.model.create-test-demo-model />
-            {{-- <x-backend.model.create-model /> --}}
 
 
 
@@ -251,7 +203,6 @@
     @section('footer_links')
         <x-backend.links.datatable-footer-links />
 
-        <x-backend.script.datatable-update />
         <x-backend.script.delete-confirmation />
         <x-backend.script.force-delete-confirmation />
 
@@ -378,30 +329,12 @@
                                     headers: myHeaders,
                                 }).then(function(response) {
                                     return response.json();
-                                }).then(function(data) {
-                                    // Hide the modal
-                                    $('#deleteConfirmModal').modal('hide');
-
-                                    if (data.success) {
-                                        // Success: Reload the DataTable and show a success message
-                                        $('#example1').DataTable().ajax.reload();
-                                        toastr.success(data.message || itemName +
-                                            " deleted successfully.");
-                                    } else {
-                                        // Error: Show the error message
-                                        toastr.error(data.error ||
-                                            "Failed to delete " + itemName +
-                                            ". Please try again.");
-                                    }
-                                }).catch(function(error) {
-                                    // Handle any unexpected errors
-                                    $('#deleteConfirmModal').modal('hide');
-                                    toastr.error(
-                                        "An unexpected error occurred. Please try again."
-                                    );
                                 });
 
-                                // Set toastr options
+                                // Hide the modal after confirming
+                                $('#deleteConfirmModal').modal('hide');
+                                // Reload the DataTable and show a success message
+                                $('#example1').DataTable().ajax.reload();
                                 toastr.options = {
                                     "closeButton": false,
                                     "debug": false,
@@ -419,11 +352,10 @@
                                     "showMethod": "fadeIn",
                                     "hideMethod": "fadeOut"
                                 };
-                                toastr.clear();
+                                toastr.error(itemName + " Deleting.....");
                             });
+                            toastr.clear();
                         });
-
-
 
                         // force delete
                         $('.delete-item_delete_force').on('click', function() {
@@ -445,45 +377,23 @@
                                     $('#confirmDeleteButton').prop('disabled', true);
                                 }
                             });
-
-                            $('#confirmDeleteButton').off('click').on('click', function() {
+                            $('#confirmDeleteButton').on('click', function() {
                                 var myHeaders = new Headers({
                                     "X-CSRF-TOKEN": $("input[name='_token']").val()
                                 });
 
+
                                 fetch("{{ route('test-demos.force.destroy', '') }}/" +
-                                        itemID, {
-                                            method: 'DELETE',
-                                            headers: myHeaders,
-                                        })
-                                    .then(function(response) {
-                                        return response.json();
-                                    })
-                                    .then(function(data) {
-                                        // Hide the modal
-                                        modal.hide();
+                                    itemID, {
+                                        method: 'DELETE',
+                                        headers: myHeaders,
+                                    }).then(function(response) {
+                                    return response.json();
 
-                                        if (data.success) {
-                                            // Success: Reload the DataTable and show a success message
-                                            $('#example1').DataTable().ajax.reload();
-                                            toastr.success(data.message || itemName +
-                                                " deleted successfully.");
-                                        } else {
-                                            // Error: Show the error message
-                                            toastr.error(data.error ||
-                                                "Failed to delete " + itemName +
-                                                ". Please try again.");
-                                        }
-                                    })
-                                    .catch(function(error) {
-                                        // Handle any unexpected errors
-                                        modal.hide();
-                                        toastr.error(
-                                            "An unexpected error occurred. Please try again."
-                                        );
-                                    });
+                                });
 
-                                // Set toastr options
+                                modal.hide(); // Hide the modal after deletion
+                                $('#example1').DataTable().ajax.reload();
                                 toastr.options = {
                                     "closeButton": false,
                                     "debug": false,
@@ -501,10 +411,9 @@
                                     "showMethod": "fadeIn",
                                     "hideMethod": "fadeOut"
                                 };
-                                toastr.clear();
+                                toastr.error(itemName + " Force Deleting.....");
                             });
                         });
-
                         toastr.clear();
 
 
