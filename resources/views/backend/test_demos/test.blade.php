@@ -43,8 +43,8 @@
                             <span class="text-danger" id="nameError"></span>
                         </div>
                         <div class="form-group">
-                            <label for="name">Password</label>
-                            <input type="text" class="form-control" id="password" name="password">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
                             <span class="text-danger" id="passwordError"></span>
                         </div>
                         <div class="form-group">
@@ -67,6 +67,7 @@
                 // Clear previous error messages
                 $('#nameError').text('');
                 $('#emailError').text('');
+                $('#passwordError').text('');
 
                 let formData = {
                     name: $('#name').val(),

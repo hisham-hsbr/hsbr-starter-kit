@@ -142,6 +142,7 @@ class TestDemoController extends Controller
      */
     public function store(StoreAndUpdateTestDemoRequest $request)
     {
+
         $testDemo = new TestDemo();
 
 
@@ -168,7 +169,7 @@ class TestDemoController extends Controller
 
         $testDemo->save();
 
-        return redirect()->route('test-demos.index')->with(
+        return redirect()->back()->with(
             [
                 'message_store' => 'TestDemo Created Successfully'
             ]

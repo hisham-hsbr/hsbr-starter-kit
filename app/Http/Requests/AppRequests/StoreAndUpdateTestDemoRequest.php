@@ -4,6 +4,9 @@ namespace App\Http\Requests\AppRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Session;
 
 class StoreAndUpdateTestDemoRequest extends FormRequest
 {
@@ -44,5 +47,10 @@ class StoreAndUpdateTestDemoRequest extends FormRequest
             'name.required' => 'Name required',
             'status.required_if' => 'The status must be active when default is selected.',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        Session::flash('showModal', true); // Set a session variable to indicate errors
+        throw new HttpResponseException(back()->withErrors($validator)->withInput());
     }
 }
