@@ -1,9 +1,10 @@
-@props(['card_title', 'card_footer' => ''])
+@props(['cardTitle' => '', 'cardFooter' => ''])
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">{{ $card_title }}</h3>
+        <h3 class="card-title">{{ $cardTitle }}</h3>
 
         <div class="card-tools">
+
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                 <i class="fas fa-minus"></i>
             </button>
@@ -16,9 +17,9 @@
         {{ $slot }}
     </div>
     <!-- /.card-body -->
-    @if ($card_footer)
+    @if ($cardFooter)
         <div class="card-footer">
-            {{ $card_footer }}
+            {{ $cardFooter }}
         </div>
     @endif
     <!-- /.card-footer-->

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Chrome-Like Window Management</title>
+        <link
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            .floating-window {
+                width: 300px;
+                height: 200px;
+                position: fixed;
+                top: 20%;
+                left: 20%;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                cursor: move;
+                resize: both;
+                overflow: auto;
+                display: flex;
+                flex-direction: column;
+                z-index: 1000;
+            }
+
+            .floating-header {
+                background-color: #3a1c00;
+                color: #fff;
+                padding: 5px;
+                cursor: move;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 16px;
+            }
+
+            .control-button {
+                background: transparent;
+                border: none;
+                color: #cfc4b1;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0 5px;
+                margin: 0;
+            }
+
+            .control-button:hover {
+                color: #fff;
+            }
+
+            .floating-content {
+                padding: 10px;
+            }
+
+            /* Minimized windows area */
+            #minimizedAreaContainer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 40px;
+                background-color: #f0f0f0;
+                display: flex;
+                align-items: center;
+                padding: 5px;
+                border-top: 1px solid #ddd;
+            }
+
+            #minimizedArea {
+                display: flex;
+                flex-grow: 1;
+                overflow-x: auto;
+            }
+
+            /* Tab appearance in minimized area */
+            .tab-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 150px;
+                height: 30px;
+                margin-right: 5px;
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 3px;
+                cursor: pointer;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                padding: 0 5px;
+                position: relative;
+            }
+
+            .tab-item.active {
+                background-color: #28a745; /* Active tab color */
+            }
+
+            .tab-controls {
+                display: flex;
+                gap: 5px;
+                font-size: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <button class="btn btn-primary" onclick="createWindow()">
+                Open New Window
+            </button>
+        </div>
+
+        <!-- Minimized Windows Area -->
+        <div id="minimizedAreaContainer">
+            <div id="minimizedArea"></div>
+        </div>
+
+        <!-- JavaScript to handle window creation, minimization, maximization, and tab display -->
+        <script>
+            let windowCounter = 0;
+            let topZIndex = 1000;
+            let activeWindowId = null;
+
+            function createWindow() {
+                // Increment the counter to give each window a unique ID and label
+                windowCounter++;
+                const windowId = `floatingWindow${windowCounter}`;
+                const windowLabel = `Window ${windowCounter}`;
+
+                // Create the main floating window div
+                const windowDiv = document.createElement("div");
+                windowDiv.id = windowId;
+                windowDiv.className = "floating-window";
+                windowDiv.setAttribute("data-label", windowLabel);
+                windowDiv.style.zIndex = ++topZIndex;
+                windowDiv.style.top = `${Math.random() * 50 + 10}%`;
+                windowDiv.style.left = `${Math.random() * 50 + 10}%`;
+
+                // Add header with title, minimize, maximize, and close buttons
+                windowDiv.innerHTML = `
+            <div class="floating-header" id="${windowId}Header" onclick="bringToFront('${windowId}')">
+                <span>${windowLabel}</span>
+                <div>
+                    <button class="control-button" onclick="minimizeWindow('${windowId}')">–</button>
+                    <button class="control-button" onclick="toggleMaximizeWindow('${windowId}')">□</button>
+                    <button class="control-button" onclick="closeWindow('${windowId}')">✕</button>
+                </div>
+            </div>
+            <div class="floating-content">
+                <p>This is the content of ${windowLabel}.</p>
+            </div>
+        `;
+
+                document.body.appendChild(windowDiv);
+                addTabToBottom(windowId, windowLabel);
+                setActiveTab(windowId);
+                makeWindowDraggable(windowId);
+            }
+
+            function setActiveTab(windowId) {
+                activeWindowId = windowId;
+                updateBottomTabs();
+            }
+
+            function updateBottomTabs() {
+                const tabs = document.querySelectorAll(".tab-item");
+                tabs.forEach((tab) => {
+                    const tabId = tab.getAttribute("data-window-id");
+                    tab.classList.remove("active");
+                    if (tabId === activeWindowId) {
+                        tab.classList.add("active");
+                    }
+                });
+            }
+
+            function addTabToBottom(windowId, label) {
+                const minimizedArea = document.getElementById("minimizedArea");
+
+                // Check if the tab already exists
+                if (
+                    document.querySelector(
+                        `.tab-item[data-window-id="${windowId}"]`
+                    )
+                )
+                    return;
+
+                // Create a new tab in the minimized area
+                const tabDiv = document.createElement("div");
+                tabDiv.className = "tab-item";
+                tabDiv.setAttribute("data-window-id", windowId);
+                tabDiv.title = label; // Tooltip with full label
+                tabDiv.innerHTML = `
+            ${label}
+            <div class="tab-controls">
+                <button class="control-button" onclick="minimizeWindow('${windowId}')">–</button>
+                <button class="control-button" onclick="toggleMaximizeWindow('${windowId}')">□</button>
+                <button class="control-button" onclick="closeWindow('${windowId}')">✕</button>
+            </div>
+        `;
+                tabDiv.onclick = () => toggleWindow(windowId);
+
+                minimizedArea.appendChild(tabDiv);
+                updateBottomTabs();
+            }
+
+            function toggleWindow(windowId) {
+                const windowElement = document.getElementById(windowId);
+                if (windowElement.style.display === "none") {
+                    windowElement.style.display = "flex";
+                    bringToFront(windowId);
+                } else {
+                    minimizeWindow(windowId);
+                }
+                setActiveTab(windowId);
+            }
+
+            function closeWindow(windowId) {
+                const windowElement = document.getElementById(windowId);
+                windowElement.remove();
+
+                // Remove the corresponding tab at the bottom
+                const tab = document.querySelector(
+                    `.tab-item[data-window-id="${windowId}"]`
+                );
+                tab && tab.remove();
+                updateBottomTabs();
+            }
+
+            function minimizeWindow(windowId) {
+                const windowElement = document.getElementById(windowId);
+                windowElement.style.display = "none";
+                updateBottomTabs();
+            }
+
+            function toggleMaximizeWindow(windowId) {
+                const windowElement = document.getElementById(windowId);
+                if (windowElement.classList.contains("maximized")) {
+                    windowElement.classList.remove("maximized");
+                    windowElement.style.width = "300px";
+                    windowElement.style.height = "200px";
+                    windowElement.style.top = "20%";
+                    windowElement.style.left = "20%";
+                } else {
+                    windowElement.classList.add("maximized");
+                    windowElement.style.width = "100%";
+                    windowElement.style.height = "100%";
+                    windowElement.style.top = "0";
+                    windowElement.style.left = "0";
+                }
+            }
+
+            function bringToFront(windowId) {
+                setActiveTab(windowId);
+                const windowElement = document.getElementById(windowId);
+                windowElement.style.zIndex = ++topZIndex;
+            }
+
+            function makeWindowDraggable(windowId) {
+                const windowElement = document.getElementById(windowId);
+                const header = document.getElementById(`${windowId}Header`);
+                let offsetX = 0,
+                    offsetY = 0,
+                    mouseX = 0,
+                    mouseY = 0;
+
+                header.onmousedown = (e) => {
+                    e.preventDefault();
+                    bringToFront(windowId); // Bring to the front when starting to drag
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+
+                    document.onmousemove = dragWindow;
+                    document.onmouseup = stopDrag;
+                };
+
+                function dragWindow(e) {
+                    e.preventDefault();
+                    offsetX = mouseX - e.clientX;
+                    offsetY = mouseY - e.clientY;
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+
+                    const newTop = windowElement.offsetTop - offsetY;
+                    const newLeft = windowElement.offsetLeft - offsetX;
+
+                    windowElement.style.top =
+                        Math.max(
+                            0,
+                            Math.min(
+                                newTop,
+                                window.innerHeight - windowElement.offsetHeight
+                            )
+                        ) + "px";
+                    windowElement.style.left =
+                        Math.max(
+                            0,
+                            Math.min(
+                                newLeft,
+                                window.innerWidth - windowElement.offsetWidth
+                            )
+                        ) + "px";
+                }
+
+                function stopDrag() {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                }
+            }
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>

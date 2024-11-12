@@ -5,65 +5,60 @@ namespace App\Http\Controllers\AppControllers;
 use App\Http\Controllers\Controller;
 use App\Models\AppModels\Settings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SettingsController extends Controller
 {
-    private $headName = 'Test Demo';
-    private $routeName = 'test-demos';
-    private $permissionName = 'Test Demo';
-    private $snakeName = 'test_demo';
+    private $headName = 'Settings';
+    private $routeName = 'settings';
+    private $permissionName = 'settings';
+    private $snakeName = 'settings';
 
 
     public function index()
     {
-        //
+        return view('backend.app_views.settings.model_settings')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                // 'testDemos' => $testDemos,
+            ]
+        );
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function modelSettings($model)
     {
-        //
+        $settings = Settings::where('model', decrypt($model))->get();
+        return view('backend.app_views.settings.model_settings')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'model' => decrypt($model),
+                'settings' => $settings,
+            ]
+        );
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function modelSettingsUpdate(Request $request)
     {
-        //
-    }
+        $rules = array_fill_keys(array_keys($request->all()), 'required');
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect()->back()->with(['errors' => $validator->errors()], 422);
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Settings $settings)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Settings $settings)
-    {
-        //
-    }
+        foreach ($request->keys() as $key) {
+            if ($key === '_token' || $key === '_method') {
+                continue; // Skip this iteration if the key is _token or _method
+            }
+            $record = Settings::where('name', $key)->first();
+            if ($record) {
+                $record->value = $request->$key;
+                $record->update();
+            }
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Settings $settings)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Settings $settings)
-    {
-        //
+        return redirect()->back()->with('message_store', value: 'Settings updated successfully!');
     }
 }

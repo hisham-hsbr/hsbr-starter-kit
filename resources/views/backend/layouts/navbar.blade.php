@@ -10,7 +10,20 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">Contact</a>
         </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="contactDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Quick Links
+            </a>
+            <div class="dropdown-menu" aria-labelledby="contactDropdown">
+                <a class="dropdown-item" href="#">Add Test Demos</a>
+                <a class="dropdown-item" href="#">Support</a>
+            </div>
+        </li>
     </ul>
+    {{-- <div class="text-end">
+        <div id="google_translate_element"></div>
+    </div> --}}
 
     <!-- Right navbar links -->
     <ul class="ml-auto navbar-nav">
@@ -24,7 +37,9 @@
                     <div class="input-group input-group-sm">
                         <input class="form-control form-control-navbar" type="search" placeholder="Search"
                             aria-label="Search">
+
                         <div class="input-group-append">
+
                             <button class="btn btn-navbar" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -125,6 +140,20 @@
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
         </li>
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span id="selectedLanguage">{{ App::getLocale() }}</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                <a class="dropdown-item" href="{{ route('change-locale', 'en') }}" data-lang="en">English</a>
+                <a class="dropdown-item" href="{{ route('change-locale', 'ml') }}" data-lang="ml">മലയാളം</a>
+                <a class="dropdown-item" href="{{ route('change-locale', 'hi') }}" data-lang="fr">हिंदी</a>
+                <a class="dropdown-item" href="{{ route('change-locale', 'ar') }}" data-lang="fr">عربي</a>
+            </div>
+        </div>
+
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                 {{-- <x-back-end.app.user-profile-image class="user-image img-circle elevation-2" /> --}}

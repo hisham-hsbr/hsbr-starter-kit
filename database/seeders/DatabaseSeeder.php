@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\AppModels\Activity;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,10 +15,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(DeveloperUserSeeder::class);
-        $this->call(PermissionSeeder::class);
-        $this->call(SettingsSeeder::class);
-        $this->call(TimeZoneSeeder::class);
-        $this->call(TestDemoSeeder::class);
+        // Globally disable activity logging
+        config(['activitylog.enabled' => false]);
+
+
+        // Run all seeders
+        $this->call([
+            DeveloperUserSeeder::class,
+            PermissionSeeder::class,
+            SettingsSeeder::class,
+            TimeZoneSeeder::class,
+            TestDemoSeeder::class,
+
+        ]);
+
+        // Re-enable logging
+        config(['activitylog.enabled' => true]);
     }
 }

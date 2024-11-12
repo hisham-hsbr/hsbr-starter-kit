@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Format Name</title>
+    </head>
+    <body>
+        <input type="text" id="nameInput" value="first_name" />
+        <button onclick="formatName()">Format Name</button>
+        <p id="formattedName"></p>
+
+        <script>
+            function formatName() {
+                const input = document.getElementById("nameInput").value;
+                const formattedName = input
+                    .split("_")
+                    .map(
+                        (word) =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                    )
+                    .join(" ");
+                document.getElementById("formattedName").textContent =
+                    formattedName;
+            }
+        </script>
+    </body>
+</html>

@@ -13,7 +13,41 @@
 <!-- jquery-validation -->
 <script src="{{ asset('backend/admin_lte/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('backend/admin_lte/plugins/jquery-validation/additional-methods.min.js') }}"></script>
+<!-- Select2 -->
+<script src="{{ asset('backend/admin_lte/plugins/select2/js/select2.full.min.js') }}"></script>
+<script>
+    $(function() {
 
+        //Initialize Select2 Elements
+        $('.select2').select2()
+    });
+</script>
+
+<script>
+    // Make sure to include jQuery and Select2 library in your project
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: 'Search...',
+            allowClear: true
+        });
+    });
+</script>
+
+<!-- Google Translate Script -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+                pageLanguage: "en"
+            },
+            "google_translate_element"
+        );
+    }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 
 <x-app.message.message />
 

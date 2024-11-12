@@ -41,5 +41,13 @@ class SettingsSeeder extends Seeder
         Settings::create(['name' => 'default_time_zone', 'model' => 'app', 'default_value' => '1', 'group' => 'default', 'parent' => 'default_value', 'default_by' => '1', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Settings::create(['name' => 'message_home_toolbar', 'model' => 'app', 'default_value' => 'welcome to my app', 'group' => 'message', 'parent' => 'default', 'default_by' => '1', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Settings::create(['name' => 'message_test', 'model' => 'app', 'default_value' => 'test message', 'group' => 'message', 'parent' => 'default', 'default_by' => '1', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+
+        // test demo model settings
+        Settings::create(attributes: ['name' => 'test_demo_view', 'model' => 'TestDemo', 'default_value' => 'plain', 'group' => 'model', 'parent' => 'test_demo', 'default_by' => '1', 'form_type' => 'text', 'form_data' => '', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+        Settings::create(['name' => 'test_demo_icon', 'model' => 'TestDemo', 'default_value' => 'fa-user', 'group' => 'model', 'parent' => 'test_demo', 'default_by' => '1', 'form_type' => 'text', 'form_data' => '', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+        Settings::create(['name' => 'test_demo_color', 'model' => 'TestDemo', 'default_value' => 'yellow', 'group' => 'model', 'parent' => 'test_demo', 'default_by' => '1', 'form_type' => 'text', 'form_data' => '', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+        // user model settings
+        Settings::create(['name' => 'user_icon', 'model' => 'user', 'default_value' => 'fa-user', 'group' => 'model', 'parent' => 'user', 'default_by' => '1', 'form_type' => 'text', 'form_data' => '', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+        Settings::create(['name' => 'user_color', 'model' => 'user', 'default_value' => 'yellow', 'group' => 'model', 'parent' => 'user', 'default_by' => '1', 'form_type' => 'text', 'form_data' => '', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
     }
 }

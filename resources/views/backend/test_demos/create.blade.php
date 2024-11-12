@@ -94,9 +94,9 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" class="float-right ml-1 btn btn-primary">Submit</button>
-                        <a type="button" href="{{ route($routeName . '.index') }}"
-                            class="float-right ml-1 btn btn-warning">Back</a>
+                        <button type="submit" id="saveButton" class="float-right ml-1 btn btn-primary"><u>S</u>ave</button>
+                        <a type="button" id="backButton" href="{{ route($routeName . '.index') }}"
+                            class="float-right ml-1 btn btn-warning"><u>B</u>ack</a>
                     </div>
                 </form>
             </div>
@@ -160,4 +160,16 @@
             });
         });
     </script>
+
+    <x-backend.script.keyboard-shortcut key="s" button_id="saveButton" type="ctrl&alt" event="click" />
+    <x-backend.script.keyboard-shortcut key="b" button_id="backButton" type="ctrl&alt" event="click" />
+
+    <x-backend.script.keyboard-shortcut key="c" button_id="name" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="n" button_id="contact_name" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="p" button_id="phone_1" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="d" button_id="default" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="a" button_id="status" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="m" button_id="test" type="ctrl&alt" event="focus" />
+
+
 @endsection

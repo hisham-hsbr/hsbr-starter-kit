@@ -6,7 +6,7 @@
     </script>
 @endif
 <!-- Button to open the modal with Font Awesome filter icon aligned to the right -->
-<div class="mb-3 text-right">
+<div class="mb-3">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalForm">Quick add</button>
 </div>
 <!-- Modal -->

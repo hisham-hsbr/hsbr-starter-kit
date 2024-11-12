@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Multiple Movable Windows with Minimize Area</title>
+        <link
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            .floating-window {
+                width: 300px;
+                height: 200px;
+                position: fixed;
+                top: 20%;
+                left: 20%;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                z-index: 1050;
+                cursor: move;
+                resize: both;
+                overflow: auto;
+            }
+
+            .floating-header {
+                background-color: #007bff;
+                color: #fff;
+                padding: 5px;
+                cursor: move;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .floating-content {
+                padding: 10px;
+            }
+
+            /* Minimized windows area */
+            #minimizedArea {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 40px;
+                background-color: #f0f0f0;
+                display: flex;
+                justify-content: start;
+                align-items: center;
+                padding: 5px;
+                border-top: 1px solid #ddd;
+            }
+
+            /* Style for minimized window icons */
+            .minimized-window {
+                width: 150px;
+                height: 30px;
+                margin-right: 5px;
+                overflow: hidden;
+                text-align: center;
+                line-height: 30px;
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <button class="btn btn-primary" onclick="createWindow()">
+                Open New Window
+            </button>
+        </div>
+
+        <!-- Minimized Windows Area -->
+        <div id="minimizedArea"></div>
+
+        <!-- JavaScript to handle window creation and behavior -->
+        <script>
+            let windowCounter = 0;
+
+            function createWindow() {
+                // Increment the counter to give each window a unique ID and label
+                windowCounter++;
+                const windowId = `floatingWindow${windowCounter}`;
+                const windowLabel = `Window ${windowCounter}`;
+
+                // Create the main floating window div
+                const windowDiv = document.createElement("div");
+                windowDiv.id = windowId;
+                windowDiv.className = "floating-window";
+                windowDiv.setAttribute("data-label", windowLabel); // Store label for minimized display
+                windowDiv.style.top = `${Math.random() * 50 + 10}%`;
+                windowDiv.style.left = `${Math.random() * 50 + 10}%`;
+
+                // Add header with title, minimize, and close buttons
+                windowDiv.innerHTML = `
+            <div class="floating-header" id="${windowId}Header">
+                <span>${windowLabel}</span>
+                <div>
+                    <button class="btn btn-sm btn-outline-light" onclick="minimizeWindow('${windowId}')">Minimize</button>
+                    <button class="btn btn-sm btn-outline-light" onclick="closeWindow('${windowId}')">Close</button>
+                </div>
+            </div>
+            <div class="floating-content">
+                <p>This is the content of ${windowLabel}.</p>
+                <button class="btn btn-info btn-sm" onclick="accessMainContent('${windowId}')">Access Main Window Content</button>
+                <p class="mt-2" id="${windowId}ContentDisplay"></p>
+            </div>
+        `;
+
+                document.body.appendChild(windowDiv);
+                makeWindowDraggable(windowId);
+            }
+
+            // Close the floating window
+            function closeWindow(windowId) {
+                const windowElement = document.getElementById(windowId);
+                windowElement.remove();
+                removeFromMinimizedArea(windowId);
+            }
+
+            // Minimize the floating window
+            function minimizeWindow(windowId) {
+                const windowElement = document.getElementById(windowId);
+                const minimizedArea = document.getElementById("minimizedArea");
+                const windowLabel = windowElement.getAttribute("data-label");
+
+                // Check if window is already minimized
+                if (windowElement.style.display === "none") {
+                    // Restore window and remove from minimized area
+                    windowElement.style.display = "block";
+                    const minimizedIcon = minimizedArea.querySelector(
+                        `#${windowId}Minimized`
+                    );
+                    minimizedIcon && minimizedIcon.remove();
+                } else {
+                    // Hide window and add an icon to the minimized area
+                    windowElement.style.display = "none";
+
+                    const minimizedDiv = document.createElement("div");
+                    minimizedDiv.id = `${windowId}Minimized`;
+                    minimizedDiv.className = "minimized-window";
+                    minimizedDiv.innerText = windowLabel;
+                    minimizedDiv.onclick = () => minimizeWindow(windowId);
+                    minimizedArea.appendChild(minimizedDiv);
+                }
+            }
+
+            // Remove from minimized area when closed
+            function removeFromMinimizedArea(windowId) {
+                const minimizedDiv = document.getElementById(
+                    `${windowId}Minimized`
+                );
+                if (minimizedDiv) minimizedDiv.remove();
+            }
+
+            // Access content from the main window
+            function accessMainContent(windowId) {
+                const mainContent = "Main window content accessed!";
+                document.getElementById(`${windowId}ContentDisplay`).innerText =
+                    "Main Content: " + mainContent;
+            }
+
+            // Make the window draggable
+            function makeWindowDraggable(windowId) {
+                const windowElement = document.getElementById(windowId);
+                const header = document.getElementById(`${windowId}Header`);
+                let offsetX = 0,
+                    offsetY = 0,
+                    mouseX = 0,
+                    mouseY = 0;
+
+                header.onmousedown = (e) => {
+                    e.preventDefault();
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+
+                    document.onmousemove = dragWindow;
+                    document.onmouseup = stopDrag;
+                };
+
+                function dragWindow(e) {
+                    e.preventDefault();
+                    offsetX = mouseX - e.clientX;
+                    offsetY = mouseY - e.clientY;
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+
+                    const newTop = windowElement.offsetTop - offsetY;
+                    const newLeft = windowElement.offsetLeft - offsetX;
+
+                    // Ensure window stays within viewport boundaries
+                    windowElement.style.top =
+                        Math.max(
+                            0,
+                            Math.min(
+                                newTop,
+                                window.innerHeight - windowElement.offsetHeight
+                            )
+                        ) + "px";
+                    windowElement.style.left =
+                        Math.max(
+                            0,
+                            Math.min(
+                                newLeft,
+                                window.innerWidth - windowElement.offsetWidth
+                            )
+                        ) + "px";
+                }
+
+                function stopDrag() {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                }
+            }
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>

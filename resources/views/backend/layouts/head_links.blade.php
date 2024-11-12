@@ -11,6 +11,10 @@
 <link rel="stylesheet" href="{{ asset('backend/admin_lte/plugins/toastr/toastr.min.css') }}">
 {{-- page Loader --}}
 <link rel="stylesheet" href="{{ asset('backend/pageloader/style.css') }}">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('backend/admin_lte/plugins/select2/css/select2.min.css') }}">
+<link rel="stylesheet"
+    href="{{ asset('backend/admin_lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
 
 

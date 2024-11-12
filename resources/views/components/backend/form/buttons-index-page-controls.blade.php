@@ -1,4 +1,4 @@
-@props(['routeName'])
+@props(['routeName', 'model'])
 <div class="btn-group">
     <button type="button" class="btn btn-info">Action</button>
     <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
@@ -26,8 +26,8 @@
         </a>
 
         <!-- Settings Button -->
-        <a href="{{ route($routeName . '.create') }}" class="btn btn-block btn-outline-secondary btn-xs"><i
-                class="fas fa-cog"></i> Settings </a>
+        <a href="{{ route('settings.model.settings', encrypt($model)) }}"
+            class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-cog"></i> Settings </a>
 
         <!-- Refresh Button -->
         <a onclick="Refresh()" class="btn btn-block btn-outline-warning btn-xs"><i class="fas fa-sync-alt"></i> Refresh

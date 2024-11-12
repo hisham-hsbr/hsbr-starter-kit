@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Application Settings</title>
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        />
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1 class="text-center">Application Settings</h1>
+
+            <!-- Profile Settings -->
+            <div class="card mt-4">
+                <div class="card-header">Profile Settings</div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="username"
+                                placeholder="Enter username"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                placeholder="Enter email"
+                            />
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Save Changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Account Preferences -->
+            <div class="card mt-4">
+                <div class="card-header">Account Preferences</div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="language">Language</label>
+                            <select class="form-control" id="language">
+                                <option>English</option>
+                                <option>Spanish</option>
+                                <option>French</option>
+                                <option>German</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="timezone">Timezone</label>
+                            <select class="form-control" id="timezone">
+                                <option>GMT</option>
+                                <option>EST</option>
+                                <option>PST</option>
+                                <option>CST</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Save Preferences
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="card mt-4">
+                <div class="card-header">Notification Settings</div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="emailNotifications"
+                            />
+                            <label
+                                class="form-check-label"
+                                for="emailNotifications"
+                                >Email Notifications</label
+                            >
+                        </div>
+                        <div class="form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="smsNotifications"
+                            />
+                            <label
+                                class="form-check-label"
+                                for="smsNotifications"
+                                >SMS Notifications</label
+                            >
+                        </div>
+                        <div class="form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="pushNotifications"
+                            />
+                            <label
+                                class="form-check-label"
+                                for="pushNotifications"
+                                >Push Notifications</label
+                            >
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">
+                            Save Notifications
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Privacy Settings -->
+            <div class="card mt-4">
+                <div class="card-header">Privacy Settings</div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="profileVisibility"
+                            />
+                            <label
+                                class="form-check-label"
+                                for="profileVisibility"
+                                >Make Profile Public</label
+                            >
+                        </div>
+                        <div class="form-check">
+                            <input
+                                type="checkbox"
+                                class="form-check-input"
+                                id="dataSharing"
+                            />
+                            <label class="form-check-label" for="dataSharing"
+                                >Share Data with Third Parties</label
+                            >
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">
+                            Save Privacy Settings
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Security Settings -->
+            <div class="card mt-4">
+                <div class="card-header">Security Settings</div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="password">Change Password</label>
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                placeholder="Enter new password"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="twoFactorAuth"
+                                >Enable Two-Factor Authentication</label
+                            >
+                            <select class="form-control" id="twoFactorAuth">
+                                <option>Off</option>
+                                <option>On</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Update Security
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Theme Customization -->
+            <div class="card mt-4">
+                <div class="card-header">Theme Customization</div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="themeColor">Theme Color</label>
+                            <select class="form-control" id="themeColor">
+                                <option>Light</option>
+                                <option>Dark</option>
+                                <option>Blue</option>
+                                <option>Green</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Save Theme Settings
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Connected Accounts -->
+            <div class="card mt-4">
+                <div class="card-header">Connected Accounts</div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="facebookConnect">Facebook</label>
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-sm"
+                            >
+                                Connect
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="googleConnect">Google</label>
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-sm"
+                            >
+                                Connect
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label for="twitterConnect">Twitter</label>
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-sm"
+                            >
+                                Connect
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>

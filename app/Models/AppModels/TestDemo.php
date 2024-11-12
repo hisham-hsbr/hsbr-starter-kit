@@ -10,10 +10,12 @@ use App\Casts\StatusIconCast;
 use App\Casts\TimeZoneCast;
 use App\Casts\TitleCast;
 use App\Casts\UserNameCast;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class TestDemo extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, LogsActivity;
     protected $fillable = [
         'name',
         'status',
@@ -33,5 +35,15 @@ class TestDemo extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 1);
+    }
+    public function getActivitylogOptions(): LogOptions
+    {
+        $useLogName = 'TestDemo';
+        return LogOptions::defaults()
+            ->logOnly(['code', 'name', 'local_name', 'description', 'default', 'status'])
+            // ->logOnly(['code', 'name', 'local_name', 'description', 'default', 'status', 'created_at', 'updated_at', 'deleted_at'])
+            ->setDescriptionForEvent(fn(string $eventName) => "$useLogName {$eventName}")
+            ->useLogName($useLogName)
+            ->logOnlyDirty();
     }
 }

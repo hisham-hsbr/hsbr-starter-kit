@@ -18,10 +18,13 @@ return new class extends Migration
             $table->string('model');
             $table->text('data')->nullable();
             $table->string('default_value');
+            $table->string('value')->nullable();
             $table->string('type')->nullable();
             $table->string('group')->nullable();
             $table->string('parent')->nullable();
             $table->string('default_by')->nullable();
+            $table->string('form_type')->nullable();
+            $table->string('form_data')->nullable();
 
             // default
             $table->string('description')->nullable();

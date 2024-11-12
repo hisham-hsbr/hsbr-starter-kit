@@ -5,16 +5,20 @@ namespace App\Http\Controllers\AppControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppRequests\StoreAndUpdateTestDemoRequest;
 use App\Models\AppModels\TestDemo;
+use App\Models\AppModels\Activity;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class TestDemoController extends Controller
 {
-    private $headName = 'Test Demo';
+    private $headName = 'Test Demos';
     private $routeName = 'test-demos';
     private $permissionName = 'Test Demo';
     private $snakeName = 'test_demo';
+    private $camelCase = 'testDemo';
+    private $model = 'TestDemo';
 
 
     public function index()
@@ -45,6 +49,7 @@ class TestDemoController extends Controller
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
                 'permissionName' => $this->permissionName,
+                'model' => $this->model,
                 'testDemos' => $testDemos,
                 'defaultCount' => $defaultCount,
                 'createdByUsers' => $createdByUsers,
@@ -179,25 +184,102 @@ class TestDemoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TestDemo $testDemo)
+    public function show($testDemo)
     {
-        //
+
+
+        $testDemo = TestDemo::withTrashed()->find(decrypt($testDemo));
+        $activityLog = Activity::where('subject_id', $testDemo->id)
+            ->where('subject_type', 'App\Models\AppModels\TestDemo')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('backend.test_demos.show')->with(
+            [
+                'testDemo' => $testDemo,
+                'activityLog' => $activityLog,
+                'camelCase' => $this->camelCase,
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+            ]
+        );
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TestDemo $testDemo)
+    public function edit($testDemo)
     {
-        //
+        $testDemo = TestDemo::withTrashed()->find(decrypt($testDemo));
+
+        return view('backend.test_demos.edit')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'testDemo' => $testDemo
+            ]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TestDemo $testDemo)
+    public function update(StoreAndUpdateTestDemoRequest $request, $id)
     {
-        //
+
+        $id = decrypt($id);
+        $testDemo = TestDemo::withTrashed()->find($id);
+
+        $testDemo->code  = $request->code;
+        $testDemo->name = $request->name;
+        $testDemo->local_name = $request->local_name;
+        $testDemo->description = $request->description;
+
+
+        // Handle default value
+        if ($request->default == 1) {
+            // Set all other entries to null for default
+            TestDemo::withTrashed()->where('default', 1)->update(['default' => null]);
+            $testDemo->default = 1;
+        } else {
+            $testDemo->default = 0;
+        }
+
+
+
+        if ($request->status == 0) {
+            $testDemo->status == 0;
+        } else {
+
+            $testDemo->status = $request->status;
+        }
+
+
+        $testDemo->updated_by = Auth::user()->id;
+        $testDemo->save();
+        // dd($testDemo);
+
+        // Check for default count consistency
+        $defaultCount = TestDemo::withTrashed()->where('default', 1)->count();
+        $message_error = null;
+        $message_warning = null;
+
+        if ($defaultCount > 1) {
+            $message_error = "Default Count is more than " . $defaultCount;
+        } elseif ($defaultCount == 0) {
+            TestDemo::where('status', 1)->limit(1)->update(['default' => 1]);
+            $message_warning = "Default value Automatic Selected first Active One";
+        }
+
+        return redirect()->route('test-demos.index')->with(
+            [
+                'message_store' => 'TestDemo Updated Successfully',
+                'message_error' => $message_error,
+                'message_warning' => $message_warning,
+            ]
+        );
     }
 
     /**
@@ -248,5 +330,19 @@ class TestDemoController extends Controller
                 'message_update' => 'TestDemo Restored Successfully'
             ]
         );
+    }
+
+    public function testDemosPDF($id)
+    {
+        $id = decrypt($id);
+        $testDemo = TestDemo::withTrashed()->find($id);
+        $pdf_name = 'Job Number TF-';
+        $data = [
+            'testDemo' => $testDemo,
+        ];
+        // return view('back_end.fixancare.services.generate_pdf.blade',compact('services','products','job_types','job_statuses','work_statuses','complaints'));
+
+        $pdf = Pdf::loadView('backend.test_demos.pdf', $data)->setPaper('a4', 'portrait')->setWarnings(false);
+        return $pdf->download(filename: $pdf_name . '.pdf');
     }
 }

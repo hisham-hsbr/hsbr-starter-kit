@@ -1,6 +1,6 @@
 @props(['createdByUsers', 'updatedByUsers'])
 
-<div id="filteredData" class="callout callout-info" style="display: none;">
+<div id="filteredData" class="callout callout-info" style="display: none;margin-top: 5px;">
     <h5>Filter Applyed For!</h5>
 
     <p>
