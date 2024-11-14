@@ -4,12 +4,16 @@ namespace App\Http\Controllers\AppControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppRequests\StoreAndUpdateTestDemoRequest;
+use App\Imports\TestDemosImport;
 use App\Models\AppModels\TestDemo;
 use App\Models\AppModels\Activity;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class TestDemoController extends Controller
 {
@@ -42,6 +46,7 @@ class TestDemoController extends Controller
             $message_error = "Please set a Default value";
             session()->flash('message_error', $message_error);
         }
+
 
 
         return view('backend.test_demos.index')->with(
@@ -140,11 +145,6 @@ class TestDemoController extends Controller
             ->toJson();
     }
 
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreAndUpdateTestDemoRequest $request)
     {
 
@@ -176,14 +176,69 @@ class TestDemoController extends Controller
 
         return redirect()->back()->with(
             [
-                'message_store' => 'TestDemo Created Successfully'
+                'message_success' => 'TestDemo Created Successfully'
             ]
         );
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function testDemosExcelImport()
+    {
+        return view('backend.test_demos.import')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+            ]
+        );
+    }
+
+    public function testDemosExcelSampleDownload()
+    {
+        $path = public_path('downloads/sample_excels/test_demos_import_sample.xlsx');
+        return response()->download($path);
+    }
+
+
+
+
+    public function testDemosExcelUpload(Request $request)
+    {
+        $tableData = json_decode($request->input('table_data'), true);
+        $validationErrors = [];
+
+        foreach ($tableData as $index => $row) {
+            $validator = Validator::make($row, [
+                'code' => 'required|unique:test_demos,code',
+                'name' => 'required',
+                'status' => ['required', 'in:0,1'],
+            ]);
+
+            if ($validator->fails()) {
+                foreach ($validator->errors()->messages() as $field => $messages) {
+                    $validationErrors["{$index}.{$field}"] = $messages;
+                }
+            }
+        }
+
+        if (!empty($validationErrors)) {
+            return response()->json(['message_errors' => $validationErrors], 422);
+        }
+
+        // Create each row, 'created_by' and 'updated_by' are automatically set
+        foreach ($tableData as $row) {
+            TestDemo::create($row);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message_success' => 'Data imported successfully.',
+            'redirect_url' => route('test-demos.index')
+        ]);
+    }
+
     public function show($testDemo)
     {
 
@@ -258,7 +313,7 @@ class TestDemoController extends Controller
 
 
         $testDemo->updated_by = Auth::user()->id;
-        $testDemo->save();
+        $testDemo->update();
         // dd($testDemo);
 
         // Check for default count consistency
@@ -275,7 +330,7 @@ class TestDemoController extends Controller
 
         return redirect()->route('test-demos.index')->with(
             [
-                'message_store' => 'TestDemo Updated Successfully',
+                'message_success' => 'TestDemo Updated Successfully',
                 'message_error' => $message_error,
                 'message_warning' => $message_warning,
             ]

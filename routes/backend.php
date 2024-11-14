@@ -36,27 +36,30 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
         Route::post('/excel-upload', 'testDemosExcelUpload')->name('upload'); //->middleware('permission:Test Demo Excel Import');
         Route::get('/excel-sample-download', 'testDemosExcelSampleDownload')->name('download'); //->middleware('permission:Test Demo Excel Import');
 
+        Route::post('/excel-check-unique', 'checkUnique')->name('checkUnique'); //->middleware('permission:Test Demo Excel Import');
+
         // Route::get(uri: '/demo1', 'demo')->name('demo1');
         Route::get('/demo', 'demo')->name('demo');
         Route::get('/check', 'check')->name('check');
     });
+    // Route::post('/test-demos/check-unique', [TestDemoController::class, 'checkUnique'])->name('test-demos.checkUnique');
 
     //user
-    Route::controller('App\Http\Controllers\AppControllers\UserController')->prefix('/admin/users')->name('users.')->group(function () {
+    Route::controller('App\Http\Controllers\AppControllers\UserController')->prefix('/admin/user-management/users')->name('users.')->group(function () {
         Route::get('/', 'index')->name('index'); //->middleware('permission:User Read');
         Route::get('/create', 'create')->name('create'); //->middleware('permission:User Read');
         Route::post('/store', 'store')->name('store'); //->middleware('permission:User Read');
         Route::get('/edit/{id}', 'edit')->name('edit'); //->middleware('permission:User Read');
         Route::patch('/update/{id}', 'update')->name('update'); //->middleware('permission:User Read');
-        Route::get('/get', 'testDemosGet')->name('get'); //->middleware('permission:User Read');
+        Route::get('/get', 'usersGet')->name('get'); //->middleware('permission:User Read');
         Route::get('/show/{id}', 'show')->name('show'); //->middleware('permission:User Read');
         Route::delete('/destroys/{id}', 'destroy')->name('destroy'); //->middleware('permission:User Read');
         Route::delete('/force-destroy/{id}', 'forceDestroy')->name('force.destroy'); //->middleware('permission:User Read');
         Route::get('/restore/{id}', 'restore')->name('restore'); //->middleware('permission:User Read');
-        Route::get('/pdf/{id}', 'testDemosPDF')->name('pdf'); //->middleware('permission:User Read');
-        Route::get('/excel-import', 'testDemosExcelImport')->name('import'); //->middleware('permission:User Excel Import');
-        Route::post('/excel-upload', 'testDemosExcelUpload')->name('upload'); //->middleware('permission:User Excel Import');
-        Route::get('/excel-sample-download', 'testDemosExcelSampleDownload')->name('download'); //->middleware('permission:User Excel Import');
+        Route::get('/pdf/{id}', 'usersPDF')->name('pdf'); //->middleware('permission:User Read');
+        Route::get('/excel-import', 'usersExcelImport')->name('import'); //->middleware('permission:User Excel Import');
+        Route::post('/excel-upload', 'usersExcelUpload')->name('upload'); //->middleware('permission:User Excel Import');
+        Route::get('/excel-sample-download', 'usersExcelSampleDownload')->name('download'); //->middleware('permission:User Excel Import');
 
         // Route::get(uri: '/demo1', 'demo')->name('demo1');
         Route::get('/demo', 'demo')->name('demo');

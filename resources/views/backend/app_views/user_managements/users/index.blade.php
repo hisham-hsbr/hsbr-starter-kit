@@ -1,119 +1,107 @@
 @extends('backend.layouts.app')
-@section('page_head', 'Dashboard')
-@section('head_links')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
-
-@endsection
 @section('page_title')
-    <x-backend.layout_partials.page-title pageTitle="Test Demo" />
+    {{ $headName }} | Index
 @endsection
-@section('page_breadcrumb')
-    <x-backend.layout_partials.page-breadcrumb activePage="Test Demo">
-        <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}" />
-    </x-backend.layout_partials.page-breadcrumb>
+@section('page_header_name')
+    {{ $headName }} - Index
+@endsection
+@section('head_links')
+    <x-backend.links.datatable-head-links />
+@endsection
+@section('breadcrumbs')
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}"
+        :active="false" />
+    <x-backend.layout_partials.page-breadcrumb-item pageName="{{ $headName }}"
+        pageHref="{{ route($routeName . '.index') }}" :active="false" />
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Index" pageHref="" :active="true" />
 @endsection
 
 @section('main_content')
-    <div class="row">
-        <div class="col-lg-12">
-            <x-backend.layout_partials.page-card cardHeader="Test Demo" cardSubHeader="Index">
-                <h2>Users List with Filters</h2>
+    <x-backend.layout_partials.card cardTitle="" cardFooter="">
 
-                <!-- Filter Section -->
-                <div class="mb-4 row">
-                    <div class="col-md-4">
-                        <input type="text" id="filter_name" class="form-control" placeholder="Search by Name">
-                    </div>
-                    <div class="col-md-4">
-                        <input type="text" id="filter_email" class="form-control" placeholder="Search by Email">
-                    </div>
-                    <div class="col-md-4">
-                        <button type="button" id="btnFilter" class="btn btn-primary">Filter</button>
-                        <button type="button" id="btnReset" class="btn btn-secondary">Reset</button>
-                    </div>
-                </div>
+        <x-backend.model.index-page-info-model model_title="Test Demo Index" />
+        <x-backend.form.buttons-index-page-controls :routeName="$routeName" :model='$model' />
+        <x-backend.model.test-demo-filter-model :createdByUsers="$createdByUsers" :updatedByUsers="$updatedByUsers" />
+        <x-backend.model.create-test-demo-model />
+        @can('{{ $permissionName }} Read')
+            <table id="example1" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        @can('{{ $permissionName }} Read')
+                            <th>Sn</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Action')
+                            <th width="20%">Action</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Name')
+                            <th width="20%">Name</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Email')
+                            <th width="20%">Email</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Status')
+                            <th width="10%">Status</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Created At')
+                            <th width="20%">Created At</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Updated At')
+                            <th width="20%">Updated At</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Created By')
+                            <th width="20%">Created By</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Updated By')
+                            <th width="20%">Updated By</th>
+                        @endcan
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- data --}}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        @can('{{ $permissionName }} Read')
+                            <th>Sn</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Action')
+                            <th width="20%">Action</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Name')
+                            <th width="20%">Name</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Email')
+                            <th width="20%">Email</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Status')
+                            <th width="10%">Status</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Created At')
+                            <th width="20%">Created At</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Updated At')
+                            <th width="20%">Updated At</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Created By')
+                            <th width="20%">Created By</th>
+                        @endcan
+                        @can('{{ $permissionName }} Read Updated By')
+                            <th width="20%">Updated By</th>
+                        @endcan
+                    </tr>
+                </tfoot>
+            </table>
+        @endcan
 
-                <!-- DataTable -->
-                <table class="table table-bordered yajra-datatable">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Created At</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </x-backend.layout_partials.page-card>
-        </div>
-
-    </div>
+    </x-backend.layout_partials.card>
 @endsection
+
 @section('footer_links')
+    <x-backend.links.datatable-footer-links />
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+    <x-backend.script.datatable-update />
+    <x-backend.script.delete-confirmation />
+    <x-backend.script.force-delete-confirmation />
 
-    <script type="text/javascript">
-        $(function() {
-            // Initialize DataTable
-            var table = $('.yajra-datatable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: "{{ route('users.get') }}",
-                    data: function(d) {
-                        d.name = $('#filter_name').val();
-                        d.email = $('#filter_email').val();
-                    }
-                },
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
-                    },
-                    {
-                        data: 'name',
-                        name: 'name'
-                    },
-                    {
-                        data: 'email',
-                        name: 'email'
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'created_at'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
-                ],
-                dom: 'Bfrtip',
-                buttons: [
-                    'copy', 'csv', 'excel', 'pdf', 'print'
-                ]
-            });
-
-            // Filter button click event
-            $('#btnFilter').click(function() {
-                table.draw();
-            });
-
-            // Reset button click event
-            $('#btnReset').click(function() {
-                $('#filter_name').val('');
-                $('#filter_email').val('');
-                table.draw();
-            });
-        });
-    </script>
+    <x-backend.table-script.users-table-script />
 @endsection

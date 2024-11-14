@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             TimeZoneSeeder::class,
             TestDemoSeeder::class,
 
+
+            UpdateDataSeeder::class,
         ]);
 
         // Re-enable logging

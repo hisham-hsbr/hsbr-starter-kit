@@ -21,7 +21,7 @@
         </a>
 
         <!-- Import Button -->
-        <a href="{{ route($routeName . '.create') }}" class="btn btn-block btn-outline-info btn-xs"><i
+        <a href="{{ route($routeName . '.import') }}" class="btn btn-block btn-outline-info btn-xs"><i
                 class="fas fa-file-import"></i> Import
         </a>
 

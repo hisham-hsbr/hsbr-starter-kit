@@ -12,37 +12,80 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private $headName = 'Users';
+    private $routeName = 'users';
+    private $permissionName = 'User';
+    private $snakeName = 'user';
+    private $camelCase = 'user';
+    private $model = 'User';
     public function index()
     {
+        $users = User::withTrashed()->get();
+        $createdByUsers = $users->sortBy('created_by')->pluck('created_by')->unique();
+        $updatedByUsers = $users->sortBy('updated_by')->pluck('updated_by')->unique();
         return view('backend.app_views.user_managements.users.index')->with(
-            []
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+
+                'createdByUsers' => $createdByUsers,
+                'updatedByUsers' => $updatedByUsers,
+            ]
         );
     }
-    public function getUsers(Request $request)
+    public function usersGet(Request $request)
     {
-        $query = User::query();
+        $defaultCount = User::withTrashed()->where('default', 1)->count();
+        $users = User::withTrashed()->get();
 
-        // Apply filters based on request inputs
-        if ($request->has('name') && !empty($request->name)) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
 
-        if ($request->has('email') && !empty($request->email)) {
-            $query->where('email', 'like', '%' . $request->email . '%');
-        }
-
-        return DataTables::of($query)
-            ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Edit</a>';
-                $btn .= '<a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
-                return $btn;
+        return Datatables::of($users)
+            ->setRowId(function ($user) {
+                return $user->id;
             })
-            ->rawColumns(['action'])
-            ->make(true);
+
+            // Add row class based on condition
+            ->setRowClass(function ($user) use ($defaultCount) {
+                return ($defaultCount > 1 && $user->default == 1) ? 'text-danger' : '';
+            })
+            ->addIndexColumn()
+            ->addColumn('action', function (User $user) {
+
+                $action = '
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info">Action</button>
+                        <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown"></button>
+                        <div class="dropdown-menu" role="menu">
+                            <a href="' . route('test-demos.show', encrypt($user->id)) . '" class="ml-2" title="View Details"><i class="fa-solid fa fa-eye text-success"></i></a>
+                            <a href="' . route('test-demos.pdf', encrypt($user->id)) . '" class="ml-2" title="View PDF"><i class="fa-solid fa-file-pdf"></i></a>
+                            <a href="' . route('test-demos.edit', encrypt($user->id)) . '" class="ml-2" title="Edit"><i class="fa-solid fa-edit text-warning"></i></a>';
+                if ($user->deleted_at == null) {
+                    $action .= '
+                    <button class="mb-1 btn btn-link delete-item_delete" data-item_delete_id="' . encrypt($user->id) . '" data-value="' . $user->name . '" data-default="' . $user->default . '" type="submit" title="Soft Delete"><i class="fa-solid fa-eraser text-danger"></i></button>';
+                }
+
+                $action .= '
+                            <button class="mb-1 btn btn-link delete-item_delete_force" data-item_delete_force_id="' . encrypt($user->id) . '" data-value="' . $user->name . '" data-default="' . $user->default . '" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" type="submit" title="Hard Delete"><i class="fa-solid fa-trash-can text-danger"></i></button>';
+
+                if ($user->deleted_at) {
+                    $action .= '<a href="' . route('test-demos.restore', encrypt($user->id)) . '" class="" title="Restore"><i class="fa-solid fa-trash-arrow-up"></i></a>';
+                }
+
+                $action .= '
+                        </div>
+                    </div>
+                ';
+
+                return $action;
+            })
+
+
+            ->rawColumns(['action', 'status_with_icon'])
+            ->toJson();
     }
 
     /**

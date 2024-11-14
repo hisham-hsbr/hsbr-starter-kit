@@ -1,5 +1,5 @@
 {{--
-test-demos
+users
 --}}
 <script>
     $(document).ready(function() {
@@ -9,7 +9,7 @@ test-demos
             scrollY: '80vh',
             scrollX: true,
             scrollCollapse: true,
-            ajax: "{{ route('test-demos.get') }}", // Route for your data source
+            ajax: "{{ route('users.get') }}", // Route for your data source
             columns: [
                 @can('{{ $permissionName }} Read')
                     {
@@ -27,14 +27,6 @@ test-demos
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Code')
-                    {
-                        data: 'code',
-                        name: 'code',
-                        width: '100%',
-                        defaultContent: ''
-                    },
-                @endcan
                 @can('{{ $permissionName }} Read Name')
                     {
                         data: 'name',
@@ -43,10 +35,10 @@ test-demos
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Local Name')
+                @can('{{ $permissionName }} Read Email')
                     {
-                        data: 'local_name',
-                        name: 'local_name',
+                        data: 'email',
+                        name: 'email',
                         width: '100%',
                         defaultContent: ''
                     },
@@ -61,32 +53,32 @@ test-demos
                 @endcan
                 @can('{{ $permissionName }} Read Created At')
                     {
-                        data: 'created_at',
-                        name: 'created_at',
+                        data: 'created_at_formatted',
+                        name: 'created_at_formatted',
                         width: '100%',
                         defaultContent: ''
                     },
                 @endcan
                 @can('{{ $permissionName }} Read Updated At')
                     {
-                        data: 'updated_at',
-                        name: 'updated_at',
+                        data: 'updated_at_formatted',
+                        name: 'updated_at_formatted',
                         width: '100%',
                         defaultContent: ''
                     },
                 @endcan
                 @can('{{ $permissionName }} Read Created By')
                     {
-                        data: 'created_by',
-                        name: 'created_by',
+                        data: 'created_by_name',
+                        name: 'created_by_name',
                         width: '100%',
                         defaultContent: '',
                     },
                 @endcan
                 @can('{{ $permissionName }} Read Updated By')
                     {
-                        data: 'updated_by',
-                        name: 'updated_by',
+                        data: 'updated_by_name',
+                        name: 'updated_by_name',
                         width: '100%',
                         defaultContent: '',
                         orderable: false,
@@ -119,7 +111,7 @@ test-demos
                             "X-CSRF-TOKEN": $("input[name='_token']").val()
                         });
 
-                        fetch("{{ route('test-demos.destroy', '') }}/" + itemID, {
+                        fetch("{{ route('users.destroy', '') }}/" + itemID, {
                             method: 'DELETE',
                             headers: myHeaders,
                         }).then(function(response) {
@@ -197,7 +189,7 @@ test-demos
                             "X-CSRF-TOKEN": $("input[name='_token']").val()
                         });
 
-                        fetch("{{ route('test-demos.force.destroy', '') }}/" +
+                        fetch("{{ route('users.force.destroy', '') }}/" +
                                 itemID, {
                                     method: 'DELETE',
                                     headers: myHeaders,

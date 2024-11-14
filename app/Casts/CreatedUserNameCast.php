@@ -6,7 +6,7 @@ use App\Models\AppModels\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
-class UserNameCast implements CastsAttributes
+class CreatedUserNameCast implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -15,7 +15,7 @@ class UserNameCast implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        // $value = $attributes['created_by'];
+        $value = $attributes['created_by'];
         $user = User::find($value);
         return $user ? $user->name : null;
     }

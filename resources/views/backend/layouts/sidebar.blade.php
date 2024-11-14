@@ -44,33 +44,11 @@
                     active="{{ request()->is('admin/dashboard') ? 'active' : '' }}" :angleLeft="false" navBadge=""
                     href="{{ route('backend.dashboard') }}" navBadgeClass="" navIcon="fas fa-home" />
 
+                <x-backend.sidebar.sidebar-nav-header navHeader="User Management" />
 
-                <x-backend.sidebar.sidebar-level-single navTitle="Admin"
-                    menu_open="{{ request()->is('admin/dashboard/*') ? 'menu-open' : '' }}"
-                    active="{{ request()->is('admin/dashboard/*') ? 'active' : '' }}" :angleLeft="true" navBadge=""
-                    navBadgeClass="" navIcon="fas fa-users">
-                    <x-backend.sidebar.sidebar-level-multi navTitle="Two"
-                        menu_open="{{ request()->is('admin/dashboard') ? 'menu-open' : '' }}"
-                        active="{{ request()->is('admin/dashboard') ? 'active' : '' }}" :angleLeft="true" navBadge=""
-                        navBadgeClass="" navIcon="fas fa-bolt">
-                        <x-backend.sidebar.sidebar-level-multi navTitle="Three" :active="true" :angleLeft="true"
-                            navBadge="" navBadgeClass="" navIcon="fas fa-bowling-ball">
-                            <x-backend.sidebar.sidebar-level-multi navTitle="Four" :angleLeft="true" navBadge=""
-                                navBadgeClass="" navIcon="fas fa-bookmark">
-                                <x-backend.sidebar.sidebar-level-multi navTitle="Five" :angleLeft="true" navBadge=""
-                                    navBadgeClass="" navIcon="fas fa-prescription-bottle">
-                                    <x-backend.sidebar.sidebar-level-multi navTitle="Six" :angleLeft="true"
-                                        navBadge="" navBadgeClass="" navIcon="fas fa-prescription-bottle">
-                                        <x-backend.sidebar.sidebar-level-multi navTitle="Seven" :angleLeft="false"
-                                            navBadge="" navBadgeClass="" navIcon="fas fa-prescription-bottle">
-                                        </x-backend.sidebar.sidebar-level-multi>
-                                    </x-backend.sidebar.sidebar-level-multi>
-                                </x-backend.sidebar.sidebar-level-multi>
-                            </x-backend.sidebar.sidebar-level-multi>
-                        </x-backend.sidebar.sidebar-level-multi>
-                    </x-backend.sidebar.sidebar-level-multi>
-                </x-backend.sidebar.sidebar-level-single>
 
+
+                <x-backend.sidebar.sidebar_partials.user-management-menu />
                 <x-backend.sidebar.sidebar_partials.test-menu />
 
 

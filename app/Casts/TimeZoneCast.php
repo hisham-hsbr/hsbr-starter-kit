@@ -29,7 +29,8 @@ class TimeZoneCast implements CastsAttributes
         }
 
         $user = Auth::user();
-        $userTimeZone =  $user->time_zone;
+        // $userTimeZone =  $user->time_zone;
+        $userTimeZone = $user && $user->timeZone ? $user->timeZone->time_zone : 'UTC'; // Default to 'UTC' or any other fallback
 
         $timeZone = $userTimeZone;
 

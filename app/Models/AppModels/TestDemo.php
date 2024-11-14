@@ -12,13 +12,20 @@ use App\Casts\TitleCast;
 use App\Casts\UserNameCast;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Auth;
 
 class TestDemo extends Model
 {
     use HasFactory, SoftDeletes, LogsActivity;
     protected $fillable = [
+        'code',
         'name',
+        'local_name',
+        'description',
+        'edit_description',
         'status',
+        'created_by',
+        'updated_by',
     ];
     protected $casts = [
         'created_at' => TimeZoneCast::class,
@@ -45,5 +52,16 @@ class TestDemo extends Model
             ->setDescriptionForEvent(fn(string $eventName) => "$useLogName {$eventName}")
             ->useLogName($useLogName)
             ->logOnlyDirty();
+    }
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            $model->created_by = Auth::id();
+            $model->updated_by = Auth::id();
+        });
+
+        static::updating(function ($model) {
+            $model->updated_by = Auth::id();
+        });
     }
 }
