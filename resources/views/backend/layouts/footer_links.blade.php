@@ -22,7 +22,6 @@
         $('.select2').select2()
     });
 </script>
-
 <script>
     // Make sure to include jQuery and Select2 library in your project
     $(document).ready(function() {
@@ -47,8 +46,36 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
 
-</body>
 
 <x-app.message.message />
 
+
+
+{{-- page loading --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var spinnerOverlay = document.getElementById('spinner-overlay');
+        spinnerOverlay.classList.remove('d-none');
+
+        window.addEventListener('load', function() {
+            spinnerOverlay.classList.add('d-none');
+        });
+    });
+</script>
+
+{{-- page loadingAJAX Loading --}}
+<script>
+    $(document).ready(function() {
+        $(document).ajaxStart(function() {
+            setTimeout(function() {
+                $('#spinner-overlay').removeClass('d-none');
+            }, 100); // 100ms delay to ensure spinner visibility
+        }).ajaxStop(function() {
+            $('#spinner-overlay').addClass('d-none');
+        });
+    });
+</script>
+
+
 @yield('footer_links')
+</body>

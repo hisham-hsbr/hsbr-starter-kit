@@ -156,21 +156,21 @@
 
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                {{-- <x-back-end.app.user-profile-image class="user-image img-circle elevation-2" /> --}}
+                <x-app.user-profile-image class="user-image img-circle elevation-2" />
                 <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                 <i class="fa-solid fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <!-- User image -->
                 <li class="user-header bg-primary">
-                    {{-- <x-back-end.app.user-profile-image class="img-circle elevation-2" /> --}}
+                    <x-app.user-profile-image class="img-circle elevation-2" />
                     <p>
                         {{ Auth::user()->name }} {{ Auth::user()->last_name }}
                         <small>{{ Auth::user()->email }}</small>
                         <small>
                             Time-Zone :
-                            {{-- {{ Auth::user()->timeZone->time_zone }} --}}
-                            {{-- ({{ Auth::user()->timeZone->utc_code }}) --}}
+                            {{ Auth::user()->timeZone->time_zone }}
+                            ({{ Auth::user()->timeZone->utc_code }})
                         </small>
                     </p>
                 </li>

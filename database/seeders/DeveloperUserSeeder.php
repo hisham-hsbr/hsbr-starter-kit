@@ -20,6 +20,7 @@ class DeveloperUserSeeder extends Seeder
             'email' => 'hisham@hsbr.app',
             'email_verified_at' => '2000-12-1',
             'password' => bcrypt(value: 'hsbr@gmail.com'),
+            'gender' => 'male',
             'created_by' => '1',
             'updated_by' => '1',
             'status' => '1'

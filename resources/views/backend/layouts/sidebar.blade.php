@@ -1,15 +1,18 @@
 <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
-        <img src="{{ asset('backend/admin_lte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+    <a href="/" class="brand-link">
+        <img src="{{ asset('/storage/images/app/logo/hsbr_logo_icon.png') }}" alt="HSBR Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <img src="{{ asset('/storage/images/app/logo/hsbr_logo_name_w.png') }}"
+            style="width: 40%; height: 40%; object-fit: cover;" />
+
+        {{-- <span class="brand-text font-weight-light">HSBR-Apps</span> --}}
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user (optional) -->
-        <div class="pb-3 mt-3 mb-3 user-panel d-flex">
+        {{-- <div class="pb-3 mt-3 mb-3 user-panel d-flex">
             <div class="image">
                 <img src="{{ asset('backend/admin_lte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
                     alt="User Image">
@@ -17,10 +20,10 @@
             <div class="info">
                 <a href="#" class="d-block">Alexander Pierce</a>
             </div>
-        </div>
+        </div> --}}
 
         <!-- SidebarSearch Form -->
-        <div class="form-inline">
+        <div class="pt-4 form-inline">
             <div class="input-group" data-widget="sidebar-search">
                 <input class="form-control form-control-sidebar" type="search" placeholder="Search"
                     aria-label="Search">

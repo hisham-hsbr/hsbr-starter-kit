@@ -126,7 +126,7 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        toastr.success(response.message);
+                        toastr.success(response.message_success);
 
                         window.location.href = response.redirect_url; // Redirect to the URL
                     }
@@ -151,6 +151,8 @@
                     if (errorMessages) {
                         $(this).addClass('border-danger');
                         $(this).after(`<div class="text-danger">${errorMessages.join(', ')}</div>`);
+                        toastr.error(errorMessages.join(', '));
+
                     }
                 });
             });
