@@ -17,24 +17,26 @@ class TimeZoneCast implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        $response = Http::get("http://worldtimeapi.org/api/ip");
+        // Retrieve the authenticated user
+        $user = Auth::user();
 
-        if ($response->successful()) {
-            $data = $response->json();
-            $currentTimezone = $data['timezone'];
-            $currentDatetime = $data['datetime'];
-            $currentUtcOffset = $data['utc_offset'];
-            $timeZone = $currentTimezone;
-            return Carbon::parse($value)->setTimezone(timeZone: $timeZone)->format('d-M-Y h:i A')  . ' (' . $timeZone . ') (live)';
+        // Determine user's timezone or fallback to 'UTC'
+        $timeZone = $user && $user->timeZone ? $user->timeZone->time_zone : 'UTC';
+
+        // Handle cases where 'email_verified_at' might be null or invalid
+        $emailVerifiedAt = $attributes['email_verified_at'] ?? null;
+        if (!$emailVerifiedAt) {
+            return 'N/A'; // Return a fallback value for null email_verified_at
         }
 
-        $user = Auth::user();
-        // $userTimeZone =  $user->time_zone;
-        $userTimeZone = $user && $user->timeZone ? $user->timeZone->time_zone : 'UTC'; // Default to 'UTC' or any other fallback
-
-        $timeZone = $userTimeZone;
-
-        return Carbon::parse($value)->setTimezone(timeZone: $timeZone)->format('d-M-Y h:i A')  . ' (' . $timeZone . ')(User)';
+        try {
+            // Parse and format the 'email_verified_at' timestamp
+            $emailVerifiedAtFormatted = Carbon::parse($emailVerifiedAt)->setTimezone($timeZone)->format('d-M-Y h:i A');
+            return $emailVerifiedAtFormatted;
+        } catch (\Exception $e) {
+            // Handle parsing errors gracefully
+            return 'Invalid Date';
+        }
     }
 
     /**

@@ -14,6 +14,9 @@ class SettingsController extends Controller
     private $permissionName = 'settings';
     private $snakeName = 'settings';
 
+    private $camelCase = 'settings';
+    private $model = 'Settings';
+
 
     public function index()
     {
@@ -22,19 +25,66 @@ class SettingsController extends Controller
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
                 'permissionName' => $this->permissionName,
-                // 'testDemos' => $testDemos,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
             ]
         );
     }
-    public function modelSettings($model)
+    public function generalSettings()
     {
-        $settings = Settings::where('model', decrypt($model))->get();
+        $settings = Settings::all();
+        return view('backend.app_views.settings.settings')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+
+                'settings' => $settings,
+            ]
+        );
+    }
+    public function generalSettingsUpdate(Request $request)
+    {
+        $rules = array_fill_keys(array_keys($request->all()), 'required');
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect()->back()->with(['errors' => $validator->errors()], 422);
+        }
+
+
+        foreach ($request->keys() as $key) {
+            if ($key === '_token' || $key === '_method') {
+                continue; // Skip this iteration if the key is _token or _method
+            }
+            // dd($request->all());
+            $record = Settings::where('name', $key)->first();
+            if ($record) {
+                $record->value = $request->$key;
+                $record->update();
+            }
+        }
+
+        return redirect()->back()->with('message_store', value: 'Settings updated successfully!');
+    }
+
+    public function modelSettings($modelSettings)
+    {
+        // $settings = Settings::all();
+        $settings = Settings::where('model', decrypt($modelSettings))->get();
         return view('backend.app_views.settings.model_settings')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
                 'permissionName' => $this->permissionName,
-                'model' => decrypt($model),
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+
+                'modelSettings' => decrypt(value: $modelSettings),
                 'settings' => $settings,
             ]
         );

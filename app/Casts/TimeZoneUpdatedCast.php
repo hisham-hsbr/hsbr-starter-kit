@@ -2,11 +2,13 @@
 
 namespace App\Casts;
 
-use App\Models\AppModels\User;
-use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
-class CreatedUserNameCast implements CastsAttributes
+class TimeZoneUpdatedCast implements CastsAttributes
 {
     /**
      * Cast the given value.
@@ -15,9 +17,12 @@ class CreatedUserNameCast implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        $value = $attributes['created_by'];
-        $user = User::find($value);
-        return $user ? $user->name : null;
+
+        $user = Auth::user();
+        $userTimeZone = $user && $user->timeZone ? $user->timeZone->time_zone : 'UTC'; // Default to 'UTC' or any other fallback
+        $timeZone = $userTimeZone;
+
+        return Carbon::parse($value)->setTimezone(timeZone: $timeZone)->format('d-M-Y h:i A')  . ' (' . $timeZone . ')(User)';
     }
 
     /**

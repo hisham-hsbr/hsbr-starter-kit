@@ -12,7 +12,7 @@
 <!-- Modal -->
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="modalFormLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <form role="form" action="{{ route('test-demos.store') }}" method="post" enctype="multipart/form-data"
+        <form role="form" action="{{ route('test.demos.store') }}" method="post" enctype="multipart/form-data"
             id="myForm">
             {{ csrf_field() }}
             <div class="modal-content">

@@ -5,26 +5,32 @@ namespace App\Models\AppModels;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Models\Activity as SpatieActivity;
 use Spatie\Permission\Models\Permission as SpatiePermission;
+use App\Casts\UserNameCreatedCast;
+use App\Casts\UserNameUpdatedCast;
+use App\Casts\StatusCast;
+use App\Casts\StatusIconCast;
+use App\Casts\TimeZoneCreatedCast;
+use App\Casts\TimeZoneUpdatedCast;
+use App\Casts\TitleCast;
 
 class Activity extends SpatieActivity
 {
+    protected function casts(): array
+    {
+        return [
+            'created_at_formatted' => TimeZoneCreatedCast::class,
+            'updated_at_formatted' => TimeZoneUpdatedCast::class,
+            'created_by_name' => UserNameCreatedCast::class,
+            'updated_by_name' => UserNameUpdatedCast::class,
+            'name' => TitleCast::class,
+            'status' => StatusCast::class,
+            'status_with_icon' => StatusIconCast::class,
+        ];
+    }
+
+    protected $appends = ['status_with_icon', 'created_at_formatted', 'updated_at_formatted', 'created_by_name', 'updated_by_name'];
     public function activityUser()
     {
         return $this->belongsTo(User::class, 'causer_id');
-    }
-
-    public function createdBy()
-    {
-        return $this->belongsTo(User::class, 'created_by', 'id');
-    }
-
-    public function updatedBy()
-    {
-        return $this->belongsTo(User::class, 'updated_by', 'id');
-    }
-
-    public function timeZone()
-    {
-        return $this->belongsTo(TimeZone::class, 'time_zone_id', 'id');
     }
 }

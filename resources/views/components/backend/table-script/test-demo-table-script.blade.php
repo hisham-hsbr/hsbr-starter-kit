@@ -9,7 +9,7 @@ test-demos
             scrollY: '80vh',
             scrollX: true,
             scrollCollapse: true,
-            ajax: "{{ route('test-demos.get') }}", // Route for your data source
+            ajax: "{{ route('test.demos.get') }}", // Route for your data source
             columns: [
                 @can('{{ $permissionName }} Read')
                     {
@@ -119,7 +119,7 @@ test-demos
                             "X-CSRF-TOKEN": $("input[name='_token']").val()
                         });
 
-                        fetch("{{ route('test-demos.destroy', '') }}/" + itemID, {
+                        fetch("{{ route('test.demos.destroy', '') }}/" + itemID, {
                             method: 'DELETE',
                             headers: myHeaders,
                         }).then(function(response) {
@@ -197,7 +197,7 @@ test-demos
                             "X-CSRF-TOKEN": $("input[name='_token']").val()
                         });
 
-                        fetch("{{ route('test-demos.force.destroy', '') }}/" +
+                        fetch("{{ route('test.demos.force.destroy', '') }}/" +
                                 itemID, {
                                     method: 'DELETE',
                                     headers: myHeaders,

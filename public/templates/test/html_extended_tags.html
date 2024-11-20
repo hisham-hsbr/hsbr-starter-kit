@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>All-in-One HTML Features</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f9;
+                line-height: 1.6;
+            }
+            h1,
+            h2 {
+                color: #333;
+            }
+            .flex-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            .flex-item {
+                background: #ddd;
+                padding: 20px;
+                text-align: center;
+                flex: 1 1 calc(33.33% - 20px);
+            }
+            .svg-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            button {
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            .animation {
+                width: 50px;
+                height: 50px;
+                background-color: red;
+                position: relative;
+                animation: slide 3s infinite;
+            }
+            @keyframes slide {
+                0% {
+                    left: 0;
+                }
+                50% {
+                    left: 200px;
+                }
+                100% {
+                    left: 0;
+                }
+            }
+            .tooltip-container {
+                position: relative;
+                display: inline-block;
+                cursor: pointer;
+            }
+            .tooltip-container .tooltip-text {
+                visibility: hidden;
+                width: 120px;
+                background-color: black;
+                color: white;
+                text-align: center;
+                border-radius: 5px;
+                padding: 5px;
+                position: absolute;
+                z-index: 1;
+                bottom: 125%;
+                left: 50%;
+                margin-left: -60px;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+            .tooltip-container:hover .tooltip-text {
+                visibility: visible;
+                opacity: 1;
+            }
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+            .modal-content {
+                margin: 15% auto;
+                padding: 20px;
+                background-color: white;
+                width: 50%;
+                border-radius: 5px;
+                text-align: center;
+            }
+            .modal-content button {
+                margin-top: 20px;
+            }
+            .table-container {
+                border: 1px solid #ddd;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            .table-container th,
+            .table-container td {
+                border: 1px solid #ddd;
+                padding: 10px;
+                text-align: left;
+            }
+            .table-container th {
+                background-color: #f4f4f4;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>All-in-One HTML Features</h1>
+        <p>
+            This page demonstrates a wide range of HTML features, including
+            flexbox, forms, animations, multimedia, and more.
+        </p>
+
+        <!-- Flexbox Example -->
+        <section>
+            <h2>Flexbox Layout</h2>
+            <div class="flex-container">
+                <div class="flex-item">Item 1</div>
+                <div class="flex-item">Item 2</div>
+                <div class="flex-item">Item 3</div>
+            </div>
+        </section>
+
+        <hr />
+
+        <!-- SVG Graphics -->
+        <section>
+            <h2>SVG Graphics</h2>
+            <div class="svg-container">
+                <svg width="200" height="200">
+                    <circle cx="100" cy="100" r="50" fill="blue" />
+                    <rect x="50" y="50" width="100" height="100" fill="green" />
+                    <text
+                        x="100"
+                        y="110"
+                        font-size="20"
+                        fill="white"
+                        text-anchor="middle"
+                    >
+                        SVG
+                    </text>
+                </svg>
+            </div>
+        </section>
+
+        <hr />
+
+        <!-- Animation -->
+        <section>
+            <h2>CSS Animation</h2>
+            <div class="animation"></div>
+        </section>
+
+        <hr />
+
+        <!-- Tooltip -->
+        <section>
+            <h2>Tooltip</h2>
+            <div class="tooltip-container">
+                Hover over me
+                <span class="tooltip-text">Tooltip text</span>
+            </div>
+        </section>
+
+        <hr />
+
+        <!-- Modal -->
+        <section>
+            <h2>Modal</h2>
+            <button onclick="openModal()">Open Modal</button>
+            <div class="modal" id="myModal">
+                <div class="modal-content">
+                    <h3>Modal Title</h3>
+                    <p>
+                        This is a modal window. Click the button below to close
+                        it.
+                    </p>
+                    <button onclick="closeModal()">Close Modal</button>
+                </div>
+            </div>
+        </section>
+
+        <hr />
+
+        <!-- Forms -->
+        <section>
+            <h2>Forms</h2>
+            <form action="#">
+                <label for="name">Name:</label><br />
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                /><br /><br />
+
+                <label for="gender">Gender:</label><br />
+                <input type="radio" id="male" name="gender" value="male" />
+                <label for="male">Male</label><br />
+                <input type="radio" id="female" name="gender" value="female" />
+                <label for="female">Female</label><br /><br />
+
+                <label for="hobbies">Hobbies:</label><br />
+                <input
+                    type="checkbox"
+                    id="reading"
+                    name="hobbies"
+                    value="reading"
+                />
+                <label for="reading">Reading</label><br />
+                <input
+                    type="checkbox"
+                    id="sports"
+                    name="hobbies"
+                    value="sports"
+                />
+                <label for="sports">Sports</label><br /><br />
+
+                <input type="submit" value="Submit" />
+            </form>
+        </section>
+
+        <hr />
+
+        <!-- Audio and Video -->
+        <section>
+            <h2>Audio and Video</h2>
+            <audio controls>
+                <source
+                    src="https://www.w3schools.com/html/horse.mp3"
+                    type="audio/mpeg"
+                />
+                Your browser does not support the audio element.
+            </audio>
+            <video controls width="400">
+                <source
+                    src="https://www.w3schools.com/html/mov_bbb.mp4"
+                    type="video/mp4"
+                />
+                Your browser does not support the video tag.
+            </video>
+        </section>
+
+        <hr />
+
+        <!-- Table -->
+        <section>
+            <h2>Table</h2>
+            <table class="table-container">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>30</td>
+                        <td>USA</td>
+                    </tr>
+                    <tr>
+                        <td>Jane Smith</td>
+                        <td>25</td>
+                        <td>Canada</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- JavaScript -->
+        <script>
+            function openModal() {
+                document.getElementById("myModal").style.display = "block";
+            }
+            function closeModal() {
+                document.getElementById("myModal").style.display = "none";
+            }
+        </script>
+    </body>
+</html>

@@ -18,7 +18,7 @@
 
 @section('main_content')
     <x-backend.layout_partials.card cardTitle="" cardFooter="">
-        <form role="form" action="{{ route('settings.model.settings.update', encrypt($model)) }}" method="post"
+        <form role="form" action="{{ route('settings.model.settings.update', encrypt($modelSettings)) }}" method="post"
             enctype="multipart/form-data" id="quickForm">
             {{ csrf_field() }}
             {{ method_field('PATCH') }}

@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        $settings = Settings::all()->pluck('default_value', 'name');
-        View::share('settings', $settings);
+        $bootSettings = Settings::all()->pluck('value', 'name');
+        View::share('bootSettings', $bootSettings);
     }
 }

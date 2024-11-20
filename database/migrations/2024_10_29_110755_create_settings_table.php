@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('model');
             $table->text('data')->nullable();
             $table->string('default_value');
-            $table->string('value')->nullable();
+            $table->string(column: 'value')->nullable();
             $table->string('type')->nullable();
             $table->string('group')->nullable();
             $table->string('parent')->nullable();

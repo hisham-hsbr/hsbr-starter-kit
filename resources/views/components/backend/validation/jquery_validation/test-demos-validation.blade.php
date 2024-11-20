@@ -13,9 +13,6 @@
                 name: {
                     required: true,
                 },
-                description: {
-                    required: true,
-                },
             },
             messages: {
                 code: {
@@ -23,9 +20,6 @@
                 },
                 name: {
                     required: "Please enter a name",
-                },
-                description: {
-                    required: "Please enter a description",
                 },
             },
             errorElement: 'span',

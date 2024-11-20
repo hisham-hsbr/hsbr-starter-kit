@@ -2,69 +2,353 @@
 
 namespace {{ namespace }};
 
-use App\Http\Controllers\Controller;
 use {{ namespacedModel }};
 use {{ rootNamespace }}Http\Controllers\Controller;
 use {{ namespacedRequests }}
+use App\Http\Controllers\Controller;
+use App\Models\AppModels\Activity;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
+use App\Models\AppModels\Settings;
+
 
 class {{ class }} extends Controller
 {
-   private $headName = 'Test Demo';
-    private $routeName = 'test-demos';
+   private $headName = 'Test Demos';
+    private $routeName = 'test.demos';
     private $permissionName = 'Test Demo';
     private $snakeName = 'test_demo';
+    private $camelCase = '{{ modelVariable }}';
+    private $model = 'TestDemo';
 
 
     public function index()
     {
-        //
+        ${{ modelVariable }}s = {{ model }}::all();
+        $createdByUsers = ${{ modelVariable }}s->sortBy('createdBy')->pluck('createdBy')->unique();
+        $updatedByUsers = ${{ modelVariable }}s->sortBy('updatedBy')->pluck('updatedBy')->unique();
+
+        return view('backend.folder.test_demos.index')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+
+                '{{ modelVariable }}s' => ${{ modelVariable }}s,
+                'createdByUsers' => $createdByUsers,
+                'updatedByUsers' => $updatedByUsers,
+            ]
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function {{ modelVariable }}sGet()
+    {
+        $defaultCount = {{ model }}::withTrashed()->where('default', 1)->count();
+        ${{ modelVariable }}s = {{ model }}::withTrashed()->get();
+
+
+        return Datatables::of(${{ modelVariable }}s)
+            ->setRowId(function (${{ modelVariable }}) {
+                return ${{ modelVariable }}->id;
+            })
+
+            ->setRowClass(function (${{ modelVariable }}) use ($defaultCount) {
+                return ($defaultCount > 1 && ${{ modelVariable }}->default == 1) ? 'text-danger' : '';
+            })
+            ->addIndexColumn()
+            ->addColumn('action', function ({{ model }} ${{ modelVariable }}) {
+
+                $action = '
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info">Action</button>
+                        <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown"></button>
+                        <div class="dropdown-menu" role="menu">
+                            <a href="' . route($this->routeName . '.show', encrypt(${{ modelVariable }}->id)) . '" class="ml-2" title="View Details"><i class="fa-solid fa fa-eye text-success"></i></a>
+                            <a href="' . route($this->routeName . '.pdf', encrypt(${{ modelVariable }}->id)) . '" class="ml-2" title="View PDF"><i class="fa-solid fa-file-pdf"></i></a>
+                            <a href="' . route($this->routeName . '.edit', encrypt(${{ modelVariable }}->id)) . '" class="ml-2" title="Edit"><i class="fa-solid fa-edit text-warning"></i></a>';
+                if (${{ modelVariable }}->deleted_at == null) {
+                    $action .= '
+                    <button class="mb-1 btn btn-link delete-item_delete" data-item_delete_id="' . encrypt(${{ modelVariable }}->id) . '" data-value="' . ${{ modelVariable }}->name . '" data-default="' . ${{ modelVariable }}->default . '" type="submit" title="Soft Delete"><i class="fa-solid fa-eraser text-danger"></i></button>';
+                }
+
+                $action .= '
+                            <button class="mb-1 btn btn-link delete-item_delete_force" data-item_delete_force_id="' . encrypt(${{ modelVariable }}->id) . '" data-value="' . ${{ modelVariable }}->name . '" data-default="' . ${{ modelVariable }}->default . '" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" type="submit" title="Hard Delete"><i class="fa-solid fa-trash-can text-danger"></i></button>';
+
+                if (${{ modelVariable }}->deleted_at) {
+                    $action .= '<a href="' . route($this->routeName . '.restore', encrypt(${{ modelVariable }}->id)) . '" class="" title="Restore"><i class="fa-solid fa-trash-arrow-up"></i></a>';
+                }
+
+                $action .= '
+                        </div>
+                    </div>
+                ';
+
+                return $action;
+            })
+
+
+            ->rawColumns(['action', 'status_with_icon'])
+            ->toJson();
+    }
+
     public function create()
     {
-        //
+        return view('backend.folder.test_demos.create')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+            ]
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store({{ storeRequest }} $request)
     {
-        //
+        ${{ modelVariable }} = new {{ model }}();
+
+
+        ${{ modelVariable }}->code  = $request->code;
+        ${{ modelVariable }}->name = $request->name;
+        ${{ modelVariable }}->local_name = $request->local_name;
+
+        if ($request->default) {
+            {{ model }}::where('default', 1)->update(['default' => null]);
+        }
+
+        ${{ modelVariable }}->default = $request->default;
+
+
+        if ($request->status == 0) {
+            ${{ modelVariable }}->status == 0;
+        }
+
+        ${{ modelVariable }}->status = $request->status;
+
+        ${{ modelVariable }}->created_by = Auth::user()->id;
+        ${{ modelVariable }}->updated_by = Auth::user()->id;
+
+        ${{ modelVariable }}->save();
+
+        return redirect()->back()->with(
+            [
+                'message_success' => '{{ model }} Created Successfully'
+            ]
+        );
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function {{ modelVariable }}sExcelImport()
+    {
+        return view('backend.test_demos.import')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+            ]
+        );
+    }
+
+    public function {{ modelVariable }}sExcelSampleDownload()
+    {
+        $path = public_path('downloads/sample_excels/test_demos_import_sample.xlsx');
+        return response()->download($path);
+    }
+
+
+    public function {{ modelVariable }}sExcelUpload(Request $request)
+    {
+        $tableData = json_decode($request->input('table_data'), true);
+        $validationErrors = [];
+
+        foreach ($tableData as $index => $row) {
+            $validator = Validator::make($row, [
+                'code' => 'required|unique:test_demos,code',
+                'name' => 'required',
+                'status' => ['required', 'in:0,1'],
+            ]);
+
+            if ($validator->fails()) {
+                foreach ($validator->errors()->messages() as $field => $messages) {
+                    $validationErrors["{$index}.{$field}"] = $messages;
+                }
+            }
+        }
+
+        if (!empty($validationErrors)) {
+            return response()->json(['message_errors' => $validationErrors], 422);
+        }
+
+        foreach ($tableData as $row) {
+            {{ model }}::create($row);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message_success' => 'Data imported successfully.',
+            'redirect_url' => route($this->routeName . '.index')
+        ]);
+    }
+
     public function show({{ model }} ${{ modelVariable }})
     {
-        //
+        ${{ modelVariable }} = {{ model }}::withTrashed()->find(decrypt(${{ modelVariable }}));
+        $activityLog = Activity::where('subject_id', ${{ modelVariable }}->id)
+            ->where('subject_type', 'App\Models\AppModels\{{ model }}')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('backend.test_demos.show')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+
+                '{{ modelVariable }}' => ${{ modelVariable }},
+                'activityLog' => $activityLog,
+            ]
+        );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit({{ model }} ${{ modelVariable }})
     {
-        //
+        ${{ modelVariable }} = {{ model }}::withTrashed()->find(decrypt(${{ modelVariable }}));
+
+        return view('backend.test_demos.edit')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+
+                '{{ modelVariable }}' => ${{ modelVariable }}
+            ]
+        );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }})
+    public function update({{ updateRequest }} $request,$id)
     {
-        //
+        $id = decrypt($id);
+        ${{ modelVariable }} = {{ model }}::withTrashed()->find($id);
+
+        ${{ modelVariable }}->code  = $request->code;
+        ${{ modelVariable }}->name = $request->name;
+        ${{ modelVariable }}->local_name = $request->local_name;
+        ${{ modelVariable }}->description = $request->description;
+
+        if ($request->default == 1) {
+            {{ model }}::withTrashed()->where('default', 1)->update(['default' => null]);
+            ${{ modelVariable }}->default = 1;
+        } else {
+            ${{ modelVariable }}->default = 0;
+        }
+
+        if ($request->status == 0) {
+            ${{ modelVariable }}->status == 0;
+        } else {
+
+            ${{ modelVariable }}->status = $request->status;
+        }
+
+        ${{ modelVariable }}->updated_by = Auth::user()->id;
+        ${{ modelVariable }}->update();
+
+        $defaultCount = {{ model }}::withTrashed()->where('default', 1)->count();
+        $message_error = null;
+        $message_warning = null;
+
+        if ($defaultCount > 1) {
+            $message_error = "Default Count is more than " . $defaultCount;
+        } elseif ($defaultCount == 0) {
+            {{ model }}::where('status', 1)->limit(1)->update(['default' => 1]);
+            $message_warning = "Default value Automatic Selected first Active One";
+        }
+
+        return redirect()->route($this->routeName . '.index')->with(
+            [
+                'message_success' => '{{ model }} Updated Successfully',
+                'message_error' => $message_error,
+                'message_warning' => $message_warning,
+            ]
+        );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy({{ model }} ${{ modelVariable }})
+    public function destroy($id)
     {
-        //
+        try {
+            ${{ modelVariable }} = {{ model }}::findOrFail(decrypt($id));
+
+            if (is_null(${{ modelVariable }}->default)) {
+                ${{ modelVariable }}->delete();
+                return response()->json(['success' => true, 'message' => '{{ model }} Soft Deleted Successfully']);
+            }
+
+            return response()->json(['success' => false, 'error' => 'Please change the Default value before "Soft Deleting".']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => 'An error occurred. Please try again later.']);
+        }
+    }
+    public function forceDestroy($id)
+    {
+        try {
+            ${{ modelVariable }} = {{ model }}::withTrashed()->findOrFail(decrypt($id));
+
+            if (is_null(${{ modelVariable }}->default)) {
+                ${{ modelVariable }}->forceDelete();
+                return response()->json(['success' => true, 'message' => '{{ model }} Hard Deleted Successfully']);
+            }
+
+            return response()->json(['success' => false, 'error' => 'Please change the Default value before "Hard Deleting".']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => 'An error occurred. Please try again later.']);
+        }
+    }
+    public function restore($id)
+    {
+
+        ${{ modelVariable }}  = {{ model }}::withTrashed()->findOrFail(decrypt($id));
+        ${{ modelVariable }}->restore();
+        return redirect()->route($this->routeName . '.index')->with(
+            [
+                'message_update' => '{{ model }} Restored Successfully'
+            ]
+        );
+    }
+
+    public function {{ modelVariable }}sPDF($id)
+    {
+        $id = decrypt($id);
+        ${{ modelVariable }} = {{ model }}::withTrashed()->find($id);
+        ${{ modelVariable }}Code = ${{ modelVariable }}->code;
+        $pdfName = 'Test Demo-' . ${{ modelVariable }}Code;
+
+        $logoPath = public_path('app/images/logo/hsbr_logo_name_w.png');
+        $logoData = base64_encode(file_get_contents($logoPath));
+        $logoBase64 = 'data:image/png;base64,' . $logoData;
+        $paperSize = Settings::where('name', 'test_demo_pdf_paper_size')->first()->value;
+
+        $data = [
+            'pdfName' => $pdfName,
+            'paperSize' => $paperSize,
+            '{{ modelVariable }}' => ${{ modelVariable }},
+            'logoBase64' => $logoBase64,
+        ];
+
+        $pdf = Pdf::loadView('backend.test_demos.pdf', $data)->setPaper($paperSize, 'portrait')->setWarnings(false);
+        return $pdf->download(filename: $pdfName . '.pdf');
     }
 }

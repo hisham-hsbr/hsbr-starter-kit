@@ -1,26 +1,15 @@
-<li class="nav-item">
+private $headName = 'Test Demos';
+private $routeName = 'test-demos';
+private $permissionName = 'Test Demo';
+private $snakeName = 'test_demo';
+private $camelCase = 'testDemo';
+private $model = 'TestDemo';
 
 
 
-    <a href="#" class="nav-link">
-
-
-        <i class="nav-icon fas fa-circle"></i>
-        <i class="far fa-circle nav-icon"></i>
-        <i class="far fa-dot-circle nav-icon"></i>
-        <p>
-            Level 1
-            <i class="right fas fa-angle-left"></i>
-        </p>
-
-        {{-- tree --}}
-        <ul class="nav nav-treeview">
-        </ul>
-        {{-- tree --}}
-
-
-
-    </a>
-
-
-</li>
+'headName' => $this->headName,
+'routeName' => $this->routeName,
+'permissionName' => $this->permissionName,
+'snakeName' => $this->snakeName,
+'camelCase' => $this->camelCase,
+'model' => $this->model,

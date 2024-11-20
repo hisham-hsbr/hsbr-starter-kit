@@ -16,6 +16,6 @@
 
 
 
-
+<x-backend.script.keyboard-shortcut key="h" button_id="homeButton" type="ctrl&alt" event="click" />
 
 @yield('head_links')

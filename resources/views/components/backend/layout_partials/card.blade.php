@@ -1,5 +1,5 @@
-@props(['cardTitle' => '', 'cardFooter' => ''])
-<div class="card">
+@props(['cardTitle' => '', 'cardFooter' => '', 'cardClass' => ''])
+<div class="card {{ $cardClass }}">
     <div class="card-header">
         <h3 class="card-title">{{ $cardTitle }}</h3>
 

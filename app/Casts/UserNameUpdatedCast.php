@@ -6,7 +6,7 @@ use App\Models\AppModels\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
-class UpdatedUserNameCast implements CastsAttributes
+class UserNameUpdatedCast implements CastsAttributes
 {
     /**
      * Cast the given value.

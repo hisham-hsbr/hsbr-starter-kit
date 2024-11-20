@@ -9,7 +9,17 @@
 
 {{-- <body class="hold-transition sidebar-mini layout-fixed"> --}}
 
-<body class="text-sm hold-transition sidebar-mini layout-navbar-fixed layout-fixed layout-footer-fixed">
+<body
+    class="text-sm hold-transition sidebar-mini layout-navbar-fixed layout-fixed layout-footer-fixed
+    @if (Auth::user()->settings['personal_settings'] == 1) {
+        @if (Auth::user()->settings['layout_sidebar_collapse'] == 1) sidebar-collapse @endif
+        @if (Auth::user()->settings['layout_dark_mode'] == 1) dark-mode @endif
+    }
+    @else{
+        @if ($bootSettings['layout_sidebar_collapse'] == 1) sidebar-collapse @endif
+        @if ($bootSettings['layout_dark_mode'] == 1) dark-mode @endif}
+    @endif
+    ">
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
@@ -29,7 +39,7 @@
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="pb-3 mt-3 mb-3 user-panel d-flex">
                     <div class="image">
                         <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>

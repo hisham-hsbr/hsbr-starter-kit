@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>HTML Examples with Copy Option</title>
+        <!-- Bootstrap CSS -->
+        <link
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            .code-container {
+                position: relative;
+                background: #f8f9fa;
+                padding: 10px;
+                margin-top: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-family: monospace;
+            }
+            .code-container button {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                padding: 5px 10px;
+                font-size: 14px;
+                border: none;
+                background-color: #007bff;
+                color: white;
+                border-radius: 3px;
+                cursor: pointer;
+            }
+            .code-container button:hover {
+                background-color: #0056b3;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1 class="mb-4">HTML Examples with Copy Option</h1>
+
+            <!-- Text Formatting -->
+            <section class="mb-5">
+                <h2>Text Formatting</h2>
+                <div class="mb-3">
+                    <p>
+                        This is <strong>bold</strong>, <em>italic</em>, and
+                        <u>underlined</u> text.
+                    </p>
+                </div>
+                <div class="code-container">
+                    <code
+                        >&lt;p&gt;This is &lt;strong&gt;bold&lt;/strong&gt;,
+                        &lt;em&gt;italic&lt;/em&gt;, and
+                        &lt;u&gt;underlined&lt;/u&gt; text.&lt;/p&gt;</code
+                    >
+                    <button onclick="copyCode(this)">Copy</button>
+                </div>
+            </section>
+
+            <!-- Lists -->
+            <section class="mb-5">
+                <h2>Lists</h2>
+                <h3>Ordered List</h3>
+                <div class="mb-3">
+                    <ol>
+                        <li>First item</li>
+                        <li>Second item</li>
+                    </ol>
+                </div>
+                <div class="code-container">
+                    <code
+                        >&lt;ol&gt; &lt;li&gt;First item&lt;/li&gt;
+                        &lt;li&gt;Second item&lt;/li&gt; &lt;/ol&gt;</code
+                    >
+                    <button onclick="copyCode(this)">Copy</button>
+                </div>
+
+                <h3 class="mt-4">Unordered List</h3>
+                <div class="mb-3">
+                    <ul>
+                        <li>List item 1</li>
+                        <li>List item 2</li>
+                    </ul>
+                </div>
+                <div class="code-container">
+                    <code
+                        >&lt;ul&gt; &lt;li&gt;List item 1&lt;/li&gt;
+                        &lt;li&gt;List item 2&lt;/li&gt; &lt;/ul&gt;</code
+                    >
+                    <button onclick="copyCode(this)">Copy</button>
+                </div>
+            </section>
+
+            <!-- Links -->
+            <section class="mb-5">
+                <h2>Links</h2>
+                <div class="mb-3">
+                    <a href="https://www.example.com" target="_blank"
+                        >Example</a
+                    >
+                </div>
+                <div class="code-container">
+                    <code
+                        >&lt;a href="https://www.example.com"
+                        target="_blank"&gt;Example&lt;/a&gt;</code
+                    >
+                    <button onclick="copyCode(this)">Copy</button>
+                </div>
+            </section>
+
+            <!-- Tables -->
+            <section class="mb-5">
+                <h2>Tables</h2>
+                <div class="mb-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Country</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>John</td>
+                                <td>USA</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="code-container">
+                    <code
+                        >&lt;table&gt; &lt;tr&gt; &lt;th&gt;#&lt;/th&gt;
+                        &lt;th&gt;Name&lt;/th&gt; &lt;th&gt;Country&lt;/th&gt;
+                        &lt;/tr&gt; &lt;tr&gt; &lt;td&gt;1&lt;/td&gt;
+                        &lt;td&gt;John&lt;/td&gt; &lt;td&gt;USA&lt;/td&gt;
+                        &lt;/tr&gt; &lt;/table&gt;</code
+                    >
+                    <button onclick="copyCode(this)">Copy</button>
+                </div>
+            </section>
+
+            <!-- Images -->
+            <section class="mb-5">
+                <h2>Images</h2>
+                <div class="mb-3">
+                    <img
+                        src="https://via.placeholder.com/200"
+                        alt="Placeholder Image"
+                        class="img-fluid"
+                    />
+                </div>
+                <div class="code-container">
+                    <code
+                        >&lt;img src="https://via.placeholder.com/200"
+                        alt="Placeholder Image"&gt;</code
+                    >
+                    <button onclick="copyCode(this)">Copy</button>
+                </div>
+            </section>
+
+            <!-- Audio -->
+            <section class="mb-5">
+                <h2>Audio</h2>
+                <div class="mb-3">
+                    <audio controls>
+                        <source
+                            src="https://www.w3schools.com/html/horse.mp3"
+                            type="audio/mpeg"
+                        />
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="code-container">
+                    <code
+                        >&lt;audio controls&gt; &lt;source
+                        src="https://www.w3schools.com/html/horse.mp3"
+                        type="audio/mpeg"&gt; Your browser does not support the
+                        audio element. &lt;/audio&gt;</code
+                    >
+                    <button onclick="copyCode(this)">Copy</button>
+                </div>
+            </section>
+
+            <!-- Video -->
+            <section class="mb-5">
+                <h2>Video</h2>
+                <div class="mb-3">
+                    <video controls width="400">
+                        <source
+                            src="https://www.w3schools.com/html/mov_bbb.mp4"
+                            type="video/mp4"
+                        />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="code-container">
+                    <code
+                        >&lt;video controls&gt; &lt;source
+                        src="https://www.w3schools.com/html/mov_bbb.mp4"
+                        type="video/mp4"&gt; Your browser does not support the
+                        video tag. &lt;/video&gt;</code
+                    >
+                    <button onclick="copyCode(this)">Copy</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- JavaScript for Copy Function -->
+        <script>
+            function copyCode(button) {
+                const codeContainer = button.previousElementSibling;
+                const text = codeContainer.innerText;
+                navigator.clipboard
+                    .writeText(text)
+                    .then(() => {
+                        alert("Code copied to clipboard!");
+                    })
+                    .catch((err) => {
+                        console.error("Failed to copy code: ", err);
+                    });
+            }
+        </script>
+        <!-- Bootstrap JS and dependencies -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+</html>

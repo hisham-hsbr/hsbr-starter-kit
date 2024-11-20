@@ -15,14 +15,14 @@
 <script src="{{ asset('backend/admin_lte/plugins/jquery-validation/additional-methods.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('backend/admin_lte/plugins/select2/js/select2.full.min.js') }}"></script>
-<script>
+{{-- <script>
     $(function() {
 
         //Initialize Select2 Elements
         $('.select2').select2()
     });
-</script>
-<script>
+</script> --}}
+{{-- <script>
     // Make sure to include jQuery and Select2 library in your project
     $(document).ready(function() {
         $('.select2').select2({
@@ -30,7 +30,7 @@
             allowClear: true
         });
     });
-</script>
+</script> --}}
 {{--
 <!-- Google Translate Script -->
 <script type="text/javascript">

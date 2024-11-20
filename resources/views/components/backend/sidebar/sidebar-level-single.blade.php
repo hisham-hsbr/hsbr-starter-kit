@@ -9,7 +9,7 @@
     'href' => '#',
 ])
 <li class="nav-item {{ $menu_open }}">
-    <a href="{{ $href }}" class="nav-link {{ $active }}">
+    <a href="{{ $href }}" class="nav-link {{ $active }}" {{ $attributes }}>
         @if ($navIcon)
             <i class="nav-icon {{ $navIcon }}"></i>
         @endif

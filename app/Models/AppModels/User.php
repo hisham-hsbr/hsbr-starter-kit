@@ -2,6 +2,7 @@
 
 namespace App\Models\AppModels;
 
+use App\Casts\TimeZoneCast;
 use App\Traits\HasCommonFeaturesTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,11 +12,12 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
-use App\Casts\CreatedUserNameCast;
-use App\Casts\UpdatedUserNameCast;
+use App\Casts\UserNameCreatedCast;
+use App\Casts\UserNameUpdatedCast;
 use App\Casts\StatusCast;
 use App\Casts\StatusIconCast;
-use App\Casts\TimeZoneCast;
+use App\Casts\TimeZoneCreatedCast;
+use App\Casts\TimeZoneUpdatedCast;
 use App\Casts\TitleCast;
 use App\Casts\UserNameCast;
 
@@ -27,6 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'gender',
+        'avatar',
     ];
     protected $hidden = [
         'password',
@@ -40,16 +43,22 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
     protected $casts = [
-        'created_at_formatted' => TimeZoneCast::class,
-        'updated_at_formatted' => TimeZoneCast::class,
-        'created_by_name' => CreatedUserNameCast::class,
-        'updated_by_name' => UpdatedUserNameCast::class,
+        'email_verified_at_formatted' => TimeZoneCast::class,
+        'created_at_formatted' => TimeZoneCreatedCast::class,
+        'updated_at_formatted' => TimeZoneUpdatedCast::class,
+        'created_by_name' => UserNameCreatedCast::class,
+        'updated_by_name' => UserNameUpdatedCast::class,
         'name' => TitleCast::class,
         'status' => StatusCast::class,
         'status_with_icon' => StatusIconCast::class,
-    ];
-    protected $appends = ['status_with_icon', 'created_at_formatted', 'updated_at_formatted', 'created_by_name', 'updated_by_name'];
 
+        'settings' => 'array'
+    ];
+    protected $appends = ['status_with_icon', 'created_at_formatted', 'updated_at_formatted', 'created_by_name', 'updated_by_name', 'email_verified_at_formatted'];
+
+    protected $attributes = [
+        'settings' => '{"personal_settings":"1","layout_sidebar_collapse":null,"layout_dark_mode":null,"default_status":1,"permission_view":"list"}'
+    ];
     public function scopeActive($query)
     {
         return $query->where('status', 1);

@@ -7,7 +7,7 @@
 @section('breadcrumbs')
     <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}"
         :active="false" />
-    <x-backend.layout_partials.page-breadcrumb-item pageName="Test Demos" pageHref="{{ route('test-demos.index') }}"
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Test Demos" pageHref="{{ route('test.demos.index') }}"
         :active="false" />
     <x-backend.layout_partials.page-breadcrumb-item pageName="Index" pageHref="" :active="true" />
 @endsection

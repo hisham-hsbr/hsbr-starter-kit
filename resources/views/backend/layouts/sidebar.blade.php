@@ -42,10 +42,15 @@
 
                 <x-backend.sidebar.sidebar-nav-header navHeader="Admin" />
 
-                <x-backend.sidebar.sidebar-level-single navTitle="Home"
+                <x-backend.sidebar.sidebar-level-single navTitle="Home" id="homeButton"
                     menu_open="{{ request()->is('admin/dashboard') ? 'menu-open' : '' }}"
                     active="{{ request()->is('admin/dashboard') ? 'active' : '' }}" :angleLeft="false" navBadge=""
                     href="{{ route('backend.dashboard') }}" navBadgeClass="" navIcon="fas fa-home" />
+
+                <x-backend.sidebar.sidebar-level-single navTitle="Profile" id="profileButton"
+                    menu_open="{{ request()->is('admin/profile') ? 'menu-open' : '' }}"
+                    active="{{ request()->is('admin/profile') ? 'active' : '' }}" :angleLeft="false" navBadge=""
+                    href="{{ route('user.profile.edit') }}" navBadgeClass="" navIcon="fas fa-user" />
 
                 <x-backend.sidebar.sidebar-nav-header navHeader="User Management" />
 
