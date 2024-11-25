@@ -1,169 +1,212 @@
 @extends('backend.layouts.app')
-@section('page_title', 'Test Demos- Create')
-@section('page_header_name', 'Demo Create')
+@section('page_title')
+    {{ $headName }} | Edit
+@endsection
+@section('page_header_name')
+    {{ $headName }} - Edit
+@endsection
 @section('head_links')
-
+    <x-backend.links.dual-list-box-head />
 @endsection
 @section('breadcrumbs')
     <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}"
         :active="false" />
-    <x-backend.layout_partials.page-breadcrumb-item pageName="Test Demos" pageHref="{{ route('test.demos.index') }}"
-        :active="false" />
-    <x-backend.layout_partials.page-breadcrumb-item pageName="Index" pageHref="" :active="true" />
+    <x-backend.layout_partials.page-breadcrumb-item pageName="{{ $headName }}"
+        pageHref="{{ route($routeName . '.index') }}" :active="false" />
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Edit" pageHref="" :active="true" />
 @endsection
 
 @section('main_content')
-    <div class="row">
-        <!-- left column -->
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-8">
-            <!-- jquery validation -->
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">{{ ucwords(__('my.edit')) }} <small>jQuery Validation</small></h3>
+    <x-backend.layout_partials.card cardTitle="User Edit" cardFooter="" cardClass="card-secondary">
+        <form role="form" action="{{ route($routeName . '.update', encrypt($user->id)) }}" method="post"
+            enctype="multipart/form-data" id="quickForm">
+            {{ csrf_field() }}
+            {{ method_field('PATCH') }}
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="form-group col-md-4">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name" value="{{ old('name') ?? $user->name }}"
+                            class="form-control" placeholder="Enter name">
+                        <x-backend.form.form-field-error-message name="name" />
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" value="{{ old('email') ?? $user->email }}"
+                            class="form-control" placeholder="Enter local name">
+                        <x-backend.form.form-field-error-message name="email" />
+
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="gender" class="required">Gender</label>
+                        <select name="gender" id="gender" class="form-control select2">
+                            <option disabled {{ $user->gender == '' ? 'selected' : '' }}>--Gender--
+                            </option>
+
+                            <option @if ($user->gender == 'male') { selected } @endif value="male">
+                                Male
+                            </option>
+                            <option @if ($user->gender == 'female') { selected } @endif value="female">
+                                Female</option>
+                            <option @if ($user->gender == 'other') { selected } @endif value="other">
+                                Other
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="time_zone_id" class="required col-form-label">Time Zone</label>
+                        <select name="time_zone_id" id="time_zone_id" class="form-control select2">
+                            <option disabled selected>--Time Zone--</option>
+                            @foreach ($timeZones as $timeZone)
+                                <option {{ $user->timeZone->id == $timeZone->id ? 'selected' : '' }}
+                                    value="{{ $timeZone->id }}">{{ $timeZone->time_zone }} -- (
+                                    {{ $timeZone->utc_code }}{{ ' ' }}{{ $timeZone->country }})
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="email_verified_at" class="required col-form-label">Email Verified</label>
+                        <input type="datetime-local" name="email_verified_at" id="email_verified_at" class="form-control"
+                            value="{{ $user->email_verified_at ? Carbon\Carbon::parse($user->email_verified_at_formatted)->format('Y-m-d\TH:i') : '' }}">
+                    </div>
+
+
+
+                    <div class="p-4 col-sm-10">
+                        <input type="checkbox" class="form-check-input" name="changePassword" value="1"
+                            id="changePassword" />
+                        <label class="form-check-label" for="changePassword">Change Password</label>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="password" class="required col-form-label">Password</label>
+                        <input type="password" name="password" id="password" class="form-control"
+                            style="margin-bottom: 5px" placeholder="Password">
+                        <div class="form-group-append">
+                            <button type="button" class="btn btn-outline-secondary show-password"><i
+                                    class="fa-regular fa-eye-slash"></i></button>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label for="password_confirm" class="required col-form-label">Confirm
+                            Password</label>
+                        <input type="password" name="password_confirm" id="password_confirm" class="form-control"
+                            style="margin-bottom: 5px" placeholder="Confirm Password">
+                        <div class="form-group-append">
+                            <button type="button" class="btn btn-outline-secondary show-password"><i
+                                    class="fa-regular fa-eye-slash"></i></button>
+                        </div>
+                    </div>
+                    <div class="">
+                        <button type="button" class="btn btn-block btn-outline-warning generate-password"
+                            onclick="generate()">
+                            <i class="fas fa-key"></i> Generate Password
+                        </button>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Description</label>
+                        <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter description...">{{ old('description') }}</textarea>
+                    </div>
                 </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form role="form" action="{{ route($routeName . '.update', encrypt($testDemo->id)) }}" method="post"
-                    enctype="multipart/form-data" id="quickForm">
-                    {{ csrf_field() }}
-                    {{ method_field('PATCH') }}
-                    <div class="card-body">
-                        <div class="row">
-
-                            <div class="col-md-6 form-group">
-                                <label for="code">Code</label>
-                                <input type="text" name="code" id="code"
-                                    value="{{ old('code') ?? $testDemo->code }}" class="form-control"
-                                    placeholder="Enter code">
-                                @if ($errors->has('code'))
-                                    <span class="text-danger">{{ $errors->first('code') }}</span>
-                                @endif
+                <div class="row">
+                    <div class="col-sm-12">
+                        <hr />
+                        <h4 style="color:rgb(49, 49, 165)">
+                            <mark><strong>Personal Settings</strong></mark>
+                        </h4>
+                        <hr />
+                        <span class="p-2 badge badge-info">
+                            <div class="form-check d-inline-flex align-items-center">
+                                <input type="checkbox" class="form-check-input" name="personal_settings" value="1"
+                                    id="personal_settings" @if (($user->settings['personal_settings']['value'] ?? '') == 1) checked @endif />
+                                <h6 class="form-check-label ms-2" for="personal_settings">
+                                    {{ Str::title(str_replace('_', ' ', 'Personal Settings')) }} (Enable)
+                                </h6>
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" id="name"
-                                    value="{{ old('name') ?? $testDemo->name }}" class="form-control"
-                                    placeholder="Enter name">
-                                @if ($errors->has('name'))
-                                    <span class="text-danger">{{ $errors->first('name') }}</span>
-                                @endif
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="local_name">Local Name</label>
-                                <input type="text" name="local_name" id="local_name"
-                                    value="{{ old('local_name') ?? $testDemo->local_name }}" class="form-control"
-                                    placeholder="Enter local name">
-                                @if ($errors->has('local_name'))
-                                    <span class="text-danger">{{ $errors->first('local_name') }}</span>
-                                @endif
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Description</label>
-                                <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter description...">{{ old('description') ?? $testDemo->description }}</textarea>
-                            </div>
-                            @if ($errors->has('description'))
-                                <span class="text-danger">{{ $errors->first('description') }}</span>
-                            @endif
-                        </div>
-                        <div class="mb-0 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" name="default" id="default" value="1"
-                                    @if ($testDemo->default == 1) {{ 'checked' }} @endif
-                                    class="custom-control-input">
-                                <label class="custom-control-label" for="default">Is Default</label>
-                            </div>
-                            @if ($errors->has('default'))
-                                <span class="text-danger">{{ $errors->first('default') }}</span>
-                            @endif
-                        </div>
-                        <div class="mb-0 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" name="status" id="status" value="1"
-                                    @if ($testDemo->status == 'Active') {{ 'checked' }} @endif
-                                    class="custom-control-input">
-                                <label class="custom-control-label" for="status">Is Active</label>
-                            </div>
-                            @if ($errors->has('status'))
-                                <span class="text-danger">{{ $errors->first('status') }}</span>
-                            @endif
-                        </div>
-                        <div class="mb-0 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck12">
-                                <label class="custom-control-label" for="exampleCheck12">I agree to the <a
-                                        href="#">terms of service</a>.</label>
-                            </div>
-                        </div>
-
+                        </span>
                     </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        <button type="submit" class="float-right ml-1 btn btn-primary">Submit</button>
-                        <a type="button" href="{{ route($routeName . '.index') }}"
-                            class="float-right ml-1 btn btn-warning">Back</a>
+
+
+
+                    @if (!empty($user->settings))
+                        @foreach ($user->settings as $key => $value)
+                            @if ($key != 'personal_settings')
+                                @if ($user->settings[$key]['type'] == 'checkbox')
+                                    <div class="pt-2 pl-5 col-sm-4">
+                                        <input type="checkbox" class="form-check-input" name="{{ $key }}"
+                                            value="1" id="{{ $key }}"
+                                            @if (($user->settings[$key]['value'] ?? '') == 1) checked @endif />
+                                        <label class="form-check-label" for="{{ $key }}">
+                                            {{ Str::title(str_replace('_', ' ', $key)) }} (Enable)
+                                        </label>
+                                    </div>
+                                @endif
+                            @endif
+                        @endforeach
+                    @endif
+                    <div class="col-sm-12"><br></div>
+                    @if (!empty($user->settings))
+                        @foreach ($user->settings as $key => $value)
+                            @if ($key != 'personal_settings')
+                                @if ($user->settings[$key]['type'] == 'select')
+                                    <div class="pt-2 pl-4 col-sm-8">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <label for="{{ $key }}" class="required col-form-label">
+                                                    {{ Str::title(str_replace('_', ' ', $key)) }}:
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <select name="{{ $key }}" id="{{ $key }}"
+                                                    class="form-control select2">
+                                                    @foreach ($user->settings[$key]['options'] ?? [] as $option)
+                                                        <option value="{{ $option }}"
+                                                            @if (($user->settings[$key]['value'] ?? '') == $option) selected @endif>
+                                                            {{ $option }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
+                        @endforeach
+                    @endif
+                </div>
+
+                <x-backend.script.duallistbox-refresh :route-name="'roles.refresh'" :name="'roles'" title="Assign Roles"
+                    :items="$roles" :selected-items="$user->roles->pluck('id')->toArray()" />
+                <x-backend.script.duallistbox-refresh :route-name="'permissions.refresh'" :name="'permissions'"
+                    title="Assign Special Permissions" :items="$permissions" :selected-items="$user->permissions->pluck('id')->toArray()" />
+
+                <div class="mb-0 form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="status" id="status" value="1"
+                            @if ($user->status == 'Active') {{ 'checked' }} @endif class="custom-control-input">
+                        <label class="custom-control-label" for="status">Is Active</label>
                     </div>
-                </form>
+                    <x-backend.form.form-field-error-message name="status" />
+
+                </div>
+
             </div>
-            <!-- /.card -->
-        </div>
-        <!--/.col (left) -->
-        <!-- right column -->
-        <div class="col-md-6">
-
-        </div>
-        <!--/.col (right) -->
-    </div>
+            <div style="padding-bottom: 8px;padding-right: 8px" class="">
+                <button type="submit" class="float-right ml-1 btn btn-primary" id="updateButton"><u>U</u>pdate</button>
+                <a type="button" href="{{ route('backend.dashboard') }}" id="backButton"
+                    class="float-right ml-1 btn btn-warning"><u>B</u>ack</a>
+            </div>
+        </form>
+    </x-backend.layout_partials.card>
 @endsection
 @section('footer_links')
-
     <x-backend.validation.jquery_validation.test-demos-validation />
-    <script>
-        $(document).ready(function() {
-            $("#myForm").validate({
-                rules: {
-                    name: {
-                        required: true,
-                        minlength: 3
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    }
-                },
-                messages: {
-                    name: {
-                        required: "Please enter your name",
-                        minlength: "Your name must be at least 3 characters long"
-                    },
-                    email: {
-                        required: "Please enter your email",
-                        email: "Please enter a valid email address"
-                    }
-                },
-                submitHandler: function(form) {
-                    // Use AJAX to submit the form data without refreshing or closing the modal
-                    $.ajax({
-                        url: 'your-server-endpoint-url', // Replace with your server endpoint
-                        type: 'POST',
-                        data: $(form).serialize(),
-                        success: function(response) {
-                            // Handle the response as needed
-                            alert("Form submitted successfully!");
+    <x-backend.script.password-generate />
+    <x-backend.links.dual-list-box-footer />
 
-                            // Optionally, you can reset the form after submission
-                            // $(form)[0].reset();
-                        },
-                        error: function() {
-                            alert("An error occurred while submitting the form.");
-                        }
-                    });
 
-                    // Prevent the modal from closing
-                    return false;
-                }
-            });
-        });
-    </script>
+    <x-backend.script.keyboard-shortcut key="u" button_id="updateButton" type="ctrl&alt" event="click" />
+    <x-backend.script.keyboard-shortcut key="b" button_id="backButton" type="ctrl&alt" event="click" />
 @endsection

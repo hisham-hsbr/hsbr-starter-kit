@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\AppControllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppModels\Activity;
+use App\Models\AppModels\Permission;
+use App\Models\AppModels\Role;
 use App\Models\AppModels\TimeZone;
 use App\Models\AppModels\User;
 use Illuminate\Http\Request;
@@ -11,6 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -23,8 +28,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::withTrashed()->get();
+
         $createdByUsers = $users->sortBy('created_by')->pluck('created_by')->unique();
         $updatedByUsers = $users->sortBy('updated_by')->pluck('updated_by')->unique();
+
         return view('backend.app_views.user_managements.users.index')->with(
             [
                 'headName' => $this->headName,
@@ -62,9 +69,9 @@ class UserController extends Controller
                         <button type="button" class="btn btn-info">Action</button>
                         <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown"></button>
                         <div class="dropdown-menu" role="menu">
-                            <a href="' . route('test.demos.show', encrypt($user->id)) . '" class="ml-2" title="View Details"><i class="fa-solid fa fa-eye text-success"></i></a>
-                            <a href="' . route('test.demos.pdf', encrypt($user->id)) . '" class="ml-2" title="View PDF"><i class="fa-solid fa-file-pdf"></i></a>
-                            <a href="' . route('test.demos.edit', encrypt($user->id)) . '" class="ml-2" title="Edit"><i class="fa-solid fa-edit text-warning"></i></a>';
+                            <a href="' . route('users.show', encrypt($user->id)) . '" class="ml-2" title="View Details"><i class="fa-solid fa fa-eye text-success"></i></a>
+                            <a href="' . route('users.pdf', encrypt($user->id)) . '" class="ml-2" title="View PDF"><i class="fa-solid fa-file-pdf"></i></a>
+                            <a href="' . route('users.edit', encrypt($user->id)) . '" class="ml-2" title="Edit"><i class="fa-solid fa-edit text-warning"></i></a>';
                 if ($user->deleted_at == null) {
                     $action .= '
                     <button class="mb-1 btn btn-link delete-item_delete" data-item_delete_id="' . encrypt($user->id) . '" data-value="' . $user->name . '" data-default="' . $user->default . '" type="submit" title="Soft Delete"><i class="fa-solid fa-eraser text-danger"></i></button>';
@@ -74,7 +81,7 @@ class UserController extends Controller
                             <button class="mb-1 btn btn-link delete-item_delete_force" data-item_delete_force_id="' . encrypt($user->id) . '" data-value="' . $user->name . '" data-default="' . $user->default . '" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" type="submit" title="Hard Delete"><i class="fa-solid fa-trash-can text-danger"></i></button>';
 
                 if ($user->deleted_at) {
-                    $action .= '<a href="' . route('test.demos.restore', encrypt($user->id)) . '" class="" title="Restore"><i class="fa-solid fa-trash-arrow-up"></i></a>';
+                    $action .= '<a href="' . route('users.restore', encrypt($user->id)) . '" class="" title="Restore"><i class="fa-solid fa-trash-arrow-up"></i></a>';
                 }
 
                 $action .= '
@@ -90,12 +97,34 @@ class UserController extends Controller
             ->toJson();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        //
+        $timeZones = TimeZone::where('status', 1)->get();
+        if (Auth::user()->hasRole('Developer')) {
+            $roles = Role::all();
+        } else {
+            $roles = Role::where('status', 1)
+                ->where('id', '>', 1)
+                ->get();
+        }
+        $permissions = Permission::where('status', 1)->get();
+        $permissionsGroupBy = Permission::all()->groupBy('parent');
+        return view('backend.app_views.user_managements.users.create')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+
+                'timeZones' => $timeZones,
+                'roles' => $roles,
+                'permissions' => $permissions,
+                'permissionsGroupBy' => $permissionsGroupBy,
+            ]
+        );
     }
 
     /**
@@ -105,39 +134,123 @@ class UserController extends Controller
     {
         // Validate input fields
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
+            'time_zone_id' => 'required',
+            'gender' => 'required',
+            'roles' => 'required|array'
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            // For AJAX request, return JSON response
+            if ($request->ajax()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+
+            // For non-AJAX request, redirect back with errors
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         // Save data in the database
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->time_zone_id = $request->time_zone_id;
+        $user->gender = $request->gender;
 
-        return response()->json(['success' => 'User created successfully!']);
+        if ($request->default) {
+            User::where('default', 1)->update(['default' => null]);
+        }
+
+        $user->default = $request->default ? 1 : 0;
+        $user->status = $request->status ? 1 : 0;
+        $user->created_by = Auth::user()->id;
+        $user->updated_by = Auth::user()->id;
+
+        $user->save();
+
+        // Retrieve roles from the database based on the IDs provided in the request
+        $roles = Role::whereIn('id', $request->input('roles'))->pluck('name')->toArray();
+
+        // Assign roles to the user
+        $user->assignRole($roles);
+
+        // Assign permissions if provided
+        if ($request->has('permissions')) {
+            $permissions = Permission::whereIn('id', $request->input('permissions'))->pluck('name')->toArray();
+            $user->givePermissionTo($permissions);
+        }
+
+        return redirect()->route($this->routeName . '.index')
+            ->with('message_success', "{$request->name} - Role Updated Successfully");
     }
+
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($user)
     {
-        //
+
+
+        $user = User::withTrashed()->find(decrypt($user));
+        $activityLog = Activity::where('subject_id', $user->id)
+            ->where('subject_type', 'App\Models\AppModels\User')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('backend.app_views.user_managements.users.show')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+
+                'user' => $user,
+                'activityLog' => $activityLog,
+            ]
+        );
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $user)
     {
-        //
+        $user = User::withTrashed()->find(decrypt($user));
+        $timeZones = TimeZone::where('status', 1)->get();
+        if (Auth::user()->hasRole('Developer')) {
+            $roles = Role::all();
+        } else {
+            $roles = Role::where('status', 1)
+                ->where('id', '>', 1)
+                ->get();
+        }
+        $permissions = Permission::where('status', 1)->get();
+        $permissionsGroupBy = Permission::all()->groupBy('parent');
+
+
+
+        return view('backend.app_views.user_managements.users.edit')->with(
+            [
+                'headName' => $this->headName,
+                'routeName' => $this->routeName,
+                'permissionName' => $this->permissionName,
+                'snakeName' => $this->snakeName,
+                'camelCase' => $this->camelCase,
+                'model' => $this->model,
+
+                'user' => $user,
+                'timeZones' => $timeZones,
+                'roles' => $roles,
+                'permissions' => $permissions,
+                'permissionsGroupBy' => $permissionsGroupBy,
+            ]
+        );
     }
 
     /**
@@ -145,8 +258,95 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $id = decrypt($id);
+
+        // Validate input fields
+        $request->validate([
+            'name' => 'required',
+            'time_zone_id' => 'required',
+            'gender' => 'required',
+            'email' => "required|email|unique:users,email,$id",
+            'roles' => 'required'
+        ]);
+
+        if ($request->changePassword == 1) {
+            $request->validate([
+                'password' => 'required|same:password_confirm',
+            ]);
+        }
+
+        // Find the authenticated user
+        $user = User::find($id);
+
+        // Update basic fields
+        $user->name = $request->name;
+        $user->time_zone_id = $request->time_zone_id;
+        $user->gender = $request->gender;
+        $user->email = $request->email;
+        $user->email_verified_at = $request->email_verified_at;
+
+        // Update password if needed
+        if ($request->changePassword == 1) {
+            $user->password = Hash::make($request['password']);
+        }
+
+        // Prepare updated settings
+        $settings = $user->settings; // Assume 'settings' is a JSON column
+
+        if (!empty($settings)) {
+            foreach ($settings as $key => $value) {
+                // Handle checkboxes (if not checked, default to 0)
+                if ($value['type'] === 'checkbox') {
+                    $settings[$key]['value'] = $request->has($key) ? 1 : 0;
+                } else {
+                    // Update other types of settings
+                    if ($request->has($key)) {
+                        $settings[$key]['value'] = $request->input($key);
+                    }
+                }
+            }
+        }
+
+        // Update personal_settings if applicable
+        if ($request->personal_settings == 1) {
+            $settings['personal_settings']['value'] = 1;
+        } elseif ($request->personal_settings === null) {
+            $settings['personal_settings']['value'] = null;
+        }
+
+        $user->settings = $settings;
+
+        // Clear email_verified_at if email is changed
+        if ($request->email !== $user->email) {
+            $user->email_verified_at = null;
+        }
+
+        $user->updated_by = Auth::user()->id;
+
+        // Save user updates
+        $user->update();
+
+        // Clear existing roles and permissions
+        DB::table('model_has_roles')->where('model_id', $id)->delete();
+        DB::table('model_has_permissions')->where('model_id', $id)->delete();
+
+        // Assign roles by name
+        $roles = Role::whereIn('id', $request->input('roles'))->pluck('name')->toArray();
+        $user->assignRole($roles);
+
+        // Assign permissions by name
+        if ($request->has('permissions') && is_array($request->input('permissions'))) {
+            $permissions = Permission::whereIn('id', $request->input('permissions'))->pluck('name')->toArray();
+            $user->syncPermissions($permissions);
+        } else {
+            $user->syncPermissions([]);
+        }
+
+
+        return redirect()->route($this->routeName . '.index')
+            ->with('message_success', "{$request->name} - User Updated Successfully");
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -190,15 +390,13 @@ class UserController extends Controller
     {
         $id = Auth::user()->id;
 
+        // Validate input fields
         $request->validate([
             'name' => 'required',
             'time_zone_id' => 'required',
             'gender' => 'required',
-            'email' => "required|unique:users,email,$id",
+            'email' => "required|email|unique:users,email,$id",
         ]);
-
-
-        // $city_id = (DB::table('country_state_district_cities')->where('city', $request->city)->first())->id;
 
         if ($request->changePassword == 1) {
             $request->validate([
@@ -206,65 +404,60 @@ class UserController extends Controller
             ]);
         }
 
+        // Find the authenticated user
         $user = User::find($id);
 
-
-
+        // Update basic fields
         $user->name = $request->name;
-        // $user->city_id  = $city_id;
-        $user->time_zone_id  = $request->time_zone_id;
-        // $user->email_verified_at  = $request->email_verified_at;
-        $user->gender  = $request->gender;
+        $user->time_zone_id = $request->time_zone_id;
+        $user->gender = $request->gender;
+        $user->email = $request->email;
 
-        $user->email  = $request->email;
-
+        // Update password if needed
         if ($request->changePassword == 1) {
             $user->password = Hash::make($request['password']);
         }
 
+        // Prepare updated settings
+        $settings = $user->settings; // Assume 'settings' is a JSON column
 
-
-
-        if ($request->layout_sidebar_collapse == 0) {
-            $user->layout_sidebar_collapse == 0;
-        }
-        if ($request->layout_dark_mode == 0) {
-            $user->layout_dark_mode == 0;
-        }
-        if ($request->default_status == 0) {
-            $user->default_status == 0;
-        }
-        if ($request->default_time_zone == 0) {
-            $user->default_time_zone == 0;
-        }
-
-        if (Auth::user()->settings['personal_settings'] == 1) {
-            $personal_settings = 1;
-        }
-        if (Auth::user()->settings['personal_settings'] == null) {
-            $personal_settings = null;
+        if (!empty($settings)) {
+            foreach ($settings as $key => $value) {
+                // Handle checkboxes (if not checked, default to 0)
+                if ($value['type'] === 'checkbox') {
+                    $settings[$key]['value'] = $request->has($key) ? 1 : 0;
+                } else {
+                    // Update other types of settings
+                    if ($request->has($key)) {
+                        $settings[$key]['value'] = $request->input($key);
+                    }
+                }
+            }
         }
 
-        $user->settings = [
-            'personal_settings' => $personal_settings,
-            'layout_sidebar_collapse' => $request->layout_sidebar_collapse,
-            'layout_dark_mode' => $request->layout_dark_mode,
-            'default_status' => $request->default_status,
-            'permission_view' => $request->permission_view,
-        ];
+        // Update personal_settings if applicable
+        if ($user->settings['personal_settings']['value'] == 1) {
+            $settings['personal_settings']['value'] = 1;
+        } elseif ($user->settings['personal_settings']['value'] === null) {
+            $settings['personal_settings']['value'] = null;
+        }
 
+        $user->settings = $settings;
 
-
+        // Clear email_verified_at if email is changed
         if ($request->email !== Auth::user()->email) {
             $user->email_verified_at = null;
         }
 
         $user->updated_by = Auth::user()->id;
 
+        // Save user updates
         $user->update();
 
         return back()->with('message_success', 'Profile Data Updated Successfully');
     }
+
+
 
     public function avatarUpdate(Request $request)
     {

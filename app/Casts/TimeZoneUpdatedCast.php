@@ -17,12 +17,12 @@ class TimeZoneUpdatedCast implements CastsAttributes
      */
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-
+        $value = $attributes['updated_at'];
         $user = Auth::user();
         $userTimeZone = $user && $user->timeZone ? $user->timeZone->time_zone : 'UTC'; // Default to 'UTC' or any other fallback
         $timeZone = $userTimeZone;
 
-        return Carbon::parse($value)->setTimezone(timeZone: $timeZone)->format('d-M-Y h:i A')  . ' (' . $timeZone . ')(User)';
+        return Carbon::parse($value)->setTimezone(timeZone: $timeZone)->format('d-M-Y h:i A');
     }
 
     /**

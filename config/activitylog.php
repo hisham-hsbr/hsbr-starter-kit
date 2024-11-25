@@ -29,6 +29,7 @@ return [
      * If set to true, the subject returns soft deleted models.
      */
     'subject_returns_soft_deleted_models' => false,
+    'causer_model' => App\Models\AppModels\User::class,
 
     /*
      * This model will be used to log activity.

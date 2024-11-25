@@ -11,9 +11,9 @@
 
 <body
     class="text-sm hold-transition sidebar-mini layout-navbar-fixed layout-fixed layout-footer-fixed
-    @if (Auth::user()->settings['personal_settings'] == 1) {
-        @if (Auth::user()->settings['layout_sidebar_collapse'] == 1) sidebar-collapse @endif
-        @if (Auth::user()->settings['layout_dark_mode'] == 1) dark-mode @endif
+    @if (Auth::user()->settings['personal_settings']['value'] == 1) {
+        @if (Auth::user()->settings['layout_sidebar_collapse']['value'] == 1) sidebar-collapse @endif
+        @if (Auth::user()->settings['layout_dark_mode']['value'] == 1) dark-mode @endif
     }
     @else{
         @if ($bootSettings['layout_sidebar_collapse'] == 1) sidebar-collapse @endif

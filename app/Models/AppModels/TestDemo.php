@@ -48,21 +48,10 @@ class TestDemo extends Model
     {
         $useLogName = 'TestDemo';
         return LogOptions::defaults()
-            ->logOnly(['code', 'name', 'local_name', 'description', 'default', 'status', 'deleted_at'])
+            ->logOnly(['code', 'name', 'local_name', 'description', 'default', 'status', 'created_at', 'updated_at', 'deleted_at'])
             // ->logOnly(['code', 'name', 'local_name', 'description', 'default', 'status', 'created_at', 'updated_at', 'deleted_at'])
             ->setDescriptionForEvent(fn(string $eventName) => "$useLogName {$eventName}")
             ->useLogName($useLogName)
             ->logOnlyDirty();
-    }
-    protected static function booted()
-    {
-        static::creating(function ($model) {
-            $model->created_by = Auth::id();
-            $model->updated_by = Auth::id();
-        });
-
-        static::updating(function ($model) {
-            $model->updated_by = Auth::id();
-        });
     }
 }

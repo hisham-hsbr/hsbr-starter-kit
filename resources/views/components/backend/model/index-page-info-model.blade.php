@@ -1,4 +1,4 @@
-@props(['modelTitle'])
+@props(['modelTitle' => '', 'module' => ''])
 <a type="button"><i class="fa-solid fa-circle-info" data-toggle="modal" data-target="#modal-default"></i></a>
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog modal-lg">
@@ -12,10 +12,10 @@
             <div class="modal-body">
                 <p><u>Keyboard Shortcuts</u></p>
                 <x-backend.form.model-table-code>
-                    <x-backend.form.model-table-code-tr action="Add Customer" code="Ctrl+Alt + A" />
-                    <x-backend.form.model-table-code-tr action="Import Customer" code="Ctrl+Alt + I" />
-                    <x-backend.form.model-table-code-tr action="Customer Settings" code="Ctrl+Alt + S" />
-                    <x-backend.form.model-table-code-tr action="Customer Table Refresh" code="Alt + R" />
+                    <x-backend.form.model-table-code-tr action="Add {{ $module }}" code="Ctrl+Alt + A" />
+                    <x-backend.form.model-table-code-tr action="Import {{ $module }}" code="Ctrl+Alt + I" />
+                    <x-backend.form.model-table-code-tr action="{{ $module }} Settings" code="Ctrl+Alt + S" />
+                    <x-backend.form.model-table-code-tr action="{{ $module }} Table Refresh" code="Alt + R" />
                 </x-backend.form.model-table-code>
             </div>
         </div>

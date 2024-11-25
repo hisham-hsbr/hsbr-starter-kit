@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'gender',
         'avatar',
+        'email_verified_at',
     ];
     protected $hidden = [
         'password',
@@ -56,9 +57,13 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
     protected $appends = ['status_with_icon', 'created_at_formatted', 'updated_at_formatted', 'created_by_name', 'updated_by_name', 'email_verified_at_formatted'];
 
+    // protected $attributes = [
+    //     'settings' => '{"personal_settings":"1","layout_sidebar_collapse":null,"layout_dark_mode":null,"default_status":1,"permission_view":"list"}'
+    // ];
     protected $attributes = [
-        'settings' => '{"personal_settings":"1","layout_sidebar_collapse":null,"layout_dark_mode":null,"default_status":1,"permission_view":"list"}'
+        'settings' => '{"personal_settings": {"type": "checkbox","value": "1","options": [null]},"layout_sidebar_collapse": {"type": "checkbox","value": null,"options": [null]},"layout_dark_mode": {"type": "checkbox","value": null,"options": [null]},"default_status": {"type": "checkbox","value": 1,"options": [null]},"permission_view": {"type": "select","value": "list","options": ["list", "group"]}}'
     ];
+
     public function scopeActive($query)
     {
         return $query->where('status', 1);
@@ -76,5 +81,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function timeZone()
     {
         return $this->belongsTo(TimeZone::class, 'time_zone_id', 'id');
+    }
+    public function getSettingsAttribute($value)
+    {
+        return json_decode($value, true) ?? [];
     }
 }

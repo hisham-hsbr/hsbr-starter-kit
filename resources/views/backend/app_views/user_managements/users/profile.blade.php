@@ -106,47 +106,59 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 style="color:rgb(49, 49, 165)"><mark><strong>Personal Settings</strong></mark></h4>
+                    <h4 style="color:rgb(49, 49, 165)"><mark><strong>Personal Settings</strong></mark>
+                        @if (Auth::user()->settings['personal_settings']['value'] != '1')
+                            <small><span class="badge badge-warning">Your Personal settings Disabled By
+                                    Admin</span></small>
+                        @endif
+                    </h4>
                 </div>
-                <div class="pt-2 pl-5 col-sm-4">
-                    <input type="checkbox" class="form-check-input" name="layout_sidebar_collapse" value="1"
-                        id="layout_sidebar_collapse" @if (Auth::user()->settings['layout_sidebar_collapse'] == 1) {{ 'checked' }} @endif />
-                    <label class="form-check-label" for="layout_sidebar_collapse">Sidebar Collapse
-                        (Enable)</label>
-                </div>
-                <div class="pt-2 pl-5 col-sm-4">
-                    <input type="checkbox" class="form-check-input" name="layout_dark_mode" value="1"
-                        id="layout_dark_mode" @if (Auth::user()->settings['layout_dark_mode'] == 1) {{ 'checked' }} @endif />
-                    <label class="form-check-label" for="layout_dark_mode">Dark Mode (Enable)</label>
-                </div>
-                <div class="pt-2 pl-5 col-sm-4">
-                    <input type="checkbox" class="form-check-input" name="default_status" value="1"
-                        id="default_status" @if (Auth::user()->settings['default_status'] == 1) {{ 'checked' }} @endif />
-                    <label class="form-check-label" for="default_status">Default Status
-                        (Active)</label>
-                </div>
-                <div class="col-sm-6"></div>
-                <div class="pt-2 pl-4 col-sm-8">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <label for="permission_view" class="required col-form-label ">Permission
-                                View :</label>
-                        </div>
-                        <div class="col-sm-4">
-                            <select name="permission_view" id="permission_view" class="form-control select2">
 
-                                <option @if (Auth::user()->settings['permission_view'] == 'list') { selected } @endif value="list">
-                                    List
-                                </option>
-                                <option @if (Auth::user()->settings['permission_view'] == 'group') { selected } @endif value="group">
-                                    Group</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-
-                </div>
+                @if (!empty(Auth::user()->settings))
+                    @foreach (Auth::user()->settings as $key => $value)
+                        @if ($key != 'personal_settings')
+                            @if (Auth::user()->settings[$key]['type'] == 'checkbox')
+                                <div class="pt-2 pl-5 col-sm-4">
+                                    <input type="checkbox" class="form-check-input" name="{{ $key }}"
+                                        value="1" id="{{ $key }}"
+                                        @if ((Auth::user()->settings[$key]['value'] ?? '') == 1) checked @endif />
+                                    <label class="form-check-label" for="{{ $key }}">
+                                        {{ Str::title(str_replace('_', ' ', $key)) }} (Enable)
+                                    </label>
+                                </div>
+                            @endif
+                        @endif
+                    @endforeach
+                @endif
+                <div class="col-sm-12"><br></div>
+                @if (!empty(Auth::user()->settings))
+                    @foreach (Auth::user()->settings as $key => $value)
+                        @if ($key != 'personal_settings')
+                            @if (Auth::user()->settings[$key]['type'] == 'select')
+                                <div class="pt-2 pl-4 col-sm-8">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <label for="{{ $key }}" class="required col-form-label">
+                                                {{ Str::title(str_replace('_', ' ', $key)) }}:
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <select name="{{ $key }}" id="{{ $key }}"
+                                                class="form-control select2">
+                                                @foreach (Auth::user()->settings[$key]['options'] ?? [] as $option)
+                                                    <option value="{{ $option }}"
+                                                        @if ((Auth::user()->settings[$key]['value'] ?? '') == $option) selected @endif>
+                                                        {{ $option }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
+                    @endforeach
+                @endif
             </div>
             <x-backend.form.form-field-error-message name="description" />
 

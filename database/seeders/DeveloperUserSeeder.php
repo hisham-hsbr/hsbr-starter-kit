@@ -33,5 +33,15 @@ class DeveloperUserSeeder extends Seeder
         $role->syncPermissions($permissions);
 
         $user->assignRole([$role->id]);
+
+        User::create([
+            'name' => 'Hisham Basheer',
+            'email' => 'hisham.hsbr@gmail.com',
+            'gender' => 'male',
+            'password' => bcrypt('hsbr@gmail.com'),
+            'created_by' => '1',
+            'updated_by' => '1',
+            'status' => '1'
+        ]);
     }
 }

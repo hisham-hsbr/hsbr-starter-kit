@@ -20,7 +20,7 @@ class SettingsController extends Controller
 
     public function index()
     {
-        return view('backend.app_views.settings.model_settings')->with(
+        return view('backend.app_views.settings.index')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
