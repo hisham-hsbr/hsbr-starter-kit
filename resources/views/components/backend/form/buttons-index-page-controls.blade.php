@@ -44,7 +44,7 @@
 
 
 
-
+<x-backend.script.keyboard-shortcut key="c" button_id="name" type="alt" event="focus" />
 
 
 

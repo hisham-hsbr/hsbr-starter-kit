@@ -13,4 +13,13 @@ return [
     'refresh' => 'refresh',
     'settings' => 'settings',
     'import' => 'import',
+
+    // form
+    'name' => 'name',
+    'email' => 'email',
+    'password' => 'password',
+    'role' => 'password',
+    'permission' => 'password',
+    'active' => 'active',
+    'default' => 'default',
 ];

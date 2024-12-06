@@ -61,7 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
     //     'settings' => '{"personal_settings":"1","layout_sidebar_collapse":null,"layout_dark_mode":null,"default_status":1,"permission_view":"list"}'
     // ];
     protected $attributes = [
-        'settings' => '{"personal_settings": {"type": "checkbox","value": "1","options": [null]},"layout_sidebar_collapse": {"type": "checkbox","value": null,"options": [null]},"layout_dark_mode": {"type": "checkbox","value": null,"options": [null]},"default_status": {"type": "checkbox","value": 1,"options": [null]},"permission_view": {"type": "select","value": "list","options": ["list", "group"]}}'
+        'settings' => '{"personal_settings": {"type": "checkbox","value": "1","options": [null]},"layout_sidebar_collapse": {"type": "checkbox","value": null,"options": [null]},"layout_dark_mode": {"type": "checkbox","value": null,"options": [null]},"google_translate_mode": {"type": "checkbox","value": null,"options": [null]},"default_status": {"type": "checkbox","value": 1,"options": [null]},"permission_view": {"type": "select","value": "list","options": ["list", "group"]}}'
     ];
 
     public function scopeActive($query)
@@ -73,7 +73,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $useLogName = 'User';
         return LogOptions::defaults()
-            ->logOnly(['name', 'email', 'password', 'description', 'default', 'status', 'created_at', 'updated_at', 'deleted_at'])
+            ->logOnly(['name', 'email', 'gender', 'time_zone_id', 'password', 'description', 'default', 'status', 'created_at', 'updated_at', 'deleted_at'])
             ->setDescriptionForEvent(fn(string $eventName) => "$useLogName {$eventName}")
             ->useLogName($useLogName)
             ->logOnlyDirty();

@@ -21,10 +21,12 @@
             </div>
         </li>
     </ul>
-    {{-- <div class="text-end">
-        <div id="google_translate_element"></div>
-    </div> --}}
-
+    {{-- google translate --}}
+    @if (Auth::user()->settings['google_translate_mode']['value'] == 1)
+        <div class="text-end">
+            <div id="google_translate_element"></div>
+        </div>
+    @endif
     <!-- Right navbar links -->
     <ul class="ml-auto navbar-nav">
         <!-- Navbar Search -->

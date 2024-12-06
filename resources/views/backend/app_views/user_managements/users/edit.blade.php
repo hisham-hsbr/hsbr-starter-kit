@@ -25,20 +25,12 @@
             <div class="card-body">
                 <div class="row">
 
-                    <div class="form-group col-md-4">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name" value="{{ old('name') ?? $user->name }}"
-                            class="form-control" placeholder="Enter name">
-                        <x-backend.form.form-field-error-message name="name" />
+                    <x-backend.form.label-input-group label="Name" name="name" type="text"
+                        value="{{ isset($user) ? $user->name : '' }}" placeholder="Enter name" :shortcut="['type' => 'Alt', 'key' => 'N']" />
 
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="email">Email</label>
-                        <input type="text" name="email" id="email" value="{{ old('email') ?? $user->email }}"
-                            class="form-control" placeholder="Enter local name">
-                        <x-backend.form.form-field-error-message name="email" />
+                    <x-backend.form.label-input-group label="Email" name="email" type="email"
+                        value="{{ isset($user) ? $user->email : '' }}" placeholder="Enter email" :shortcut="['type' => 'Alt', 'key' => 'E']" />
 
-                    </div>
                     <div class="form-group col-sm-4">
                         <label for="gender" class="required">Gender</label>
                         <select name="gender" id="gender" class="form-control select2">
@@ -206,6 +198,10 @@
     <x-backend.script.password-generate />
     <x-backend.links.dual-list-box-footer />
 
+    <x-backend.script.keyboard-shortcut key="n" button_id="name" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="e" button_id="email" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="g" button_id="gender" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="t" button_id="time_zone_id" type="alt" event="focus" />
 
     <x-backend.script.keyboard-shortcut key="u" button_id="updateButton" type="ctrl&alt" event="click" />
     <x-backend.script.keyboard-shortcut key="b" button_id="backButton" type="ctrl&alt" event="click" />

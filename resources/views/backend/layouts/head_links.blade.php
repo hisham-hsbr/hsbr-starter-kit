@@ -18,4 +18,6 @@
 
 <x-backend.script.keyboard-shortcut key="h" button_id="homeButton" type="ctrl&alt" event="click" />
 
+<x-backend.links.dual-list-box-head />
+<x-backend.links.datatable-head-links />
 @yield('head_links')

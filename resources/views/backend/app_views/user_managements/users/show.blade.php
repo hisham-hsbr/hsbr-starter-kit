@@ -6,7 +6,6 @@
     {{ $headName }} - Show
 @endsection
 @section('head_links')
-    <x-backend.links.datatable-head-links />
 @endsection
 @section('breadcrumbs')
     <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}"
@@ -73,10 +72,10 @@
                             </div>
                         @endcan
 
-                        <!-- role Modal -->
+                        <!-- Role Modal -->
                         <div class="modal fade" id="roleModal" tabindex="-1" role="dialog"
                             aria-labelledby="roleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="roleModalLabel">Roles List</h5>
@@ -103,6 +102,7 @@
                             </div>
                         </div>
 
+
                         @can('{{ $permissionName }} Read Special Permissions')
                             <div class="col-sm-6">
                                 <label class="col-sm-4">Special Permissions</label>
@@ -115,10 +115,10 @@
                         @endcan
 
 
-                        <!-- permissions Modal -->
+                        <!-- Permissions Modal -->
                         <div class="modal fade" id="permissionModal" tabindex="-1" role="dialog"
                             aria-labelledby="permissionModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="permissionModalLabel">Permissions List</h5>
@@ -143,12 +143,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
 
                         @can('{{ $permissionName }} Read Created At')
                             <div class="col-sm-6">
@@ -186,124 +180,7 @@
         <!--/.col (left) -->
 
     </div>
-
-    <h1>History</h1>
-    <table id="example1" class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Sn</th>
-                <th>Event</th>
-                <th>Properties</th>
-                <th>User</th>
-                <th>Created At</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($activityLog as $a)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $a->event }}</td>
-                    <td>
-                        <!-- Trigger button to open modal -->
-                        <a type="button" class="" data-toggle="modal"
-                            data-target="#propertiesModal{{ $loop->iteration }}">
-                            View Properties
-                        </a>
-
-                        <!-- Modal for Properties -->
-                        <div class="modal fade" id="propertiesModal{{ $loop->iteration }}" tabindex="-1"
-                            role="dialog" aria-labelledby="propertiesModalLabel{{ $loop->iteration }}"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="propertiesModalLabel{{ $loop->iteration }}">
-                                            Properties
-                                        </h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        @foreach ($a->properties as $key => $value)
-                                            <div class="pt-2 col-md-12">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th colspan="2" class="bg-secondary color-palette">
-                                                                @if ($key == 'attributes')
-                                                                    New {{ $a->event }} {{ $a->log_name }}
-                                                                @elseif ($key == 'old')
-                                                                    Old {{ $a->log_name }}
-                                                                @endif
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($value as $lists => $data)
-                                                            <tr class="bg-light color-palette">
-                                                                <td style="color:red; width: 10%">{{ $lists }}</td>
-                                                                <td>{{ $data }}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>{{ $a->activityUser->name }}</td>
-                    <td>{{ $a->created_at_formatted }}</td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="6" class="text-center">History not available</td>
-                </tr>
-            @endforelse
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Sn</th>
-                <th>Event</th>
-                <th>Properties</th>
-                <th>User</th>
-                <th>Created At</th>
-            </tr>
-        </tfoot>
-    </table>
-
-
+    <x-backend.tables.activity-history-table :activityLog='$activityLog' :model='$model' />
 @endsection
 @section('footer_links')
-    <x-backend.links.datatable-footer-links />
-    <script>
-        $(document).ready(function() {
-            $('#example1').DataTable({
-                // Optional: Customization options for DataTables
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-                "language": {
-                    "search": "Search:",
-                    "lengthMenu": "Show _MENU_ entries",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
-                    "paginate": {
-                        "previous": "Previous",
-                        "next": "Next"
-                    }
-                }
-            });
-        });
-    </script>
 @endsection

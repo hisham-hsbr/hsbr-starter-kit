@@ -27,7 +27,7 @@ class UserController extends Controller
     private $model = 'User';
     public function index()
     {
-        $users = User::withTrashed()->get();
+        $users = User::withTrashed()->where('id', '!=', Auth::user()->id)->get();
 
         $createdByUsers = $users->sortBy('created_by')->pluck('created_by')->unique();
         $updatedByUsers = $users->sortBy('updated_by')->pluck('updated_by')->unique();
@@ -49,7 +49,11 @@ class UserController extends Controller
     public function usersGet(Request $request)
     {
         $defaultCount = User::withTrashed()->where('default', 1)->count();
-        $users = User::withTrashed()->get();
+
+        // Get all users including trashed, but exclude the authenticated user
+        $users = User::withTrashed()->where('id', '!=', Auth::user()->id)->get();
+
+
 
 
         return Datatables::of($users)
@@ -90,10 +94,19 @@ class UserController extends Controller
                 ';
 
                 return $action;
+            })->editColumn('emailVerified', function (User $user) {
+
+                $verified = '<span style="background-color: #190482;color: white;padding: 3px;width:100px;">Verified</span>';
+                $pending = '<span style="background-color: #C70039;color: white;padding: 3px;width:100px;">Pending</span>';
+
+                $verifiedStatus = $user->email_verified_at ? $verified : $pending;
+
+                return $verifiedStatus;
             })
 
 
-            ->rawColumns(['action', 'status_with_icon'])
+
+            ->rawColumns(['action', 'status_with_icon', 'emailVerified'])
             ->toJson();
     }
 
@@ -374,18 +387,6 @@ class UserController extends Controller
         );
     }
 
-    // public function profileUpdate(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|email|max:255',
-    //     ]);
-
-    //     $user = $request->user();
-    //     $user->update($request->only('name', 'email'));
-
-    //     return response()->json(['success' => true, 'message' => 'Profile updated successfully.']);
-    // }
     public function profileUpdate(Request $request)
     {
         $id = Auth::user()->id;

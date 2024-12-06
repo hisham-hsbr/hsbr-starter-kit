@@ -1,12 +1,11 @@
 @extends('backend.layouts.app')
 @section('page_title')
-    {{ $headName }} | Create
+    {{ $headName }} | {{ ucwords(__('my.create')) }}
 @endsection
 @section('page_header_name')
-    {{ $headName }} - Create
+    {{ $headName }} - {{ ucwords(__('my.create')) }}
 @endsection
 @section('head_links')
-    <x-backend.links.dual-list-box-head />
 @endsection
 @section('breadcrumbs')
     <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}"
@@ -23,30 +22,21 @@
                 <div class="card-header">
                     <h3 class="card-title">{{ ucwords(__('my.create')) }} <small>{{ $headName }}</small></h3>
                 </div>
-                <!-- /.card-header -->
-                <!-- form start -->
                 <form role="form" action="{{ route($routeName . '.store') }}" method="post"
                     enctype="multipart/form-data" id="quickForm">
                     {{ csrf_field() }}
                     <div class="card-body">
                         <div class="row">
+                            <x-backend.form.label-input-group label="Name" name="name" type="text"
+                                value="{{ isset($user) ? $user->name : '' }}" placeholder="Enter name" :shortcut="['type' => 'Alt', 'key' => 'N']" />
 
-                            <div class="form-group col-md-4">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" id="name" value="{{ old('name') }}"
-                                    class="form-control" placeholder="Enter name">
-                                <x-backend.form.form-field-error-message name="name" />
+                            <x-backend.form.label-input-group label="Email" name="email" type="text"
+                                value="{{ isset($user) ? $user->email : '' }}" placeholder="Enter email"
+                                :shortcut="['type' => 'Alt', 'key' => 'E']" />
 
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="email">Email</label>
-                                <input type="text" name="email" id="email" value="{{ old('email') }}"
-                                    class="form-control" placeholder="Enter local name">
-                                <x-backend.form.form-field-error-message name="email" />
-
-                            </div>
                             <div class="form-group col-sm-4">
-                                <label for="gender" class="required">Gender</label>
+                                <label for="gender" class="required">Gender <x-backend.form.span-shortcut-tooltip
+                                        type="Alt" key="G" /></label>
                                 <select name="gender" id="gender" class="form-control select2">
                                     <option disabled {{ old('gender') == '' ? 'selected' : '' }}>--Gender--
                                     </option>
@@ -62,7 +52,10 @@
                                 </select>
                             </div>
                             <div class="col-sm-4">
-                                <label for="time_zone_id" class="required col-form-label">Time Zone</label>
+                                <label for="time_zone_id" class="required col-form-label">Time
+                                    Zone
+                                    <x-backend.form.span-shortcut-tooltip type="Alt" key="T" />
+                                </label>
                                 <select name="time_zone_id" id="time_zone_id" class="form-control select2">
                                     <option disabled selected>--Time Zone--</option>
                                     @foreach ($timeZones as $timeZone)
@@ -115,51 +108,28 @@
                         <x-backend.script.duallistbox-refresh :route-name="'permissions.refresh'" :name="'permissions'"
                             title="Assign Special Permissions" :items="$permissions" />
 
-
                         <div class="mb-0 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" name="status" id="status" value="1"
-                                    class="custom-control-input">
-                                <label class="custom-control-label" for="status">Is Active</label>
-                            </div>
-                            <x-backend.form.form-field-error-message name="status" />
+                            <x-backend.form.status-default-value-set />
                         </div>
                     </div>
-                    <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="submit" id="saveButton"
-                            class="float-right ml-1 btn btn-primary"><u>S</u>ave</button>
-                        <a type="button" id="backButton" href="{{ route($routeName . '.index') }}"
-                            class="float-right ml-1 btn btn-warning"><u>B</u>ack</a>
+                        <x-backend.form.button-save-back :routeName="$routeName" />
                     </div>
                 </form>
             </div>
-            <!-- /.card -->
         </div>
-        <!--/.col (left) -->
-        <!-- right column -->
-        <div class="col-md-6">
-
-        </div>
-        <!--/.col (right) -->
+        <div class="col-md-6"></div>
     </div>
 @endsection
 @section('footer_links')
     <x-backend.validation.jquery_validation.test-demos-validation />
-    <x-backend.links.dual-list-box-footer />
+
     <x-backend.script.password-generate />
 
 
 
-
-
-    <x-backend.script.keyboard-shortcut key="s" button_id="saveButton" type="ctrl&alt" event="click" />
-    <x-backend.script.keyboard-shortcut key="b" button_id="backButton" type="ctrl&alt" event="click" />
-
-    <x-backend.script.keyboard-shortcut key="c" button_id="name" type="alt" event="focus" />
-    <x-backend.script.keyboard-shortcut key="n" button_id="contact_name" type="alt" event="focus" />
-    <x-backend.script.keyboard-shortcut key="p" button_id="phone_1" type="alt" event="focus" />
-    <x-backend.script.keyboard-shortcut key="d" button_id="default" type="alt" event="focus" />
-    <x-backend.script.keyboard-shortcut key="a" button_id="status" type="alt" event="focus" />
-    <x-backend.script.keyboard-shortcut key="m" button_id="test" type="ctrl&alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="n" button_id="name" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="e" button_id="email" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="g" button_id="gender" type="alt" event="focus" />
+    <x-backend.script.keyboard-shortcut key="t" button_id="time_zone_id" type="alt" event="focus" />
 @endsection

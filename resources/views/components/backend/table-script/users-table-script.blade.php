@@ -43,6 +43,14 @@ users
                         defaultContent: ''
                     },
                 @endcan
+                @can('{{ $permissionName }} Read Email Verified')
+                    {
+                        data: 'emailVerified',
+                        name: 'emailVerified',
+                        width: '100%',
+                        defaultContent: ''
+                    },
+                @endcan
                 @can('{{ $permissionName }} Read Status')
                     {
                         data: 'status_with_icon',

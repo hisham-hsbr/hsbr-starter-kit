@@ -10,6 +10,60 @@
         <button onclick="formatName()">Format Name</button>
         <p id="formattedName"></p>
 
+        <div>
+            <h1>Case Conversion Examples</h1>
+            <?php
+    // Sample string
+    $string = "hello world! welcome to php case conversion.";
+
+    // Different types of case conversion
+    $uppercase = strtoupper($string); // Converts to uppercase
+    $lowercase = strtolower($string); // Converts to lowercase
+    $capitalizedWords = ucwords($string); // Capitalizes the first letter of each word
+    $capitalizedSentence = ucfirst($string); // Capitalizes the first letter of the sentence
+    $lowercaseFirst = lcfirst($capitalizedSentence); // Makes the first letter lowercase
+
+    // Displaying results
+    echo "<p><strong>Original String:</strong> $string</p>";
+    echo "<p><strong>Uppercase:</strong> $uppercase</p>";
+    echo "<p><strong>Lowercase:</strong> $lowercase</p>";
+    echo "<p><strong>Capitalized Each Word (Title Case):</strong> $capitalizedWords</p>";
+    echo "<p><strong>Capitalized Sentence:</strong> $capitalizedSentence</p>";
+    echo "<p><strong>Lowercase First Letter:</strong> $lowercaseFirst</p>";
+    ?>
+
+            <!--
+            <ul>
+                <li><strong>Original Text:</strong> {{ $text }}</li>
+                <li><strong>Uppercase:</strong> {{ strtoupper($text) }}</li>
+                <li><strong>Lowercase:</strong> {{ strtolower($text) }}</li>
+                <li>
+                    <strong>Title Case:</strong> {{ ucwords(strtolower($text))
+                    }}
+                </li>
+                <li>
+                    <strong>First Character Uppercase:</strong> {{
+                    ucfirst(strtolower($text)) }}
+                </li>
+                <li>
+                    <strong>Snake Case (Laravel Helper):</strong> {{
+                    Str::snake($text) }}
+                </li>
+                <li>
+                    <strong>Kebab Case (Laravel Helper):</strong> {{
+                    Str::kebab($text) }}
+                </li>
+                <li>
+                    <strong>Studly Case (Laravel Helper):</strong> {{
+                    Str::studly($text) }}
+                </li>
+                <li>
+                    <strong>Camel Case (Laravel Helper):</strong> {{
+                    Str::camel($text) }}
+                </li>
+            </ul> -->
+        </div>
+
         <script>
             function formatName() {
                 const input = document.getElementById("nameInput").value;
@@ -27,3 +81,16 @@
         </script>
     </body>
 </html>
+
+<!--
+Case Type	Function/Helper	Example Result
+Uppercase	strtoupper	HELLO WORLD
+Lowercase	strtolower	hello world
+Title Case	ucwords	Hello World
+Sentence Case	ucfirst(strtolower())	Hello world
+Studly Case	Str::studly	HelloWorld
+Camel Case	Str::camel	helloWorld
+Snake Case	Str::snake	hello_world
+Kebab Case	Str::kebab	hello-world
+Slug	Str::slug	hello-world
+-->
