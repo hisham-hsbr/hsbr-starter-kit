@@ -13,6 +13,8 @@
                 </option>
             @endforeach
         </select>
+        <x-backend.form.form-field-error-message :name="$name" />
+
     </div>
 </div>
 

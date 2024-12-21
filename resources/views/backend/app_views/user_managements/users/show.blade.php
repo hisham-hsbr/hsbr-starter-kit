@@ -57,7 +57,21 @@
                         @can('{{ $permissionName }} Read Email Verified At')
                             <div class="col-sm-6">
                                 <label class="col-sm-4">Email Verified At</label>
-                                <label><code>: {{ $user->email_verified_at_formatted }}</code></label>
+                                <label><code>:
+                                        {!! $user->email_verified_at
+                                            ? $user->email_verified_at_formatted
+                                            : '<span style="color: red;">Not verified</span>' !!}
+                                    </code></label>
+                                @if (!$user->email_verified_at)
+                                    <form action="{{ route('users.resend.email.verification', encrypt($user->id)) }}"
+                                        method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="p-0 border-0 btn btn-link text-decoration-none"
+                                            title="Resend Verification Email">
+                                            <i class="fa-solid fa-paper-plane"></i> Resend
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         @endcan
                         <div class="col-sm-6"></div>
@@ -175,6 +189,7 @@
                 <x-backend.form.buttons-show-page-controls :routeName="$routeName" :model='$model' :item='$user' />
             </div>
             <!-- /.card-footer -->
+
 
         </div>
         <!--/.col (left) -->

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\AppControllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UserEmailVerificationMail;
+use App\Mail\UserWelcomeWithOTPMail;
 use App\Models\AppModels\Activity;
 use App\Models\AppModels\Permission;
 use App\Models\AppModels\Role;
 use App\Models\AppModels\TimeZone;
 use App\Models\AppModels\User;
+use App\Notifications\UserCreateNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +18,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
+use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\URL;
 
 class UserController extends Controller
 {
@@ -139,21 +146,61 @@ class UserController extends Controller
             ]
         );
     }
+    public function checkEmail(Request $request)
+    {
+        $email = $request->input('email');
+        $encryptedUserId = $request->input('user_id'); // Get the encrypted user ID
 
-    /**
-     * Store a newly created resource in storage.
-     */
+        try {
+            $userId = $encryptedUserId ? decrypt($encryptedUserId) : null; // Decrypt the user ID if provided
+        } catch (\Exception $e) {
+            return response()->json(['unique' => false]); // Invalid encrypted ID, fail validation
+        }
+
+        // Check if the email exists for another user
+        $isUnique = !User::where('email', $email)
+            ->when($userId, function ($query, $userId) {
+                return $query->where('id', '!=', $userId); // Exclude the current user's ID
+            })
+            ->exists();
+
+        return response()->json(['unique' => $isUnique]);
+    }
+
+    public function generatePassword()
+    {
+        $charset = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ123456789';
+        $password = '';
+        $length = 6;
+
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $charset[random_int(0, strlen($charset) - 1)];
+        }
+
+        return $password;
+    }
+    public function showResetForm($email)
+    {
+        // Retrieve user by email
+        $user = User::where('email', $email)->firstOrFail();
+
+        // Show the password reset form
+        return view('auth.passwords.reset', compact('user'));
+    }
     public function store(Request $request)
     {
         // Validate input fields
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
+            // 'password' => 'required|same:password_confirm',
             'time_zone_id' => 'required',
             'gender' => 'required',
             'roles' => 'required|array'
         ]);
+
+        // Generate password
+        $password = $this->generatePassword();
 
         if ($validator->fails()) {
             // For AJAX request, return JSON response
@@ -169,12 +216,15 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->password = Hash::make($password);
         $user->time_zone_id = $request->time_zone_id;
         $user->gender = $request->gender;
 
         if ($request->default) {
             User::where('default', 1)->update(['default' => null]);
+        }
+        if ($request->send_email_verification) {
+            $user->otp = 1;
         }
 
         $user->default = $request->default ? 1 : 0;
@@ -196,6 +246,17 @@ class UserController extends Controller
             $user->givePermissionTo($permissions);
         }
 
+
+
+        if ($request->send_email_verification) {
+            $email = $user->email;
+            $otp = $password;
+            $userName = $user->name;
+            $loginUrl = url('/login') . '?email=' . urlencode($email) . '&password=' . urlencode($password);
+
+            Mail::to($user->email)->send(new UserWelcomeWithOTPMail($userName, $otp, $loginUrl, $email));
+        }
+
         return redirect()->route($this->routeName . '.index')
             ->with('message_success', "{$request->name} - Role Updated Successfully");
     }
@@ -204,6 +265,17 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
+    public function passwordResetWithOtp()
+    {
+        $token = bin2hex(random_bytes(32)); // Generate a secure random token
+        return view('frontend.auth.reset-password-with-otp')->with($token);
+    }
+    public function passwordOtpStore()
+    {
+        $token = bin2hex(random_bytes(32)); // Generate a secure random token
+        $email = Auth::user()->email;
+        return view('frontend.auth.reset-password-with-otp')->with($token, $email);
+    }
     public function show($user)
     {
 
@@ -234,7 +306,7 @@ class UserController extends Controller
      */
     public function edit(string $user)
     {
-        $user = User::withTrashed()->find(decrypt($user));
+        $user = User::withTrashed()->find(id: decrypt($user));
         $timeZones = TimeZone::where('status', 1)->get();
         if (Auth::user()->hasRole('Developer')) {
             $roles = Role::all();
@@ -361,18 +433,15 @@ class UserController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
     public function profileEdit()
     {
         $timeZones = TimeZone::where('status', 1)->get();
         $headName = 'Profile';
         $routeName = 'user.profile';
+        $message_warning = null;
+        if (Auth::user()->otp == 1) {
+            session()->flash('alert_password_change', true);
+        }
         return view('backend.app_views.user_managements.users.profile')->with(
             [
                 'headName' => $headName,
@@ -382,7 +451,7 @@ class UserController extends Controller
                 'camelCase' => $this->camelCase,
                 'model' => $this->model,
 
-                'timeZones' => $timeZones
+                'timeZones' => $timeZones,
             ]
         );
     }
@@ -499,5 +568,83 @@ class UserController extends Controller
         $user->update();
 
         return redirect()->back()->with('message_success', 'Profile Avatar Deleted');
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $user = User::findOrFail(decrypt($id));
+
+
+            $user->delete();
+            return response()->json(['success' => true, 'message' => 'User Soft Deleted Successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => 'An error occurred. Please try again later.']);
+        }
+    }
+
+    public function forceDestroy($id)
+    {
+        try {
+            $user = User::withTrashed()->findOrFail(decrypt($id));
+
+
+            $user->forceDelete();
+            return response()->json(['success' => true, 'message' => 'User Hard Deleted Successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => 'An error occurred. Please try again later.']);
+        }
+    }
+    public function restore($id)
+    {
+
+        $user  = User::withTrashed()->findOrFail(decrypt($id));
+        $user->restore();
+        return redirect()->route($this->routeName . '.index')->with(
+            [
+                'message_update' => 'User Restored Successfully'
+            ]
+        );
+    }
+    public function resendEmailVerification($id, Request $request)
+    {
+        try {
+            // Decrypt the ID
+            $userId = decrypt($id);
+
+            // Find the user by ID
+            $user = User::findOrFail($userId);
+
+            // Check if the email is already verified
+            if ($user->hasVerifiedEmail()) {
+
+                return back()->with(
+                    [
+                        'message_info' => 'This user has already verified their email address.'
+                    ]
+                );
+            }
+
+            // Send the email verification notification
+            // $user->sendEmailVerificationNotification();
+            $verificationUrl = URL::temporarySignedRoute(
+                'verification.verify',
+                now()->addMinutes(60),
+                ['id' => $user->id, 'hash' => sha1($user->email)]
+            );
+            Mail::to($user->email)->send(new UserEmailVerificationMail($verificationUrl));
+            return back()->with(
+                [
+                    'message_success' => 'Verification email sent successfully!'
+                ]
+            );
+        } catch (\Exception $e) {
+            // Handle any exceptions
+            return back()->with(
+                [
+                    'message_error' => 'An error occurred while sending the verification email.'
+                ]
+            );
+        }
     }
 }

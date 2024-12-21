@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\AppControllers\JobQueueController;
+use App\Http\Controllers\AppControllers\UserController;
+use App\Models\AppModels\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
 
@@ -91,8 +95,18 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
         Route::get('/excel-import', 'usersExcelImport')->name('import')->middleware('permission:User Excel Import');
         Route::post('/excel-upload', 'usersExcelUpload')->name('upload')->middleware('permission:User Excel Import');
         Route::get('/excel-sample-download', 'usersExcelSampleDownload')->name('download')->middleware('permission:User Excel Import');
-    });
 
+        Route::post('/check-email', 'checkEmail')->name('check.email')->middleware('permission:User Create');
+        Route::post('/resend-email-verification/{id}', 'resendEmailVerification')->name('resend.email.verification')->middleware('permission:Resend Email Verification');
+        Route::post('/password-reset/{email}', 'resendEmailVerification')->name('password.reset')->middleware('permission:Resend Email Verification');
+    });
+    // Route::post('/admin/user-management/users/check-email', function (Request $request) {
+    //     $exists = User::where('email', $request->email)->exists();
+    //     return response()->json(['unique' => !$exists]);
+    // })->name('users.check.email');
+    // Route::post('password-reset/{email}', 'App\Http\Controllers\AppControllers\UserController', 'resendEmailVerification')->name('password.reset');
+    Route::get('/password-reset-with-otp', [UserController::class, 'passwordResetWithOtp'])->name('password.reset.with.otp');
+    Route::get('/password-otp-store', [UserController::class, 'passwordOtpStore'])->name('password.otp.store');
     //User Profile
 
     Route::controller('App\Http\Controllers\AppControllers\UserController')->prefix('/admin/profile')->name('user.profile.')->group(function () {
@@ -102,6 +116,11 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
         Route::patch('/avatar-update', 'avatarUpdate')->name('avatar.update')->middleware('permission:User Profile Avatar Edit');
         Route::patch('/avatar-delete', 'avatarDelete')->name('avatar.delete')->middleware('permission:User Profile Avatar Edit');
     });
+
+    Route::get('/jobs/pending', [JobQueueController::class, 'fetchPendingJobs']);
+    Route::get('/jobs/failed', [JobQueueController::class, 'fetchFailedJobs']);
+    Route::get('/job-queues', [JobQueueController::class, 'index']);
+
 
 
 

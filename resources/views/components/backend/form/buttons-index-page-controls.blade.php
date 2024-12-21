@@ -12,7 +12,7 @@
         <a class="dropdown-item" href="#">Separated link</a> --}}
 
         <!-- Add Button -->
-        <a href="{{ route($routeName . '.create') }}" class="btn btn-block btn-outline-primary btn-xs"><i
+        <a href="{{ route($routeName . '.create') }}" id="addButton" class="btn btn-block btn-outline-primary btn-xs"><i
                 class="fas fa-plus"></i> Add </a>
 
         <!-- Export Button -->
@@ -26,11 +26,12 @@
         </a>
 
         <!-- Settings Button -->
-        <a href="{{ route('settings.model.settings', encrypt($model)) }}"
+        <a href="{{ route('settings.model.settings', encrypt($model)) }}" id="settingsButton"
             class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-cog"></i> Settings </a>
 
         <!-- Refresh Button -->
-        <a onclick="Refresh()" class="btn btn-block btn-outline-warning btn-xs"><i class="fas fa-sync-alt"></i> Refresh
+        <a onclick="Refresh()" id="refreshButton" class="btn btn-block btn-outline-warning btn-xs"><i
+                class="fas fa-sync-alt"></i> Refresh
         </a>
 
 
@@ -44,7 +45,9 @@
 
 
 
-<x-backend.script.keyboard-shortcut key="c" button_id="name" type="alt" event="focus" />
+<x-backend.script.keyboard-shortcut key="a" button_id="addButton" type="ctrl&alt" event="click" />
+<x-backend.script.keyboard-shortcut key="r" button_id="refreshButton" type="ctrl&alt" event="click" />
+<x-backend.script.keyboard-shortcut key="s" button_id="settingsButton" type="ctrl&alt" event="click" />
 
 
 

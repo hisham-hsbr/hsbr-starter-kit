@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>jQuery Validation Example</title>
+        <!-- jQuery Library -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- jQuery Validation Plugin -->
+        <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.5/jquery.validate.min.js"></script>
+        <style>
+            .error {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Form Validation</h1>
+        <form id="myForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" /><br /><br />
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" /><br /><br />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" /><br /><br />
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input
+                type="password"
+                id="confirm_password"
+                name="confirm_password"
+            /><br /><br />
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <script>
+            $(document).ready(function () {
+                $("#myForm").validate({
+                    rules: {
+                        username: {
+                            required: true,
+                            minlength: 5,
+                        },
+                        email: {
+                            required: true,
+                            email: true,
+                        },
+                        password: {
+                            required: true,
+                            minlength: 8,
+                        },
+                        confirm_password: {
+                            required: true,
+                            equalTo: "#password",
+                        },
+                    },
+                    messages: {
+                        username: {
+                            required: "Please enter your username.",
+                            minlength:
+                                "Your username must be at least 5 characters long.",
+                        },
+                        email: {
+                            required: "Please enter your email address.",
+                            email: "Please enter a valid email address.",
+                        },
+                        password: {
+                            required: "Please provide a password.",
+                            minlength:
+                                "Your password must be at least 8 characters long.",
+                        },
+                        confirm_password: {
+                            required: "Please confirm your password.",
+                            equalTo: "Passwords do not match.",
+                        },
+                    },
+                    errorElement: "div",
+                    errorPlacement: function (error, element) {
+                        error.insertAfter(element);
+                    },
+                    submitHandler: function (form) {
+                        alert("Form submitted successfully!");
+                        form.submit();
+                    },
+                });
+            });
+        </script>
+    </body>
+</html>

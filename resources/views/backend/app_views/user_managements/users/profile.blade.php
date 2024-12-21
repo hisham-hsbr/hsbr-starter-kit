@@ -17,7 +17,6 @@
     <x-backend.layout_partials.card cardTitle="Profile Edit" cardFooter="" cardClass="card-secondary">
         <x-backend.model.update-user-avatar-model />
 
-
         <div style="margin-bottom: 8px" class="card-header">
             <h3 class="card-title">Personal Details</h3>
         </div>
@@ -76,7 +75,7 @@
                 </div>
                 <div class="p-4 col-sm-10">
                     <input type="checkbox" class="form-check-input" name="changePassword" value="1"
-                        id="changePassword" />
+                        @if (Auth::user()->otp == 1) checked @endif id="changePassword" />
                     <label class="form-check-label" for="changePassword">Change Password</label>
                 </div>
                 <div class="form-group col-sm-4">

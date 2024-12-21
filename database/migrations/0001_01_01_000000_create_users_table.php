@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('personal_settings')->nullable();
             $table->text('settings')->nullable();
             $table->string('avatar')->nullable();
+            $table->boolean('otp')->nullable();
             $table->rememberToken();
 
             // default

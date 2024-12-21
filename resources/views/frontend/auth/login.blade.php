@@ -12,14 +12,15 @@
                         @csrf
                         <div class="form-group">
                             <label>Enter Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="Enter Your Email" required>
+                            <input type="email" name="email" class="form-control" placeholder="Enter Your Email"
+                                value="{{ request()->query('email') }}" required>
                             <x-frontend.input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
 
                         <div class="form-group">
                             <label>Enter Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Enter Your Password"
-                                required>
+                                value="{{ request()->query('password') }}" required>
                             <x-frontend.input-error :messages="$errors->get('password')" class="mt-2" />
                         </div>
                         <div class="block mt-4">
@@ -29,6 +30,12 @@
                                     name="remember">
                                 <span class="text-sm text-gray-600 ms-2 dark:text-gray-400">{{ __('Remember me') }}</span>
                             </label>
+                            @if (Route::has('password.request'))
+                                <a class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                    href="{{ route('password.request') }}">
+                                    {{ __('Forgot your password?') }}
+                                </a>
+                            @endif
                         </div>
                         <div class="text-center signin-btn">
                             <button type="submit">Sign In</button>

@@ -46,7 +46,7 @@
                     menu_open="{{ request()->is('admin/dashboard') ? 'menu-open' : '' }}"
                     active="{{ request()->is('admin/dashboard') ? 'active' : '' }}" :angleLeft="false" navBadge=""
                     href="{{ route('backend.dashboard') }}" navBadgeClass="" navIcon="fas fa-home" />
-                @can('User Profile Read')
+                @can('User Profile Edit')
                     <x-backend.sidebar.sidebar-level-single navTitle="Profile" id="profileButton"
                         menu_open="{{ request()->is('admin/profile') ? 'menu-open' : '' }}"
                         active="{{ request()->is('admin/profile') ? 'active' : '' }}" :angleLeft="false" navBadge=""

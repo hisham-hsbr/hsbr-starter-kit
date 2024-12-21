@@ -51,6 +51,10 @@
         @include('backend.layouts.footer_links')
 
 
+        @include('backend.layouts.functions')
+
+
+
 </body>
 
 </html>

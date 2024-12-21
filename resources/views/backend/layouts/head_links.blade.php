@@ -14,6 +14,8 @@
 <link rel="stylesheet"
     href="{{ asset('backend/admin_lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
+<!-- sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 <x-backend.script.keyboard-shortcut key="h" button_id="homeButton" type="ctrl&alt" event="click" />

@@ -22,6 +22,8 @@
             enctype="multipart/form-data" id="quickForm">
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
+            <input type="hidden" id="encryptedUserId" value="{{ encrypt($user->id) }}">
+
             <div class="card-body">
                 <div class="row">
 
@@ -72,6 +74,7 @@
                             id="changePassword" />
                         <label class="form-check-label" for="changePassword">Change Password</label>
                     </div>
+
                     <div class="form-group col-sm-4">
                         <label for="password" class="required col-form-label">Password</label>
                         <input type="password" name="password" id="password" class="form-control"
@@ -194,7 +197,8 @@
     </x-backend.layout_partials.card>
 @endsection
 @section('footer_links')
-    <x-backend.validation.jquery_validation.test-demos-validation />
+    <x-backend.modules.users.jquery-validation-users />
+
     <x-backend.script.password-generate />
     <x-backend.links.dual-list-box-footer />
 

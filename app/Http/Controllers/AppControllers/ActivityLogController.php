@@ -4,7 +4,9 @@ namespace App\Http\Controllers\AppControllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AppModels\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\Datatables\Datatables;
 use Spatie\Activitylog\Models\Activity;
 
@@ -50,7 +52,8 @@ class ActivityLogController extends Controller
     public function activityLogsGet()
     {
 
-        $activity = Activity::all();
+        // $activity = Activity::all();
+        $activity = Activity::orderBy('created_at', 'desc')->get();
         return Datatables::of($activity)
 
             ->setRowId(function ($activity) {
@@ -63,6 +66,17 @@ class ActivityLogController extends Controller
                 $viewLink = '<a href="' . route('activity.logs.show', $activity->id) . '" class="ml-2"><i class="fa-solid fa fa-eye"></i></a>';
                 return $viewLink;
             })
+            ->addColumn('created_at', function (Activity $activity) {
+
+                $value = $activity->created_at;
+
+                $user = Auth::user();
+                $userTimeZone = $user && $user->timeZone ? $user->timeZone->time_zone : 'UTC'; // Default to 'UTC' or any other fallback
+                $timeZone = $userTimeZone;
+
+                return Carbon::parse(time: $value)->setTimezone(timeZone: $timeZone)->format('d-M-Y h:i A');
+            })
+
             ->addColumn('causer_name', function ($activity) {
                 return $activity->causer_id ? $activity->causer->name ?? 'Unknown User' : 'N/A';
             })

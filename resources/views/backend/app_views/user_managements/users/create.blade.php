@@ -50,21 +50,23 @@
                                         Other
                                     </option>
                                 </select>
+                                <x-backend.form.form-field-error-message name="gender" />
                             </div>
-                            <div class="col-sm-4">
-                                <label for="time_zone_id" class="required col-form-label">Time
+                            <div class="form-group col-sm-4">
+                                <label for="time_zone_id" class="required">Time
                                     Zone
                                     <x-backend.form.span-shortcut-tooltip type="Alt" key="T" />
                                 </label>
                                 <select name="time_zone_id" id="time_zone_id" class="form-control select2">
                                     <option disabled selected>--Time Zone--</option>
                                     @foreach ($timeZones as $timeZone)
-                                        <option {{ old('timeZone->id') == $timeZone->id ? 'selected' : '' }}
+                                        <option {{ old('time_zone_id') == $timeZone->id ? 'selected' : '' }}
                                             value="{{ $timeZone->id }}">{{ $timeZone->time_zone }} -- (
                                             {{ $timeZone->utc_code }}{{ ' ' }}{{ $timeZone->country }})
                                         </option>
                                     @endforeach
                                 </select>
+                                <x-backend.form.form-field-error-message name="time_zone_id" />
                             </div>
                             <div class="col-sm-12"></div>
 
@@ -72,16 +74,19 @@
                                 <label for="password" class="required col-form-label">Password</label>
                                 <input type="password" name="password" id="password" class="form-control"
                                     style="margin-bottom: 5px" placeholder="Password">
+                                <x-backend.form.form-field-error-message name="password" />
                                 <div class="form-group-append">
                                     <button type="button" class="btn btn-outline-secondary show-password"><i
                                             class="fa-regular fa-eye-slash"></i></button>
                                 </div>
+
                             </div>
                             <div class="form-group col-sm-4">
                                 <label for="password_confirm" class="required col-form-label">Confirm
                                     Password</label>
                                 <input type="password" name="password_confirm" id="password_confirm" class="form-control"
                                     style="margin-bottom: 5px" placeholder="Confirm Password">
+                                <x-backend.form.form-field-error-message name="password_confirm" />
                                 <div class="form-group-append">
                                     <button type="button" class="btn btn-outline-secondary show-password"><i
                                             class="fa-regular fa-eye-slash"></i></button>
@@ -110,6 +115,18 @@
 
                         <div class="mb-0 form-group">
                             <x-backend.form.status-default-value-set />
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" name="send_email_verification" id="send_email_verification"
+                                    value="1" class="custom-control-input"
+                                    @if (Auth::user()->settings['personal_settings']['value'] == 1) {
+                                        @if (Auth::user()->settings['default_send_email_verification']['value'] == 1) checked @endif
+                                } @else{ @if ($bootSettings['default_send_email_verification'] == 1) checked @endif} @endif>
+                                <label class="custom-control-label" for="send_email_verification">Send Email
+                                    Verification</label>
+
+                                <x-backend.form.form-field-error-message name="send_email_verification" />
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -122,11 +139,9 @@
     </div>
 @endsection
 @section('footer_links')
-    <x-backend.validation.jquery_validation.test-demos-validation />
+    <x-backend.modules.users.jquery-validation-users />
 
     <x-backend.script.password-generate />
-
-
 
     <x-backend.script.keyboard-shortcut key="n" button_id="name" type="alt" event="focus" />
     <x-backend.script.keyboard-shortcut key="e" button_id="email" type="alt" event="focus" />
