@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\AppControllers;
+namespace App\Http\Controllers\HakControllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppRequests\StoreAndUpdateTestDemoRequest;
-use App\Models\AppModels\TestDemo;
-use App\Models\AppModels\Settings;
+use App\Models\HakModels\TestDemo;
+use App\Models\HakModels\Settings;
 use Illuminate\Http\Request;
-use App\Models\AppModels\Activity;
+use App\Models\HakModels\Activity;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -226,7 +226,7 @@ class TestDemoController extends Controller
 
         $testDemo = TestDemo::withTrashed()->find(decrypt($testDemo));
         $activityLog = Activity::where('subject_id', $testDemo->id)
-            ->where('subject_type', 'App\Models\AppModels\TestDemo')
+            ->where('subject_type', 'App\Models\HakModels\TestDemo')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -279,13 +279,9 @@ class TestDemoController extends Controller
         } else {
             $testDemo->default = 0;
         }
+        // dd($request->status);
+        $testDemo->status = $request->status == 1 ? 1 : null;
 
-        if ($request->status == 0) {
-            $testDemo->status == 0;
-        } else {
-
-            $testDemo->status = $request->status;
-        }
 
         $testDemo->updated_by = Auth::user()->id;
         $testDemo->update();

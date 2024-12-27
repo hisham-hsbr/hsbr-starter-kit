@@ -24,24 +24,18 @@
                     <tr>
                         <td style="background-color: #007bff; padding: 20px; text-align: center; color: #ffffff;">
                             <h2 style="margin: 0;">{{ $bootSettings['app_name'] }}</h2>
-                            <p style="margin: 0;">Thanks for Email verification request!</p>
+                            <p style="margin: 0;">Thanks for OTP request!</p>
                         </td>
                     </tr>
                     <tr>
                         <td style="padding: 30px; text-align: center;">
                             <h3 style="margin: 0; color: #333;">Hello, {{ $userName }}</h3>
-                            <p style="color: #555;">Please click the link below to verify your email address:</p>
-                            <a href="{{ $verificationUrl }}"
-                                style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px; font-size: 16px;">Verify
-                                Email</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 30px; text-align: center;">
-                            <p>If the button above does not work, please copy and paste the following link into your
-                                browser:</p>
-                            <p style="word-break: break-word; text-align: center; color: #007bff;">
-                                {{ $verificationUrl }}</p>
+                            <p style="color: #555;">Your One-Time Password (OTP) for verification is:</p>
+                            <h1 style="color: #007bff; margin: 20px 0;">{{ $otp }}</h1>
+                            <p style="color: #555;">Please use this OTP to complete your verification.</p>
+                            <a href="{{ $loginUrl }}"
+                                style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px; font-size: 16px;">login
+                                Now</a>
                         </td>
                     </tr>
                     <tr>

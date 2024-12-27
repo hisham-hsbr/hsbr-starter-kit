@@ -2,7 +2,7 @@
 
 namespace App\Casts;
 
-use App\Models\AppModels\User;
+use App\Models\HakModels\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 

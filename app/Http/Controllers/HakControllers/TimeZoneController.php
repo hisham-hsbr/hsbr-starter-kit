@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\AppControllers;
+namespace App\Http\Controllers\HakControllers;
 
 use App\Http\Controllers\Controller;
 
-use App\Models\AppModels\TimeZone;
+use App\Models\HakModels\TimeZone;
 use Illuminate\Http\Request;
 
 class TimeZoneController extends Controller

@@ -171,6 +171,13 @@
                             </div>
                         @endcan
                     </div>
+                    <form action="{{ route('users.send.otp', encrypt($user->id)) }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="p-0 border-0 btn btn-link text-decoration-none"
+                            title="Resend Verification Email">
+                            <i class="fa-solid fa-key"></i> Send OTP
+                        </button>
+                    </form>
                 </div>
             </div>
 

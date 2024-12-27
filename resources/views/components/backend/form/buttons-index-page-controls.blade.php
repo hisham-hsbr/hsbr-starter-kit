@@ -5,12 +5,6 @@
         <span class="sr-only">Toggle Dropdown</span>
     </button>
     <div class="dropdown-menu" role="menu">
-        {{-- <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalForm">add T</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Separated link</a> --}}
-
         <!-- Add Button -->
         <a href="{{ route($routeName . '.create') }}" id="addButton" class="btn btn-block btn-outline-primary btn-xs"><i
                 class="fas fa-plus"></i> Add </a>

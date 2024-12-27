@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\AppModels\TestDemo;
+use App\Models\HakModels\TestDemo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\AppModels\Settings;
+use App\Models\HakModels\Settings;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;

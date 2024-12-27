@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\AppModels;
+namespace App\Models\HakModels;
 
 use App\Casts\UserNameCast;
 use App\Casts\UserNameCauserCast;

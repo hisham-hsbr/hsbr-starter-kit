@@ -1,23 +1,29 @@
 <?php
 
-use App\Http\Controllers\AppControllers\JobQueueController;
-use App\Http\Controllers\AppControllers\UserController;
-use App\Models\AppModels\User;
+use App\Http\Controllers\HakControllers\JobQueueController;
+use App\Http\Controllers\HakControllers\UserController;
+use App\Models\HakModels\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
 
+
+    Route::get('/test', action: function () {
+        return view(view: 'backend.emails.email'); // The 'example' view will be loaded from resources/views/example.blade.php
+    });
+
+
     Route::redirect('/admin', destination: '/admin/dashboard');
     Route::redirect('/dashboard', destination: '/admin/dashboard');
-    Route::get('/admin/dashboard', 'App\Http\Controllers\AppControllers\BackendController@dashboard')->name('backend.dashboard');
-    Route::get('/admin/start', 'App\Http\Controllers\AppControllers\BackendController@starter')->name('backend.starter');
+    Route::get('/admin/dashboard', 'App\Http\Controllers\HakControllers\BackendController@dashboard')->name('backend.dashboard');
+    Route::get('/admin/start', 'App\Http\Controllers\HakControllers\BackendController@starter')->name('backend.starter');
 
-    Route::get('/users', ['App\Http\Controllers\AppControllers\UserController@index'])->name('users.index');
-    Route::get('/users/get', ['App\Http\Controllers\AppControllers\UserController@getUsers'])->name('users.get');
+    Route::get('/users', ['App\Http\Controllers\HakControllers\UserController@index'])->name('users.index');
+    Route::get('/users/get', ['App\Http\Controllers\HakControllers\UserController@getUsers'])->name('users.get');
 
     //activity-logs
-    Route::controller('App\Http\Controllers\AppControllers\ActivityLogController')->prefix('/admin/user-management/activity-logs')->name('activity.logs.')->group(function () {
+    Route::controller('App\Http\Controllers\HakControllers\ActivityLogController')->prefix('/admin/user-management/activity-logs')->name('activity.logs.')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:Activity Log Read');
         Route::get('/show/{id}', 'show')->name('show')->middleware('permission:Activity Log Show');
         Route::get('/get', 'activityLogsGet')->name('get')->middleware('permission:Activity Log Read');
@@ -26,7 +32,7 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
     });
 
     // test demo
-    Route::controller('App\Http\Controllers\AppControllers\TestDemoController')->prefix('/admin/test/demos')->name('test.demos.')->group(function () {
+    Route::controller('App\Http\Controllers\HakControllers\TestDemoController')->prefix('/admin/test/demos')->name('test.demos.')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:Test Demo Read');
         Route::get('/create', 'create')->name('create')->middleware('permission:Test Demo Create');
         Route::post('/store', 'store')->name('store')->middleware('permission:Test Demo Create');
@@ -43,7 +49,7 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
         Route::get('/excel-sample-download', 'testDemosExcelSampleDownload')->name('download')->middleware('permission:Test Demo Excel Import');
     });
     // role
-    Route::controller('App\Http\Controllers\AppControllers\RoleController')->prefix('/admin/user-management/roles')->name('roles.')->group(function () {
+    Route::controller('App\Http\Controllers\HakControllers\RoleController')->prefix('/admin/user-management/roles')->name('roles.')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:Role Read');
         Route::get('/create', 'create')->name('create')->middleware('permission:Role Create');
         Route::post('/store', 'store')->name('store')->middleware('permission:Role Create');
@@ -61,7 +67,7 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
         Route::get('/excel-sample-download', 'rolesExcelSampleDownload')->name('download')->middleware('permission:Role Excel Import');
     });
     // permission
-    Route::controller('App\Http\Controllers\AppControllers\PermissionController')->prefix('/admin/user-management/permissions')->name('permissions.')->group(function () {
+    Route::controller('App\Http\Controllers\HakControllers\PermissionController')->prefix('/admin/user-management/permissions')->name('permissions.')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:Permission Read');
         Route::get('/create', 'create')->name('create')->middleware('permission:Permission Create');
         Route::post('/store', 'store')->name('store')->middleware('permission:Permission Create');
@@ -80,7 +86,7 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
     });
 
     //user
-    Route::controller('App\Http\Controllers\AppControllers\UserController')->prefix('/admin/user-management/users')->name('users.')->group(function () {
+    Route::controller('App\Http\Controllers\HakControllers\UserController')->prefix('/admin/user-management/users')->name('users.')->group(function () {
         Route::get('/', 'index')->name('index')->middleware('permission:User Read');
         Route::get('/create', 'create')->name('create')->middleware('permission:User Create');
         Route::post('/store', 'store')->name('store')->middleware('permission:User Create');
@@ -99,17 +105,12 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
         Route::post('/check-email', 'checkEmail')->name('check.email')->middleware('permission:User Create');
         Route::post('/resend-email-verification/{id}', 'resendEmailVerification')->name('resend.email.verification')->middleware('permission:Resend Email Verification');
         Route::post('/password-reset/{email}', 'resendEmailVerification')->name('password.reset')->middleware('permission:Resend Email Verification');
+        Route::post('/send-otp/{id}', 'sendOTP')->name('send.otp')->middleware('permission:Send OTP Email');
     });
-    // Route::post('/admin/user-management/users/check-email', function (Request $request) {
-    //     $exists = User::where('email', $request->email)->exists();
-    //     return response()->json(['unique' => !$exists]);
-    // })->name('users.check.email');
-    // Route::post('password-reset/{email}', 'App\Http\Controllers\AppControllers\UserController', 'resendEmailVerification')->name('password.reset');
-    Route::get('/password-reset-with-otp', [UserController::class, 'passwordResetWithOtp'])->name('password.reset.with.otp');
-    Route::get('/password-otp-store', [UserController::class, 'passwordOtpStore'])->name('password.otp.store');
+
     //User Profile
 
-    Route::controller('App\Http\Controllers\AppControllers\UserController')->prefix('/admin/profile')->name('user.profile.')->group(function () {
+    Route::controller('App\Http\Controllers\HakControllers\UserController')->prefix('/admin/profile')->name('user.profile.')->group(function () {
         Route::get('/', 'profileEdit')->name('edit')->middleware('permission:User Profile Edit');
         Route::patch('/', 'profileUpdate')->name('update')->middleware('permission:User Profile Edit');
         Route::delete('/', 'profileDestroy')->name('destroy')->middleware('permission:User Profile Delete');
@@ -125,7 +126,7 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
 
 
     // settings
-    Route::controller('App\Http\Controllers\AppControllers\SettingsController')->prefix('/admin/user-management/settings')->name('settings.')->group(function () {
+    Route::controller('App\Http\Controllers\HakControllers\SettingsController')->prefix('/admin/user-management/settings')->name('settings.')->group(function () {
         Route::get('/index', 'index')->name('index')->middleware('permission:Settings Read');
         Route::get('/general-settings', 'generalSettings')->name('general.settings')->middleware('permission:Settings General Read');
         Route::patch('/general-settings/update', 'generalSettingsUpdate')->name('general.settings.update')->middleware('permission:Settings General Update');

@@ -177,6 +177,8 @@
 <!-- Custom JS -->
 <script src="{{ asset('frontend/jovie/assets/js/custom.js') }}"></script>
 
-
+<!-- Toastr -->
+<script src="{{ asset('backend/admin_lte/plugins/toastr/toastr.min.js') }}"></script>
+<x-app.message.message />
 @section('footer_links')
 @show

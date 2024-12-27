@@ -9,21 +9,23 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class UserEmailVerificationMail extends Mailable implements ShouldQueue
+class UserSendOTPMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $verificationUrl;
+    public $otp;
+    public $loginUrl;
     public $userName;
-    public function __construct($verificationUrl, $userName)
+    public function __construct($loginUrl, $userName, $otp)
     {
-        $this->verificationUrl = $verificationUrl;
+        $this->loginUrl = $loginUrl;
+        $this->otp = $otp;
         $this->userName = $userName;
     }
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verify Email Address',
+            subject: 'One-Time Password (OTP)',
         );
     }
 
@@ -33,7 +35,7 @@ class UserEmailVerificationMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'backend.emails.email_verification',
+            view: 'backend.emails.email_otp',
         );
     }
 

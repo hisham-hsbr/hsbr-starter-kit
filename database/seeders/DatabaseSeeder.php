@@ -5,7 +5,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\AppModels\Activity;
+use App\Models\HakModels\Activity;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

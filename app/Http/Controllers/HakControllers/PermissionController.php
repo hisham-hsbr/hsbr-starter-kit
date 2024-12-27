@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\AppControllers;
+namespace App\Http\Controllers\HakControllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\AppModels\Permission;
+use App\Models\HakModels\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -43,7 +43,7 @@ class PermissionController extends Controller
 
 
 
-        return view('backend.app_views.user_managements.permissions.index')->with(
+        return view('backend.hak_views.user_managements.permissions.index')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -118,7 +118,7 @@ class PermissionController extends Controller
     }
     public function create()
     {
-        return view('backend.app_views.user_managements.permissions.create')->with(
+        return view('backend.hak_views.user_managements.permissions.create')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,

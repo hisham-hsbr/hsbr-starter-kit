@@ -16,13 +16,15 @@ class UserWelcomeWithOTPMail extends Mailable implements ShouldQueue
     public $userName;
     public $otp;
     public $loginUrl;
+    public $verificationUrl;
     public $email;
 
-    public function __construct($userName, $otp, $loginUrl, $email)
+    public function __construct($userName, $otp, $loginUrl, $email, $verificationUrl)
     {
         $this->userName = $userName;
         $this->otp = $otp;
         $this->loginUrl = $loginUrl;
+        $this->verificationUrl = $verificationUrl;
         $this->email = $email;
     }
     public function envelope(): Envelope
@@ -38,7 +40,7 @@ class UserWelcomeWithOTPMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'backend.emails.user_welcome',
+            view: 'backend.emails.email_welcome_with_otp',
         );
     }
 

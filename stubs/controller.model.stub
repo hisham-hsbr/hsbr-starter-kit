@@ -6,12 +6,12 @@ use {{ namespacedModel }};
 use {{ rootNamespace }}Http\Controllers\Controller;
 use {{ namespacedRequests }}
 use App\Http\Controllers\Controller;
-use App\Models\AppModels\Activity;
+use App\Models\HakModels\Activity;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
-use App\Models\AppModels\Settings;
+use App\Models\HakModels\Settings;
 
 
 class {{ class }} extends Controller
@@ -203,7 +203,7 @@ class {{ class }} extends Controller
     {
         ${{ modelVariable }} = {{ model }}::withTrashed()->find(decrypt(${{ modelVariable }}));
         $activityLog = Activity::where('subject_id', ${{ modelVariable }}->id)
-            ->where('subject_type', 'App\Models\AppModels\{{ model }}')
+            ->where('subject_type', 'App\Models\HakModels\{{ model }}')
             ->orderBy('created_at', 'desc')
             ->get();
 

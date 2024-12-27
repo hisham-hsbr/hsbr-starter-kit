@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\AppControllers;
+namespace App\Http\Controllers\HakControllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\AppModels\Settings;
+use App\Models\HakModels\Settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,7 +20,7 @@ class SettingsController extends Controller
 
     public function index()
     {
-        return view('backend.app_views.settings.index')->with(
+        return view('backend.hak_views.settings.index')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -34,7 +34,7 @@ class SettingsController extends Controller
     public function generalSettings()
     {
         $settings = Settings::all();
-        return view('backend.app_views.settings.settings')->with(
+        return view('backend.hak_views.settings.settings')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -75,7 +75,7 @@ class SettingsController extends Controller
     {
         // $settings = Settings::all();
         $settings = Settings::where('model', decrypt($modelSettings))->get();
-        return view('backend.app_views.settings.model_settings')->with(
+        return view('backend.hak_views.settings.model_settings')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,

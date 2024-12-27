@@ -1,28 +1,23 @@
 <?php
 
-namespace App\Models\AppModels;
+namespace App\Models\HakModels;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Models\Role as SpatieRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Illuminate\Support\Facades\Auth;
 use App\Casts\StatusCast;
 use App\Casts\StatusIconCast;
 use App\Casts\TimeZoneCreatedCast;
 use App\Casts\TimeZoneUpdatedCast;
 use App\Casts\TitleCast;
 use App\Casts\UserNameCast;
-use Illuminate\Support\Facades\Auth;
 
-class Role extends SpatieRole
+class TestDemo extends Model
 {
     use HasFactory, SoftDeletes, LogsActivity;
-
-    protected $attributes = [
-        'guard_name' => 'web'
-    ];
     protected $fillable = [
         'code',
         'name',
@@ -51,9 +46,10 @@ class Role extends SpatieRole
     }
     public function getActivitylogOptions(): LogOptions
     {
-        $useLogName = 'Role';
+        $useLogName = 'TestDemo';
         return LogOptions::defaults()
-            ->logOnly(['name', 'permissions["name"]', 'description', 'default', 'status', 'deleted_at', 'created_at', 'updated_at', 'deleted_at'])
+            ->logOnly(['code', 'name', 'local_name', 'description', 'default', 'status', 'created_at', 'updated_at', 'deleted_at'])
+            // ->logOnly(['code', 'name', 'local_name', 'description', 'default', 'status', 'created_at', 'updated_at', 'deleted_at'])
             ->setDescriptionForEvent(fn(string $eventName) => "$useLogName {$eventName}")
             ->useLogName($useLogName)
             ->logOnlyDirty();

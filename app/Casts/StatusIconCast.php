@@ -20,13 +20,18 @@ class StatusIconCast implements CastsAttributes
         $delete = '<span style="background-color: #ff0000;color: white;padding: 3px;width:100px;">Deleted</span>';
 
         // checking status,deleted_at & default
-        $deletedAt = $attributes['deleted_at'] ?? null;
-        $default = $attributes['default'] ?? 0;
-        $status = $attributes['status'] ?? 0;
+        $deletedAt = $attributes['deleted_at'];
+        $default = $attributes['default'];
+        $status = $attributes['status'];
 
-        return $deletedAt === null
-            ? ($value == 1 ? ($default == 1 ? $activeWithDefault : $active) : $inActive)
-            : $delete;
+        // Return the appropriate HTML based on the conditions
+        if ($deletedAt !== null) {
+            return $delete; // Deleted
+        } elseif ($status == 1) {
+            return $default == 1 ? $activeWithDefault : $active; // Active or Active with Default
+        } else {
+            return $inActive; // Inactive
+        }
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\AppModels\User;
+use App\Models\HakModels\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;

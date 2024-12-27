@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\AppModels;
+namespace App\Models\HakModels;
 
-
-use Spatie\Permission\Models\Permission as SpatiePermission;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role as SpatieRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
@@ -14,10 +14,9 @@ use App\Casts\TimeZoneCreatedCast;
 use App\Casts\TimeZoneUpdatedCast;
 use App\Casts\TitleCast;
 use App\Casts\UserNameCast;
+use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Permission extends SpatiePermission
+class Role extends SpatieRole
 {
     use HasFactory, SoftDeletes, LogsActivity;
 
@@ -52,10 +51,9 @@ class Permission extends SpatiePermission
     }
     public function getActivitylogOptions(): LogOptions
     {
-        $useLogName = 'Permission';
+        $useLogName = 'Role';
         return LogOptions::defaults()
-            ->logOnly(['code', 'name', 'local_name', 'description', 'default', 'status', 'deleted_at'])
-            // ->logOnly(['code', 'name', 'local_name', 'description', 'default', 'status', 'created_at', 'updated_at', 'deleted_at'])
+            ->logOnly(['name', 'permissions["name"]', 'description', 'default', 'status', 'deleted_at', 'created_at', 'updated_at', 'deleted_at'])
             ->setDescriptionForEvent(fn(string $eventName) => "$useLogName {$eventName}")
             ->useLogName($useLogName)
             ->logOnlyDirty();

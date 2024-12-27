@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\AppControllers;
+namespace App\Http\Controllers\HakControllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\AppModels\Role;
+use App\Models\HakModels\Role;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use App\Models\AppModels\Activity;
-use App\Models\AppModels\Permission;
+use App\Models\HakModels\Activity;
+use App\Models\HakModels\Permission;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +43,7 @@ class RoleController extends Controller
             session()->flash('message_error', $message_error);
         }
 
-        return view('backend.app_views.user_managements.roles.index')->with(
+        return view('backend.hak_views.user_managements.roles.index')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -130,7 +130,7 @@ class RoleController extends Controller
     {
         $permissions = Permission::all()->groupBy('parent');
 
-        return view('backend.app_views.user_managements.roles.create')->with(
+        return view('backend.hak_views.user_managements.roles.create')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -186,11 +186,11 @@ class RoleController extends Controller
         $role = Role::withTrashed()->find(decrypt($role));
         $activityLog = Activity::with('causer')
             ->where('subject_id', $role->id)
-            ->where('subject_type', 'App\Models\AppModels\Role')
+            ->where('subject_type', 'App\Models\HakModels\Role')
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('backend.app_views.user_managements.roles.show')->with(
+        return view('backend.hak_views.user_managements.roles.show')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -215,7 +215,7 @@ class RoleController extends Controller
 
 
 
-        return view('backend.app_views.user_managements.roles.edit')->with(
+        return view('backend.hak_views.user_managements.roles.edit')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,

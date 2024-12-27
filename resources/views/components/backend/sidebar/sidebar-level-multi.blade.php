@@ -27,26 +27,3 @@
         {{ $slot }}
     </li>
 </ul>
-
-
-
-
-{{-- style="margin-left: 5px" --}}
-
-{{-- <li class="nav-item menu-open">
-    <a href="#" class="nav-link active">
-        <i class="nav-icon fas fa-tree"></i>
-        <p>
-            UI Elements
-            <i class="fas fa-angle-left right"></i>
-        </p>
-    </a>
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="../UI/general.html" class="nav-link active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>General</p>
-            </a>
-        </li>
-    </ul>
-</li> --}}

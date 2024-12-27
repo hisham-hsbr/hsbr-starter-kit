@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\AppModels\Permission;
-use App\Models\AppModels\Role;
-use App\Models\AppModels\User;
+use App\Models\HakModels\Permission;
+use App\Models\HakModels\Role;
+use App\Models\HakModels\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

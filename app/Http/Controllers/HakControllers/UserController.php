@@ -1,27 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\AppControllers;
+namespace App\Http\Controllers\HakControllers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\UserEmailVerificationMail;
+use App\Mail\UserSendOTPMail;
 use App\Mail\UserWelcomeWithOTPMail;
-use App\Models\AppModels\Activity;
-use App\Models\AppModels\Permission;
-use App\Models\AppModels\Role;
-use App\Models\AppModels\TimeZone;
-use App\Models\AppModels\User;
-use App\Notifications\UserCreateNotification;
+use App\Models\HakModels\Activity;
+use App\Models\HakModels\Permission;
+use App\Models\HakModels\Role;
+use App\Models\HakModels\TimeZone;
+use App\Models\HakModels\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
-use Carbon\Carbon;
-use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 
 class UserController extends Controller
@@ -39,7 +36,7 @@ class UserController extends Controller
         $createdByUsers = $users->sortBy('created_by')->pluck('created_by')->unique();
         $updatedByUsers = $users->sortBy('updated_by')->pluck('updated_by')->unique();
 
-        return view('backend.app_views.user_managements.users.index')->with(
+        return view('backend.hak_views.user_managements.users.index')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -59,9 +56,6 @@ class UserController extends Controller
 
         // Get all users including trashed, but exclude the authenticated user
         $users = User::withTrashed()->where('id', '!=', Auth::user()->id)->get();
-
-
-
 
         return Datatables::of($users)
             ->setRowId(function ($user) {
@@ -130,7 +124,7 @@ class UserController extends Controller
         }
         $permissions = Permission::where('status', 1)->get();
         $permissionsGroupBy = Permission::all()->groupBy('parent');
-        return view('backend.app_views.user_managements.users.create')->with(
+        return view('backend.hak_views.user_managements.users.create')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -146,47 +140,7 @@ class UserController extends Controller
             ]
         );
     }
-    public function checkEmail(Request $request)
-    {
-        $email = $request->input('email');
-        $encryptedUserId = $request->input('user_id'); // Get the encrypted user ID
 
-        try {
-            $userId = $encryptedUserId ? decrypt($encryptedUserId) : null; // Decrypt the user ID if provided
-        } catch (\Exception $e) {
-            return response()->json(['unique' => false]); // Invalid encrypted ID, fail validation
-        }
-
-        // Check if the email exists for another user
-        $isUnique = !User::where('email', $email)
-            ->when($userId, function ($query, $userId) {
-                return $query->where('id', '!=', $userId); // Exclude the current user's ID
-            })
-            ->exists();
-
-        return response()->json(['unique' => $isUnique]);
-    }
-
-    public function generatePassword()
-    {
-        $charset = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ123456789';
-        $password = '';
-        $length = 6;
-
-        for ($i = 0; $i < $length; $i++) {
-            $password .= $charset[random_int(0, strlen($charset) - 1)];
-        }
-
-        return $password;
-    }
-    public function showResetForm($email)
-    {
-        // Retrieve user by email
-        $user = User::where('email', $email)->firstOrFail();
-
-        // Show the password reset form
-        return view('auth.passwords.reset', compact('user'));
-    }
     public function store(Request $request)
     {
         // Validate input fields
@@ -254,7 +208,13 @@ class UserController extends Controller
             $userName = $user->name;
             $loginUrl = url('/login') . '?email=' . urlencode($email) . '&password=' . urlencode($password);
 
-            Mail::to($user->email)->send(new UserWelcomeWithOTPMail($userName, $otp, $loginUrl, $email));
+            $verificationUrl = URL::temporarySignedRoute(
+                'verification.verify',
+                now()->addMinutes(60),
+                ['id' => encrypt($user->id), 'hash' => sha1($user->email)]
+            );
+
+            Mail::to($user->email)->send(new UserWelcomeWithOTPMail($userName, $otp, $loginUrl, $email, $verificationUrl));
         }
 
         return redirect()->route($this->routeName . '.index')
@@ -262,31 +222,17 @@ class UserController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     */
-    public function passwordResetWithOtp()
-    {
-        $token = bin2hex(random_bytes(32)); // Generate a secure random token
-        return view('frontend.auth.reset-password-with-otp')->with($token);
-    }
-    public function passwordOtpStore()
-    {
-        $token = bin2hex(random_bytes(32)); // Generate a secure random token
-        $email = Auth::user()->email;
-        return view('frontend.auth.reset-password-with-otp')->with($token, $email);
-    }
     public function show($user)
     {
 
 
         $user = User::withTrashed()->find(decrypt($user));
         $activityLog = Activity::where('subject_id', $user->id)
-            ->where('subject_type', 'App\Models\AppModels\User')
+            ->where('subject_type', 'App\Models\HakModels\User')
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('backend.app_views.user_managements.users.show')->with(
+        return view('backend.hak_views.user_managements.users.show')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -301,9 +247,6 @@ class UserController extends Controller
         );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $user)
     {
         $user = User::withTrashed()->find(id: decrypt($user));
@@ -320,7 +263,7 @@ class UserController extends Controller
 
 
 
-        return view('backend.app_views.user_managements.users.edit')->with(
+        return view('backend.hak_views.user_managements.users.edit')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -338,9 +281,7 @@ class UserController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         $id = decrypt($id);
@@ -369,6 +310,7 @@ class UserController extends Controller
         $user->gender = $request->gender;
         $user->email = $request->email;
         $user->email_verified_at = $request->email_verified_at;
+        $user->status = $request->status == 1 ? 1 : null;
 
         // Update password if needed
         if ($request->changePassword == 1) {
@@ -442,7 +384,7 @@ class UserController extends Controller
         if (Auth::user()->otp == 1) {
             session()->flash('alert_password_change', true);
         }
-        return view('backend.app_views.user_managements.users.profile')->with(
+        return view('backend.hak_views.user_managements.users.profile')->with(
             [
                 'headName' => $headName,
                 'routeName' => $routeName,
@@ -549,10 +491,6 @@ class UserController extends Controller
         return response()->json(['message_success' => 'Profile Avatar Updated Successfully']);
     }
 
-
-
-
-
     public function avatarDelete(request $request)
     {
         $old_avatar = $request->user()->avatar;
@@ -624,15 +562,14 @@ class UserController extends Controller
                     ]
                 );
             }
-
+            $userName = $user->name;
             // Send the email verification notification
-            // $user->sendEmailVerificationNotification();
             $verificationUrl = URL::temporarySignedRoute(
                 'verification.verify',
                 now()->addMinutes(60),
-                ['id' => $user->id, 'hash' => sha1($user->email)]
+                ['id' => encrypt($user->id), 'hash' => sha1($user->email)]
             );
-            Mail::to($user->email)->send(new UserEmailVerificationMail($verificationUrl));
+            Mail::to($user->email)->send(new UserEmailVerificationMail($verificationUrl, $userName));
             return back()->with(
                 [
                     'message_success' => 'Verification email sent successfully!'
@@ -645,6 +582,72 @@ class UserController extends Controller
                     'message_error' => 'An error occurred while sending the verification email.'
                 ]
             );
+        }
+    }
+
+
+    public function checkEmail(Request $request) //email check on js validation
+    {
+        $email = $request->input('email');
+        $encryptedUserId = $request->input('user_id'); // Get the encrypted user ID
+
+        try {
+            $userId = $encryptedUserId ? decrypt($encryptedUserId) : null; // Decrypt the user ID if provided
+        } catch (\Exception $e) {
+            return response()->json(['unique' => false]); // Invalid encrypted ID, fail validation
+        }
+
+        // Check if the email exists for another user
+        $isUnique = !User::where('email', $email)
+            ->when($userId, function ($query, $userId) {
+                return $query->where('id', '!=', $userId); // Exclude the current user's ID
+            })
+            ->exists();
+
+        return response()->json(['unique' => $isUnique]);
+    }
+
+    public function generatePassword()
+    {
+        $charset = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ123456789';
+        $password = '';
+        $length = 6;
+
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $charset[random_int(0, strlen($charset) - 1)];
+        }
+
+        return $password;
+    }
+    public function sendOTP($id)
+    {
+        try {
+            $userId = decrypt($id);
+            $user = User::findOrFail($userId);
+            $otp = $this->generatePassword();
+            $email = $user->email;
+            $userName = $user->name;
+
+            $user = User::find($userId);
+
+            // Update basic fields
+            $user->otp = 1;
+            $user->password = $user->password = Hash::make($otp);
+            $user->update();
+
+
+
+            // Generate login URL
+            $loginUrl = url('/login') . '?email=' . urlencode($email) . '&password=' . urlencode($otp);
+
+            // Send email
+            Mail::to($email)->send(new UserSendOTPMail($loginUrl, $userName, $otp));
+
+            // Optional: Add logic to return a response or handle errors
+
+            return redirect()->back()->with('message_success', 'OTP sent successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('message_error', 'Failed to send OTP. Please try again.');
         }
     }
 }

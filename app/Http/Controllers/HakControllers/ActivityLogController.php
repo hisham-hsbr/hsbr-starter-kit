@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\AppControllers;
+namespace App\Http\Controllers\HakControllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\AppModels\User;
+use App\Models\HakModels\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +21,7 @@ class ActivityLogController extends Controller
     public function index()
     {
         $activityLogs = Activity::all();
-        return view('backend.app_views.user_managements.activity_logs.index')->with(
+        return view('backend.hak_views.user_managements.activity_logs.index')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
@@ -39,7 +39,7 @@ class ActivityLogController extends Controller
         $activityLog = Activity::find($id);
         // dd($activityLog);
         $users = User::all();
-        return view('backend.app_views.user_managements.activity_logs.show')->with(
+        return view('backend.hak_views.user_managements.activity_logs.show')->with(
             [
                 'headName' => $this->headName,
                 'routeName' => $this->routeName,
