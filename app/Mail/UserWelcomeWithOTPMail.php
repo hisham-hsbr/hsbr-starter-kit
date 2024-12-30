@@ -33,10 +33,6 @@ class UserWelcomeWithOTPMail extends Mailable implements ShouldQueue
             subject: 'Welcome to HSBR Apps',
         );
     }
-
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
