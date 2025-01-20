@@ -26,6 +26,8 @@ class TestDemoController extends Controller
     public function index()
     {
         $testDemos = TestDemo::all();
+        $settings = Settings::where('model', $this->model)->get();
+
         $createdByUsers = $testDemos->sortBy('created_by')->pluck('created_by')->unique();
         $updatedByUsers = $testDemos->sortBy('updated_by')->pluck('updated_by')->unique();
 
@@ -61,6 +63,7 @@ class TestDemoController extends Controller
                 'createdByUsers' => $createdByUsers,
                 'updatedByUsers' => $updatedByUsers,
                 'message_error' => $message_error,
+                'settings' => $settings,
             ]
         );
     }

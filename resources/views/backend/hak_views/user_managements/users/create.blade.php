@@ -140,6 +140,8 @@
 @endsection
 @section('footer_links')
     <x-backend.modules.users.jquery-validation-users />
+    <x-backend.links.dual-list-box-footer />
+
 
     <x-backend.script.password-generate />
 

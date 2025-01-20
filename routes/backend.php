@@ -18,6 +18,8 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
     Route::redirect('/dashboard', destination: '/admin/dashboard');
     Route::get('/admin/dashboard', 'App\Http\Controllers\HakControllers\BackendController@dashboard')->name('backend.dashboard');
     Route::get('/admin/start', 'App\Http\Controllers\HakControllers\BackendController@starter')->name('backend.starter');
+    Route::get('/dashboard-stats', 'App\Http\Controllers\HakControllers\BackendController@getDashboardStats')->name('backend.dashboard.stats');
+
 
     Route::get('/users', ['App\Http\Controllers\HakControllers\UserController@index'])->name('users.index');
     Route::get('/users/get', ['App\Http\Controllers\HakControllers\UserController@getUsers'])->name('users.get');
@@ -132,5 +134,28 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
         Route::patch('/general-settings/update', 'generalSettingsUpdate')->name('general.settings.update')->middleware('permission:Settings General Update');
         Route::get('/model-settings/{model}', 'modelSettings')->name('model.settings')->middleware('permission:Settings Model Read');
         Route::patch('/model-settings/update/{model}', 'modelSettingsUpdate')->name('model.settings.update')->middleware('permission:Settings Model Edit');
+    });
+
+    // backups
+    Route::controller('App\Http\Controllers\HakControllers\BackupController')->prefix('/admin/app-management/backups')->name('backups.')->group(function () {
+        Route::get('/index', 'index')->name('index')->middleware('permission:Backup Read');
+        Route::get('/create', 'create')->name('create')->middleware('permission:Backup Create');
+        Route::get('/manual-backup', 'manualFullBackup')->name('manual.full.backup')->middleware('permission:Backup Manual Create');
+        Route::get('/manual-db-backup', 'manualDbBackup')->name('manual.db.backup')->middleware('permission:Backup Manual DB Create');
+        Route::get('/download-backup/{file}', 'downloadBackup')->name('download.backup')->where('file', '.*')->middleware('permission:Backup File Download');
+        Route::post('/delete-backup', 'deleteBackup')->name('delete.backup')->where('file', '.*')->middleware('permission:Backup File Delete');
+        Route::post('/custom-backup', 'customBackup')->name('custom.backup')->middleware('permission:Backup Custom Create');
+        Route::get('/backup-settings', 'backupSettings')->name('settings')->middleware('permission:Backup Settings Read');
+        Route::patch('/backup-settings/update', 'backupSettingsUpdate')->name('backup.settings.update')->middleware('permission:Backup Settings Update');
+    });
+    // queues
+    Route::controller('App\Http\Controllers\HakControllers\JobQueueController')->prefix('/admin/app-management/queues')->name('queues.')->group(function () {
+        Route::get('/index', 'index')->name('index')->middleware('permission:Queue Read');
+        Route::get('/create', 'create')->name('create')->middleware('permission:Queue Create');
+        Route::get('/show', 'showQueueJobs')->name('show')->middleware('permission:Queue Show');
+        Route::get('/controls', 'controls')->name('controls')->middleware('permission:Queue Controls');
+        Route::get('/settings', 'settings')->name('settings')->middleware('permission:Queue Setup');
+        Route::get('/retry-job', 'retryJob')->name('retry.job')->middleware('permission:Queue Retry Job');
+        Route::get('/delete-failed-jobs', 'deleteFailedJobs')->name('delete.failed.jobs')->middleware('permission:Queue Delete Failed Jobs');
     });
 });

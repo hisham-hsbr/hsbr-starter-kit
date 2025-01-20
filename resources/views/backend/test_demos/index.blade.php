@@ -19,6 +19,15 @@
 @section('main_content')
     <x-backend.layout_partials.card cardTitle="" cardFooter="">
 
+        <div class="mb-4 d-flex justify-content-end">
+
+            <button type="button" class="mr-2 btn btn-secondary" data-toggle="modal" data-target="#settingsModal">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+            <x-backend.model.model-settings :model="$model" :settings="$settings" :routeName='$routeName' />
+
+        </div>
+
         <x-backend.model.index-page-info-model model_title="Test Demo Index" />
         <x-backend.form.buttons-index-page-controls :routeName="$routeName" :model='$model' />
         <x-backend.model.test-demo-filter-model :createdByUsers="$createdByUsers" :updatedByUsers="$updatedByUsers" />

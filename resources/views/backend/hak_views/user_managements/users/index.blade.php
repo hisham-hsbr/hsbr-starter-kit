@@ -19,7 +19,7 @@
     <x-backend.layout_partials.card cardTitle="" cardFooter="">
 
         <x-backend.model.index-page-info-model model_title="Test Demo Index" />
-        <x-backend.form.buttons-index-page-controls :routeName="$routeName" :model='$model' />
+        <x-backend.form.buttons-index-page-controls :routeName="$routeName" :model='$model' :settings="$settings" />
         <x-backend.model.test-demo-filter-model :createdByUsers="$createdByUsers" :updatedByUsers="$updatedByUsers" />
         <x-backend.model.create-test-demo-model />
         @can('{{ $permissionName }} Read')

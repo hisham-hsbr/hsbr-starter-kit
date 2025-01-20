@@ -1,10 +1,8 @@
 <aside class="main-sidebar main-sidebar-custom sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-        <img src="{{ asset('/storage/images/app/logo/hsbr_logo_icon.png') }}" alt="HSBR Logo"
-            class="brand-image img-circle elevation-3" style="opacity: .8">
-        <img src="{{ asset('/storage/images/app/logo/hsbr_logo_name_w.png') }}"
-            style="width: 40%; height: 40%; object-fit: cover;" />
+        <x-app.logo.logo_icon />
+        <x-app.logo.logo />
 
         {{-- <span class="brand-text font-weight-light">HSBR-Apps</span> --}}
     </a>
@@ -25,8 +23,7 @@
         <!-- SidebarSearch Form -->
         <div class="pt-4 form-inline">
             <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                    aria-label="Search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
                     <button class="btn btn-sidebar">
                         <i class="fas fa-search fa-fw"></i>
@@ -37,8 +34,8 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-compact nav-child-indent" data-widget="treeview"
+                role="menu" data-accordion="false">
 
                 <x-backend.sidebar.sidebar-nav-header navHeader="Admin" />
 
@@ -55,6 +52,10 @@
                 @canany(['User Read', 'Role Read', 'Permission Read', 'Activity Logs Read'])
                     <x-backend.sidebar.sidebar-nav-header navHeader="User Management" />
                     <x-backend.sidebar.sidebar_partials.user-management-menu />
+                @endcanany
+                @canany(['Backup Read'])
+                    <x-backend.sidebar.sidebar-nav-header navHeader="App Management" />
+                    <x-backend.sidebar.sidebar_partials.app-management-menu />
                 @endcanany
                 @can('Test Demo Read')
                     <x-backend.sidebar.sidebar_partials.test-menu />

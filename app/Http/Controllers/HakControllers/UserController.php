@@ -9,6 +9,7 @@ use App\Mail\UserWelcomeWithOTPMail;
 use App\Models\HakModels\Activity;
 use App\Models\HakModels\Permission;
 use App\Models\HakModels\Role;
+use App\Models\HakModels\Settings;
 use App\Models\HakModels\TimeZone;
 use App\Models\HakModels\User;
 use Illuminate\Http\Request;
@@ -33,6 +34,9 @@ class UserController extends Controller
     {
         $users = User::withTrashed()->where('id', '!=', Auth::user()->id)->get();
 
+        $settings = Settings::where('model', $this->model)->get();
+
+
         $createdByUsers = $users->sortBy('created_by')->pluck('created_by')->unique();
         $updatedByUsers = $users->sortBy('updated_by')->pluck('updated_by')->unique();
 
@@ -47,6 +51,8 @@ class UserController extends Controller
 
                 'createdByUsers' => $createdByUsers,
                 'updatedByUsers' => $updatedByUsers,
+                'settings' => $settings,
+
             ]
         );
     }
@@ -493,18 +499,17 @@ class UserController extends Controller
 
     public function avatarDelete(request $request)
     {
-        $old_avatar = $request->user()->avatar;
+        $old_avatar = Auth::user()->avatar;
 
         // dd($old_avatar);
         Storage::disk('public')->delete($old_avatar);
 
         $path = "";
         $id = Auth::user()->id;
-        $id = decrypt($id);
+        // $id = decrypt($id);
         $user  = User::findOrFail($id);
         $user->avatar = $path;
         $user->update();
-
         return redirect()->back()->with('message_success', 'Profile Avatar Deleted');
     }
 

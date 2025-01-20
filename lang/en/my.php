@@ -13,6 +13,7 @@ return [
     'refresh' => 'refresh',
     'settings' => 'settings',
     'import' => 'import',
+    'controls' => 'controls',
 
     // form
     'name' => 'name',

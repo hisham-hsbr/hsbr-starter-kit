@@ -1,4 +1,4 @@
-@props(['routeName', 'model'])
+@props(['routeName', 'model', 'settings'])
 <div class="btn-group">
     <button type="button" class="btn btn-info">Action</button>
     <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
@@ -19,9 +19,7 @@
                 class="fas fa-file-import"></i> Import
         </a>
 
-        <!-- Settings Button -->
-        <a href="{{ route('settings.model.settings', encrypt($model)) }}" id="settingsButton"
-            class="btn btn-block btn-outline-secondary btn-xs"><i class="fas fa-cog"></i> Settings </a>
+
 
         <!-- Refresh Button -->
         <a onclick="Refresh()" id="refreshButton" class="btn btn-block btn-outline-warning btn-xs"><i

@@ -1,9 +1,9 @@
 @extends('backend.layouts.app')
 @section('page_title')
-    {{ $headName }} | Edit
+    {{ $headName }} | {{ ucwords(__('my.edit')) }}
 @endsection
 @section('page_header_name')
-    {{ $headName }} - Edit
+    {{ $headName }} - {{ ucwords(__('my.edit')) }}
 @endsection
 @section('head_links')
 @endsection
@@ -160,18 +160,12 @@
                 @endif
             </div>
             <x-backend.form.form-field-error-message name="description" />
-
-            </div>
             <div style="padding-bottom: 8px;padding-right: 8px" class="">
                 <button type="submit" class="float-right ml-1 btn btn-primary" id="updateButton"><u>U</u>pdate</button>
                 <a type="button" href="{{ route('backend.dashboard') }}" id="backButton"
                     class="float-right ml-1 btn btn-warning"><u>B</u>ack</a>
             </div>
         </form>
-
-
-
-
 
     </x-backend.layout_partials.card>
 @endsection

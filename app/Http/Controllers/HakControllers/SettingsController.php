@@ -73,7 +73,6 @@ class SettingsController extends Controller
 
     public function modelSettings($modelSettings)
     {
-        // $settings = Settings::all();
         $settings = Settings::where('model', decrypt($modelSettings))->get();
         return view('backend.hak_views.settings.model_settings')->with(
             [
@@ -89,6 +88,9 @@ class SettingsController extends Controller
             ]
         );
     }
+
+
+
     public function modelSettingsUpdate(Request $request)
     {
         $rules = array_fill_keys(array_keys($request->all()), 'required');

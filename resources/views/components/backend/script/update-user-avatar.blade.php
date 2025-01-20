@@ -70,6 +70,10 @@
         });
     });
 
+
+
+
+
     // Reset modal on close
     $('#avatarModal').on('hidden.bs.modal', function() {
         document.getElementById('avatar').value = ''; // Reset file input

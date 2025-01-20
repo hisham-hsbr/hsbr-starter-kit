@@ -53,5 +53,15 @@ class SettingsSeeder extends Seeder
         // user model settings
         Settings::create(['name' => 'user_icon', 'model' => 'user', 'data' => '', 'default_value' => 'fa-user', 'value' => 'fa-user', 'type' => 'admin', 'group' => 'model', 'parent' => 'user', 'default_by' => '1', 'form_type' => 'text', 'form_data' => '', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Settings::create(['name' => 'user_color', 'model' => 'user', 'data' => '', 'default_value' => 'yellow', 'value' => 'yellow', 'type' => 'admin', 'group' => 'model', 'parent' => 'user', 'default_by' => '1', 'form_type' => 'text', 'form_data' => '', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+
+        // dashboard settings
+        Settings::create(['name' => 'dashboard_data_refresh', 'model' => 'dashboard', 'data' => '', 'default_value' => '1', 'value' => '1', 'type' => 'admin', 'group' => 'application', 'parent' => 'dashboard', 'default_by' => '1', 'form_type' => 'checkbox', 'form_data' => ["Enable"], 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+        Settings::create(['name' => 'dashboard_data_refresh_interval', 'model' => 'dashboard', 'data' => '', 'default_value' => '30000', 'value' => '30000', 'type' => 'admin', 'group' => 'application', 'parent' => 'dashboard', 'default_by' => '1', 'form_type' => 'text', 'form_data' => '', 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+
+        // backup settings
+        Settings::create(['name' => 'backup_automatic_schedule', 'model' => 'backup', 'data' => '', 'default_value' => '1', 'value' => '1', 'type' => 'admin', 'group' => 'application', 'parent' => 'backup', 'default_by' => '1', 'form_type' => 'checkbox', 'form_data' => ["Enable"], 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+        Settings::create(['name' => 'backup_automatic_db_only', 'model' => 'backup', 'data' => '', 'default_value' => '1', 'value' => '1', 'type' => 'admin', 'group' => 'application', 'parent' => 'backup', 'default_by' => '1', 'form_type' => 'checkbox', 'form_data' => ["Enable"], 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+        Settings::create(['name' => 'backup_manual_schedule', 'model' => 'backup', 'data' => '', 'default_value' => '1', 'value' => '1', 'type' => 'admin', 'group' => 'application', 'parent' => 'backup', 'default_by' => '1', 'form_type' => 'checkbox', 'form_data' => ["Enable"], 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+        Settings::create(['name' => 'backup_schedule_frequencies', 'model' => 'backup', 'data' => '', 'default_value' => "daily('00:00')", 'value' => "daily('00:00')", 'type' => 'admin', 'group' => 'application', 'parent' => 'backup', 'default_by' => '1', 'form_type' => 'select', 'form_data' => ["everyTwoMinutes()", "hourly()", "daily()", "daily('00:00')", "weeklyOn(1, '00:00')", "monthly()", "lastDayOfMonth()"], 'description' => 'des', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
     }
 }

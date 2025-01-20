@@ -36,10 +36,9 @@
             <!-- Content Header (Page header) -->
             @include('backend.layouts.main_content')
 
+
             <!-- /.content-wrapper -->
             @include('backend.layouts.footer')
-
-
 
             <!-- Control Sidebar -->
             <aside class="control-sidebar control-sidebar-dark">

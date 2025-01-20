@@ -14,6 +14,10 @@
                 </button>
             </div>
             <div class="modal-body">
+                <!-- Display Existing Avatar -->
+                <div class="text-center form-group">
+                    <x-app.user-profile-image style="font-size: 30px; width: 160px;" />
+                </div>
                 <form id="avatar-form">
                     @csrf
                     <input type="hidden" name="_method" value="PATCH">
@@ -26,6 +30,16 @@
                         <img id="image-preview" style="max-width: 100%;" />
                     </div>
                 </form>
+                @if (Auth::user()->avatar)
+                    <div class="mt-3 text-center">
+                        <!-- Form for Removing Avatar -->
+                        <form method="post" action="{{ route('user.profile.avatar.delete') }}">
+                            @csrf
+                            @method('patch')
+                            <button type="submit" class="mt-1 mb-1 btn btn-danger btn-sm me-1">Remove Avatar</button>
+                        </form>
+                    </div>
+                @endif
             </div>
             <div class="modal-footer">
                 <button type="button" id="crop-btn" class="btn btn-success" style="display: none;">Crop &
