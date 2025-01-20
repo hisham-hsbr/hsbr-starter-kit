@@ -68,6 +68,11 @@
                                 </select>
                                 <x-backend.form.form-field-error-message name="time_zone_id" />
                             </div>
+                            <div class="form-group col-sm-4">
+                                <label for="date_of_birth" class="required">Date Of Birth</label>
+                                <input type="date" name="date_of_birth" id="date_of_birth" class="form-control"
+                                    value="{{ old('date_of_birth') }}" placeholder="Enter Date Of Birth">
+                            </div>
                             <div class="col-sm-12"></div>
 
                             <div class="form-group col-sm-4">

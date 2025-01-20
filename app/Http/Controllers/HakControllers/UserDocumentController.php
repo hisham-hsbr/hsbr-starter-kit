@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\HakControllers;
 
 use App\Models\HakModels\Activity;
 use App\Models\HakModels\Settings;
-use App\Models\UserDocument;
+use App\Models\HakModels\UserDocument;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Controllers\Controller;
+
 
 
 class UserDocumentController extends Controller
 {
-   private $headName = 'Test Demos';
+    private $headName = 'Test Demos';
     private $routeName = 'test.demos';
     private $permissionName = 'Test Demo';
     private $snakeName = 'test_demo';
@@ -238,7 +240,7 @@ class UserDocumentController extends Controller
         );
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $id = decrypt($id);
         $userDocument = UserDocument::withTrashed()->find($id);

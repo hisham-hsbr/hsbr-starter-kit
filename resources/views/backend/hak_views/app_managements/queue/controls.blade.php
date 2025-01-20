@@ -40,6 +40,14 @@
                 </button>
             </div>
         </div>
+        <div class="mt-3 col-12">
+            <form action="{{ route('users.run.birthday') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fas fa-birthday-cake"></i> Birthday Run
+                </button>
+            </form>
+        </div>
     </x-backend.layout_partials.card>
 @endsection
 

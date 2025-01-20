@@ -108,6 +108,7 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
         Route::post('/resend-email-verification/{id}', 'resendEmailVerification')->name('resend.email.verification')->middleware('permission:Resend Email Verification');
         Route::post('/password-reset/{email}', 'resendEmailVerification')->name('password.reset')->middleware('permission:Resend Email Verification');
         Route::post('/send-otp/{id}', 'sendOTP')->name('send.otp')->middleware('permission:Send OTP Email');
+        Route::post('/run-birthday', 'runBirthday')->name('run.birthday')->middleware('permission: Run Birthday');
     });
 
     //User Profile

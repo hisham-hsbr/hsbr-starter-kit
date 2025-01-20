@@ -13,6 +13,7 @@ use App\Models\HakModels\Settings;
 use App\Models\HakModels\TimeZone;
 use App\Models\HakModels\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -155,6 +156,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             // 'password' => 'required|same:password_confirm',
             'time_zone_id' => 'required',
+            'date_of_birth' => 'required',
             'gender' => 'required',
             'roles' => 'required|array'
         ]);
@@ -179,6 +181,7 @@ class UserController extends Controller
         $user->password = Hash::make($password);
         $user->time_zone_id = $request->time_zone_id;
         $user->gender = $request->gender;
+        $user->date_of_birth = $request->date_of_birth;
 
         if ($request->default) {
             User::where('default', 1)->update(['default' => null]);
@@ -297,6 +300,7 @@ class UserController extends Controller
             'name' => 'required',
             'time_zone_id' => 'required',
             'gender' => 'required',
+            'date_of_birth' => 'required',
             'email' => "required|email|unique:users,email,$id",
             'roles' => 'required'
         ]);
@@ -314,6 +318,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->time_zone_id = $request->time_zone_id;
         $user->gender = $request->gender;
+        $user->date_of_birth = $request->date_of_birth;
         $user->email = $request->email;
         $user->email_verified_at = $request->email_verified_at;
         $user->status = $request->status == 1 ? 1 : null;
@@ -653,6 +658,16 @@ class UserController extends Controller
             return redirect()->back()->with('message_success', 'OTP sent successfully!');
         } catch (\Exception $e) {
             return redirect()->back()->with('message_error', 'Failed to send OTP. Please try again.');
+        }
+    }
+
+    public function runBirthday()
+    {
+        try {
+            Artisan::queue('notify:birthdays');
+            return back()->with('message_success', value: 'Birthday Notification running completed successfully.');
+        } catch (\Exception $e) {
+            return back()->with('message_error', 'Failed to complete Birthday Notification running: ' . $e->getMessage());
         }
     }
 }

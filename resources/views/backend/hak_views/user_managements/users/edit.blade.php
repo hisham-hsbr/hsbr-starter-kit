@@ -66,6 +66,11 @@
                         <input type="datetime-local" name="email_verified_at" id="email_verified_at" class="form-control"
                             value="{{ $user->email_verified_at ? Carbon\Carbon::parse($user->email_verified_at_formatted)->format('Y-m-d\TH:i') : '' }}">
                     </div>
+                    <div class="form-group col-sm-4">
+                        <label for="date_of_birth" class="required col-form-label">Date Of Birth</label>
+                        <input type="date" name="date_of_birth" id="date_of_birth" class="form-control"
+                            value="{{ $user->date_of_birth ? Carbon\Carbon::parse($user->date_of_birth)->format('Y-m-d') : '' }}">
+                    </div>
 
 
 
@@ -102,7 +107,8 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label>Description</label>
-                        <textarea name="description" id="description" class="form-control" rows="3" placeholder="Enter description...">{{ old('description') }}</textarea>
+                        <textarea name="description" id="description" class="form-control" rows="3"
+                            placeholder="Enter description...">{{ old('description') }}</textarea>
                     </div>
                 </div>
                 <div class="row">
