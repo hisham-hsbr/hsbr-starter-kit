@@ -22,38 +22,38 @@
         <x-backend.form.buttons-index-page-controls :routeName="$routeName" :model='$model' :settings="$settings" />
         <x-backend.model.test-demo-filter-model :createdByUsers="$createdByUsers" :updatedByUsers="$updatedByUsers" />
         <x-backend.model.create-test-demo-model />
-        @can('{{ $permissionName }} Read')
+        @can($permissionName . ' Read')
             <table id="example1" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
-                        @can('{{ $permissionName }} Read')
+                        @can($permissionName . ' Read')
                             <th>Sn</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Action')
+                        @can($permissionName . ' Read Action')
                             <th width="20%">Action</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Name')
+                        @can($permissionName . ' Read Name')
                             <th width="20%">Name</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Email')
+                        @can($permissionName . ' Read Email')
                             <th width="20%">Email</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Email Verified')
+                        @can($permissionName . ' Read Email Verified')
                             <th width="20%">Email Verified</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Status')
+                        @can($permissionName . ' Read Status')
                             <th width="10%">Status</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Created At')
+                        @can($permissionName . ' Read Created At')
                             <th width="20%">Created At</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Updated At')
+                        @can($permissionName . ' Read Updated At')
                             <th width="20%">Updated At</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Created By')
+                        @can($permissionName . ' Read Created By')
                             <th width="20%">Created By</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Updated By')
+                        @can($permissionName . ' Read Updated By')
                             <th width="20%">Updated By</th>
                         @endcan
                     </tr>
@@ -63,34 +63,34 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        @can('{{ $permissionName }} Read')
+                        @can($permissionName . ' Read')
                             <th>Sn</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Action')
+                        @can($permissionName . ' Read Action')
                             <th width="20%">Action</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Name')
+                        @can($permissionName . ' Read Name')
                             <th width="20%">Name</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Email')
+                        @can($permissionName . ' Read Email')
                             <th width="20%">Email</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Email Verified')
+                        @can($permissionName . ' Read Email Verified')
                             <th width="20%">Email Verified</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Status')
+                        @can($permissionName . ' Read Status')
                             <th width="10%">Status</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Created At')
+                        @can($permissionName . ' Read Created At')
                             <th width="20%">Created At</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Updated At')
+                        @can($permissionName . ' Read Updated At')
                             <th width="20%">Updated At</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Created By')
+                        @can($permissionName . ' Read Created By')
                             <th width="20%">Created By</th>
                         @endcan
-                        @can('{{ $permissionName }} Read Updated By')
+                        @can($permissionName . ' Read Updated By')
                             <th width="20%">Updated By</th>
                         @endcan
                     </tr>

@@ -33,7 +33,12 @@ class UserController extends Controller
     private $model = 'User';
     public function index()
     {
-        $users = User::withTrashed()->where('id', '!=', Auth::user()->id)->get();
+        $users = User::withTrashed()
+            ->where('id', '!=', Auth::user()->id)
+            ->where('id', '!=', 1)
+            ->get();
+
+
 
         $settings = Settings::where('model', $this->model)->get();
 
@@ -62,7 +67,10 @@ class UserController extends Controller
         $defaultCount = User::withTrashed()->where('default', 1)->count();
 
         // Get all users including trashed, but exclude the authenticated user
-        $users = User::withTrashed()->where('id', '!=', Auth::user()->id)->get();
+        $users = User::withTrashed()
+            ->where('id', '!=', Auth::user()->id)
+            ->where('id', '!=', 1)
+            ->get();
 
         return Datatables::of($users)
             ->setRowId(function ($user) {

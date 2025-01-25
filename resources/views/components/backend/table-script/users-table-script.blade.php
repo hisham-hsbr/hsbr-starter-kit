@@ -11,7 +11,7 @@ users
             scrollCollapse: true,
             ajax: "{{ route('users.get') }}", // Route for your data source
             columns: [
-                @can('{{ $permissionName }} Read')
+                @can('User Read')
                     {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -19,7 +19,7 @@ users
                         searchable: false
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Action')
+                @can('User Read Action')
                     {
                         data: 'action',
                         name: 'action',
@@ -27,7 +27,7 @@ users
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Name')
+                @can('User Read Name')
                     {
                         data: 'name',
                         name: 'name',
@@ -35,7 +35,7 @@ users
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Email')
+                @can('User Read Email')
                     {
                         data: 'email',
                         name: 'email',
@@ -43,7 +43,7 @@ users
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Email Verified')
+                @can('User Read Email Verified')
                     {
                         data: 'emailVerified',
                         name: 'emailVerified',
@@ -51,7 +51,7 @@ users
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Status')
+                @can('User Read Status')
                     {
                         data: 'status_with_icon',
                         name: 'status_with_icon',
@@ -59,7 +59,7 @@ users
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Created At')
+                @can('User Read Created At')
                     {
                         data: 'created_at_formatted',
                         name: 'created_at_formatted',
@@ -67,7 +67,7 @@ users
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Updated At')
+                @can('User Read Updated At')
                     {
                         data: 'updated_at_formatted',
                         name: 'updated_at_formatted',
@@ -75,7 +75,7 @@ users
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Created By')
+                @can('User Read Created By')
                     {
                         data: 'created_by_name',
                         name: 'created_by_name',
@@ -83,7 +83,7 @@ users
                         defaultContent: '',
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Updated By')
+                @can('User Read Updated By')
                     {
                         data: 'updated_by_name',
                         name: 'updated_by_name',

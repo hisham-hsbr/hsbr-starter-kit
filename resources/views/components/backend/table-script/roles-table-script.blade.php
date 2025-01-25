@@ -11,7 +11,7 @@ roles
             scrollCollapse: true,
             ajax: "{{ route('roles.get') }}", // Route for your data source
             columns: [
-                @can('{{ $permissionName }} Read')
+                @can('Role Read')
                     {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
@@ -19,7 +19,7 @@ roles
                         searchable: false
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Action')
+                @can('Role Read Action')
                     {
                         data: 'action',
                         name: 'action',
@@ -27,7 +27,7 @@ roles
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Name')
+                @can('Role Read Name')
                     {
                         data: 'name',
                         name: 'name',
@@ -35,7 +35,7 @@ roles
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Users')
+                @can('Role Read Users')
                     {
                         data: 'users_count',
                         name: 'users_count',
@@ -43,7 +43,7 @@ roles
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Permissions')
+                @can('Role Read Permissions')
                     {
                         data: 'permissions_count',
                         name: 'permissions_count',
@@ -51,7 +51,7 @@ roles
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Status')
+                @can('Role Read Status')
                     {
                         data: 'status_with_icon',
                         name: 'status_with_icon',
@@ -59,7 +59,7 @@ roles
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Created At')
+                @can('Role Read Created At')
                     {
                         data: 'created_at',
                         name: 'created_at',
@@ -67,7 +67,7 @@ roles
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Updated At')
+                @can('Role Read Updated At')
                     {
                         data: 'updated_at',
                         name: 'updated_at',
@@ -75,7 +75,7 @@ roles
                         defaultContent: ''
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Created By')
+                @can('Role Read Created By')
                     {
                         data: 'created_by',
                         name: 'created_by',
@@ -83,7 +83,7 @@ roles
                         defaultContent: '',
                     },
                 @endcan
-                @can('{{ $permissionName }} Read Updated By')
+                @can('Role Read Updated By')
                     {
                         data: 'updated_by',
                         name: 'updated_by',

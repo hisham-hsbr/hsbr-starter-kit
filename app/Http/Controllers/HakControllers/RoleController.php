@@ -24,7 +24,10 @@ class RoleController extends Controller
     private $model = 'Role';
     public function index()
     {
-        $roles = Role::withTrashed()->get();
+        $roles = Role::withTrashed()
+            ->with(['users', 'permissions'])
+            ->where('id', '!=', 1)
+            ->get();
 
         $createdByUsers = $roles->sortBy('created_by')->pluck('created_by')->unique();
         $updatedByUsers = $roles->sortBy('updated_by')->pluck('updated_by')->unique();
@@ -62,7 +65,10 @@ class RoleController extends Controller
     public function rolesGet(Request $request)
     {
         $defaultCount = Role::withTrashed()->where('default', 1)->count();
-        $roles = Role::withTrashed()->with(['users', 'permissions'])->get();
+        $roles = Role::withTrashed()
+            ->with(['users', 'permissions'])
+            ->where('id', '!=', 1)
+            ->get();
 
         return Datatables::of($roles)
             ->setRowId(function ($role) {

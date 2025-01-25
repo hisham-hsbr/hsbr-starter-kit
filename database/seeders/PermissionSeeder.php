@@ -35,6 +35,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Test Demo Filter', 'group' => 'Test Demo', 'parent' => 'Test Demo', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Test Demo History', 'group' => 'Test Demo', 'parent' => 'Test Demo', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
 
+        Permission::create(['name' => 'Test Demo Read Action', 'group' => 'Test Demo', 'parent' => 'Test Demo', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Test Demo Read Code', 'group' => 'Test Demo', 'parent' => 'Test Demo', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Test Demo Read Name', 'group' => 'Test Demo', 'parent' => 'Test Demo', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Test Demo Read Local Name', 'group' => 'Test Demo', 'parent' => 'Test Demo', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
@@ -70,8 +71,8 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Settings Filter', 'group' => 'Settings', 'parent' => 'Settings', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Settings History', 'group' => 'Settings', 'parent' => 'Settings', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
 
+        Permission::create(['name' => 'Settings Read Action', 'group' => 'Settings', 'parent' => 'Settings', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Settings Read Code', 'group' => 'Settings', 'parent' => 'Settings', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
-        Permission::create(['name' => 'Settings Read Name', 'group' => 'Settings', 'parent' => 'Settings', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Settings Read Local Name', 'group' => 'Settings', 'parent' => 'Settings', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
 
         Permission::create(['name' => 'Settings Read Description', 'group' => 'Settings', 'parent' => 'Settings', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
@@ -123,6 +124,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'User Filter', 'group' => 'User', 'parent' => 'User', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'User History', 'group' => 'User', 'parent' => 'User', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
 
+        Permission::create(['name' => 'User Read Action', 'group' => 'User', 'parent' => 'User', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'User Read Name', 'group' => 'User', 'parent' => 'User', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'User Read Email', 'group' => 'User', 'parent' => 'User', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'User Read Email Verified At', 'group' => 'User', 'parent' => 'User', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
@@ -163,6 +165,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Permission Filter', 'group' => 'Permission', 'parent' => 'Permission', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Permission History', 'group' => 'Permission', 'parent' => 'Permission', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
 
+        Permission::create(['name' => 'Permission Read Action', 'group' => 'Permission', 'parent' => 'Permission', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Permission Read Name', 'group' => 'Permission', 'parent' => 'Permission', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Permission Read Parent', 'group' => 'Permission', 'parent' => 'Permission', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Permission Read Guard Name ', 'group' => 'Permission', 'parent' => 'Permission', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
@@ -198,6 +201,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Role Filter', 'group' => 'Role', 'parent' => 'Role', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Role History', 'group' => 'Role', 'parent' => 'Role', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
 
+        Permission::create(['name' => 'Role Read Action', 'group' => 'Role', 'parent' => 'Role', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Role Read Name', 'group' => 'Role', 'parent' => 'Role', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'Role Read Guard Name', 'group' => 'Role', 'parent' => 'Role', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
 

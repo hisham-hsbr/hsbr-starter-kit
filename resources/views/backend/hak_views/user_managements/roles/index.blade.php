@@ -47,7 +47,6 @@
 
         <x-backend.model.test-demo-filter-model :createdByUsers="$createdByUsers" :updatedByUsers="$updatedByUsers" />
         @can($permissionName . ' Read')
-            <h1>ss</h1>
             <table id="example1" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
