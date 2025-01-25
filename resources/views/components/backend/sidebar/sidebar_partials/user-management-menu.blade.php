@@ -23,6 +23,13 @@
                 navBadge="" navBadgeClass="" navIcon="fa fa-lock" href="{{ route('permissions.index') }}">
             </x-backend.sidebar.sidebar-level-multi>
         @endcan
+        @can('Notification Read')
+            <x-backend.sidebar.sidebar-level-multi navTitle="Notifications"
+                menu_open="{{ request()->is('admin/user-management/notifications*') ? 'menu-open' : '' }}"
+                active="{{ request()->is('admin/user-management/notifications*') ? 'active' : '' }}" :angleLeft="false"
+                navBadge="" navBadgeClass="" navIcon="fa fa-bell" href="{{ route('notifications.index') }}">
+            </x-backend.sidebar.sidebar-level-multi>
+        @endcan
         @can('Activity Log Read')
             <x-backend.sidebar.sidebar-level-multi navTitle="Activity Logs"
                 menu_open="{{ request()->is('admin/user-management/activity-logs*') ? 'menu-open' : '' }}"

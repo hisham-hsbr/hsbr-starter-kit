@@ -136,6 +136,16 @@ Route::middleware('auth')->middleware(['auth', 'verified'])->group(function () {
         Route::get('/model-settings/{model}', 'modelSettings')->name('model.settings')->middleware('permission:Settings Model Read');
         Route::patch('/model-settings/update/{model}', 'modelSettingsUpdate')->name('model.settings.update')->middleware('permission:Settings Model Edit');
     });
+    // notification
+    Route::controller('App\Http\Controllers\HakControllers\NotificationController')->prefix('/admin/user-management/notifications')->name('notifications.')->group(function () {
+        Route::get('/index', 'index')->name('index')->middleware('permission:Notification Read');
+        Route::get('/create', 'create')->name('create')->middleware('permission:Notification Create');
+        Route::post('/store', 'store')->name('store')->middleware('permission:Notification Create');
+        Route::get('/show', 'show')->name('show')->middleware('permission:Notification Show');
+        Route::post('/read', 'markAsRead')->name('read')->middleware('permission:Notification Show');
+        Route::post('/unread', 'markAsUnread')->name('unread')->middleware('permission:Notification Show');
+        Route::get('/unread-count', 'unreadCount')->name('unread.count')->middleware('permission:Notification Unread Count Show');
+    });
 
     // backups
     Route::controller('App\Http\Controllers\HakControllers\BackupController')->prefix('/admin/app-management/backups')->name('backups.')->group(function () {
