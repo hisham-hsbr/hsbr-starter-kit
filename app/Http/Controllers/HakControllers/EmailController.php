@@ -34,7 +34,8 @@ class EmailController extends Controller
             $verificationUrl = URL::temporarySignedRoute(
                 'verification.verify',
                 now()->addMinutes(60),
-                ['id' => encrypt($user->id), 'hash' => sha1($user->email)]
+                // ['id' => encrypt($user->id), 'hash' => sha1($user->email)]
+                ['id' => $user->id, 'hash' => sha1($user->email)]
             );
             Mail::to($user->email)->send(new UserEmailVerificationMail($verificationUrl, $userName));
             return back()->with(

@@ -47,6 +47,12 @@
                                 style="display: inline-block; background-color: #007bff; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; margin-top: 20px; font-size: 16px;">Verify
                                 email</a>
                         </td>
+                        <td style="padding: 30px; text-align: center;">
+                            <p>If the button above does not work, please copy and paste the following link into your
+                                browser:</p>
+                            <p style="word-break: break-word; text-align: center; color: #007bff;">
+                                {{ $verificationUrl }}</p>
+                        </td>
                     </tr>
                     <tr>
                         <td style=" text-align: center; font-size: 12px; color: #777;">

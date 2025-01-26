@@ -7,7 +7,7 @@
         <div class="spinner-border text-primary" role="status" style="width: 6rem; height: 6rem;">
             <span class="sr-only">Loading...</span>
         </div>
-        <img src="{{ asset('/storage/images/app/logo/hsbr_logo_icon.png') }}" alt="Logo"
+        <img src="{{ asset('app/images/logo/hsbr_logo_icon.png') }}" alt="Logo"
             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 4.5rem; height: 4.5rem;">
     </div>
 </div>

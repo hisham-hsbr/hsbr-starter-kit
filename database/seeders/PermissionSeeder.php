@@ -104,9 +104,6 @@ class PermissionSeeder extends Seeder
         // <= User Profile
         Permission::create(['name' => 'User Profile Edit', 'group' => 'User Profile', 'parent' => 'User Profile', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         Permission::create(['name' => 'User Profile Avatar Edit', 'group' => 'User Profile', 'parent' => 'User Profile', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
-        Permission::create(['name' => 'User Profile Delete', 'group' => 'User Profile', 'parent' => 'User Profile', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
-        Permission::create(['name' => 'User Profile Force Delete', 'group' => 'User Profile', 'parent' => 'User Profile', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
-        Permission::create(['name' => 'User Profile Restore', 'group' => 'User Profile', 'parent' => 'User Profile', 'guard_name' => 'web', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
         // => User Profile
 
 
