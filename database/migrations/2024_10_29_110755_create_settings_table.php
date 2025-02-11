@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string(column: 'value')->nullable();
             $table->string('type')->nullable();
             $table->string('group')->nullable();
+            $table->string(column: 'permission')->nullable();
             $table->string('parent')->nullable();
             $table->string('default_by')->nullable();
             $table->string('form_type')->nullable();

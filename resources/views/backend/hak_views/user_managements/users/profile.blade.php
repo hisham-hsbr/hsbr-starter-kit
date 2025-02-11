@@ -73,6 +73,11 @@
                     <input type="text" name="email_verified_at" id="email_verified_at" class="form-control"
                         value="{{ Auth::user()->email_verified_at_formatted }}" disabled>
                 </div>
+                <div class="form-group col-sm-4">
+                    <label for="date_of_birth" class="required col-form-label">Date Of Birth</label>
+                    <input type="date" name="date_of_birth" id="date_of_birth" class="form-control"
+                        value="{{ Auth::user()->date_of_birth ? Carbon\Carbon::parse(Auth::user()->date_of_birth)->format('Y-m-d') : '' }}">
+                </div>
                 <div class="p-4 col-sm-10">
                     <input type="checkbox" class="form-check-input" name="changePassword" value="1"
                         @if (Auth::user()->otp == 1) checked @endif id="changePassword" />
@@ -98,7 +103,8 @@
                     </div>
                 </div>
                 <div class="">
-                    <button type="button" class="btn btn-block btn-outline-warning generate-password" onclick="generate()">
+                    <button type="button" class="btn btn-block btn-outline-warning generate-password"
+                        onclick="generate()">
                         <i class="fas fa-key"></i> Generate Password
                     </button>
                 </div>

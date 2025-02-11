@@ -291,6 +291,12 @@ class RoleController extends Controller
         try {
             $role = Role::withTrashed()->findOrFail(decrypt($id));
 
+            $roleInUse = Role::inUse()->find(decrypt($id));
+
+            if ($roleInUse) {
+                return response()->json(['success' => false, 'error' => 'This role is assigned to users.']);
+            }
+
             if (is_null($role->default)) {
                 $role->forceDelete();
                 return response()->json(['success' => true, 'message' => 'Role Hard Deleted Successfully']);

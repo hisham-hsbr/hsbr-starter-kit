@@ -20,6 +20,13 @@
         @if ($bootSettings['layout_dark_mode'] == 1) dark-mode @endif}
     @endif
     ">
+    {{-- <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        <strong>Notice:</strong> The website is currently under maintenance. Some features may not work as expected.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div> --}}
+
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->

@@ -58,4 +58,8 @@ class Role extends SpatieRole
             ->useLogName($useLogName)
             ->logOnlyDirty();
     }
+    public function scopeInUse($query)
+    {
+        return $query->whereHas('users');
+    }
 }

@@ -1,28 +1,22 @@
-@extends('back_end.layouts.app')
-
-@section('PageHead')
-    {{ ucwords(__('my.show')) }}
+@extends('backend.layouts.app')
+@section('page_title')
+    {{ $headName }} | Show
+@endsection
+@section('page_header_name')
+    {{ $headName }} - Show
+@endsection
+@section('head_links')
+    <x-backend.links.datatable-head-links />
+@endsection
+@section('breadcrumbs')
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}"
+        :active="false" />
+    <x-backend.layout_partials.page-breadcrumb-item pageName="{{ $headName }}"
+        pageHref="{{ route($routeName . '.index') }}" :active="false" />
+    <x-backend.layout_partials.page-breadcrumb-item pageName="Show" pageHref="" :active="true" />
 @endsection
 
-@section('PageTitle')
-    {{ ucwords(__('my.show')) }}
-@endsection
-
-@section('pageNavHeader')
-    <li class="breadcrumb-item"><a href="{{ route('back-end.dashboard') }}">{{ ucwords(__('my.dashboard')) }}</a></li>
-    <li class="breadcrumb-item"><a href="{{ route($routeName . '.index') }}">{{ $headName }}</a></li>
-    <li class="breadcrumb-item active">{{ ucwords(__('my.show')) }}</li>
-@endsection
-
-@section('headLinks')
-
-@endsection
-
-@section('actionTitle')
-    {{ ucwords(__('my.show')) }}
-@endsection
-
-@section('mainContent')
+@section('main_content')
     <div class="container-fluid">
         @can('Activity Log View')
             <div class="row">
@@ -67,7 +61,7 @@
                                 <div class="col-sm-6">
                                     <label class="col-sm-4">Event User</label>
                                     <label><code>:
-                                            {{ $activityLog->activityUser->name }}</code></label>
+                                            name</code></label>
                                 </div>
                                 <div class="col-sm-6">
                                     <label class="col-sm-4">Created At</label>
@@ -110,7 +104,7 @@
 
                     <!-- /.card-body -->
                     <div class="">
-                        <a type="button" href="{{ route('activity-logs.index') }}"
+                        <a type="button" href="{{ route($routeName . '.index') }}"
                             class="float-right ml-1 btn btn-warning">Back</a>
                     </div>
                     <!-- /.card-footer -->
@@ -125,12 +119,5 @@
 
 
 @endsection
-@section('actionFooter', 'Footer')
-@section('footerLinks')
-
-
-    <x-back-end.message.message />
-
-
-
+@section('footer_links')
 @endsection

@@ -1,13 +1,17 @@
 @extends('backend.layouts.app')
+
 @section('page_title')
     {{ $headName }} | Model Settings
 @endsection
+
 @section('page_header_name')
     {{ $headName }} - Model Settings
 @endsection
+
 @section('head_links')
     <x-backend.links.datatable-head-links />
 @endsection
+
 @section('breadcrumbs')
     <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}"
         :active="false" />
@@ -23,7 +27,6 @@
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
             <div class="row">
-                {{-- <div class="col-1"></div> --}}
                 <div class="col-12">
                     <!-- Search Bar -->
                     <div class="form-group row">
@@ -34,8 +37,20 @@
                         </div>
                     </div>
 
+                    <!-- Model Filter Dropdown -->
+                    <div class="form-group row">
+                        <label for="modelFilter" class="col-sm-2 col-form-label">Filter by Model</label>
+                        <div class="col-sm-6">
+                            <select id="modelFilter" class="form-control">
+                                <option value="">All Models</option>
+                                @foreach ($settings->pluck('model')->unique()->filter()->sort() as $model)
+                                    <option value="{{ $model }}">{{ $model }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
-                    <!-- Settings -->
+                    <!-- Settings Table -->
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -52,6 +67,12 @@
                                 <tr>
                                     <td>{{ Str::of($setting->name)->replace('_', ' ')->title() }}
                                         <br><code>{{ $setting->name }}</code>
+                                        @if (Auth::user() && Auth::user()->hasRole('Developer'))
+                                            <a href="{{ route('settings.edit', encrypt($setting->id)) }}" class="">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        @endif
+
                                     </td>
                                     <td>
                                         <div class="form-check">
@@ -102,8 +123,6 @@
                                             </div>
                                         @endif
                                     </td>
-
-
                                     <td>
                                         <h3 class="card-title">{{ $setting->model ?? 'N/A' }}</h3>
                                     </td>
@@ -118,7 +137,6 @@
                         </tbody>
                     </table>
 
-
                     <!-- Submit Button -->
                     <div>
                         <button type="submit" class="float-right ml-1 btn btn-primary"
@@ -128,7 +146,6 @@
                     </div>
                 </div>
             </div>
-
         </form>
     </x-backend.layout_partials.card>
 @endsection
@@ -137,57 +154,51 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('search');
+            const modelFilter = document.getElementById('modelFilter');
             const tableRows = document.querySelectorAll('tbody tr');
 
-            searchInput.addEventListener('input', function() {
+            function filterTable() {
                 const filterText = searchInput.value.toLowerCase();
+                const selectedModel = modelFilter.value.toLowerCase();
 
                 tableRows.forEach(row => {
-                    // Combine all relevant column text content for searching
                     const searchableText = Array.from(row.querySelectorAll('td'))
                         .map(cell => cell.textContent.toLowerCase())
                         .join(' ');
 
-                    // Check if the search text exists in the combined content
-                    if (searchableText.includes(filterText)) {
-                        row.style.display = ''; // Show row
-                    } else {
-                        row.style.display = 'none'; // Hide row
-                    }
+                    const modelText = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+
+                    const textMatch = searchableText.includes(filterText);
+                    const modelMatch = selectedModel === '' || modelText.includes(selectedModel);
+
+                    row.style.display = textMatch && modelMatch ? '' : 'none';
                 });
-            });
+            }
+
+            searchInput.addEventListener('input', filterTable);
+            modelFilter.addEventListener('change', filterTable);
         });
 
-
-
-        // Set input value to default if checkbox is checked
         function setDefaultValue(inputId, defaultValue) {
             const checkbox = document.getElementById(`default_${inputId}`);
             const input = document.getElementById(inputId);
 
             if (checkbox.checked) {
-                input.value = defaultValue; // Set the input value to the default value
-                input.readOnly = true; // Mark the input as readonly
+                input.value = defaultValue;
+                input.readOnly = true;
             } else {
-                input.readOnly = false; // Allow manual editing if unchecked
+                input.readOnly = false;
             }
         }
 
-        // Check the checkbox if input value matches default value
         function checkDefaultValue(inputId, defaultValue) {
             const input = document.getElementById(inputId);
             const checkbox = document.getElementById(`default_${inputId}`);
 
-            if (input.value === defaultValue) {
-                checkbox.checked = true; // Check the checkbox if value matches default
-                input.readOnly = true; // Mark as readonly
-            } else {
-                checkbox.checked = false; // Uncheck if value doesn't match
-                input.readOnly = false; // Allow manual editing
-            }
+            checkbox.checked = input.value === defaultValue;
+            input.readOnly = checkbox.checked;
         }
     </script>
-
 
     <x-backend.script.keyboard-shortcut key="u" button_id="updateButton" type="ctrl&alt" event="click" />
     <x-backend.script.keyboard-shortcut key="b" button_id="backButton" type="ctrl&alt" event="click" />

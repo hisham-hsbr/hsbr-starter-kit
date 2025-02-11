@@ -7,6 +7,26 @@
 @endsection
 @section('head_links')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+
+    <style>
+        body {
+            background-color: #121212;
+            color: #00ff00;
+            font-family: monospace;
+            padding: 20px;
+        }
+
+        .terminal {
+            width: 80%;
+            height: 400px;
+            background-color: black;
+            border: 2px solid #00ff00;
+            padding: 10px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
 @endsection
 @section('breadcrumbs')
     <x-backend.layout_partials.page-breadcrumb-item pageName="Dashboard" pageHref="{{ route('backend.dashboard') }}"
@@ -106,6 +126,26 @@
             </div>
         </div>
     </x-backend.layout_partials.card>
+
+    <div class="terminal" id="terminal"></div>
+    <script>
+        const terminal = document.getElementById('terminal');
+
+        function addLine(text) {
+            terminal.innerHTML += text + '\n';
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function generateLogs() {
+            let count = 0;
+            setInterval(() => {
+                addLine(`Log entry ${count}: Sample terminal output`);
+                count++;
+            }, 1000);
+        }
+
+        generateLogs();
+    </script>
 @endsection
 
 @section('footer_links')

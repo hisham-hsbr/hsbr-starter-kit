@@ -36,7 +36,7 @@ class ActivityLogController extends Controller
     }
     public function show($id)
     {
-        $activityLog = Activity::find($id);
+        $activityLog = Activity::find(decrypt($id));
         // dd($activityLog);
         $users = User::all();
         return view('backend.hak_views.user_managements.activity_logs.show')->with(
@@ -63,7 +63,7 @@ class ActivityLogController extends Controller
             ->addIndexColumn()
             ->addColumn('viewLink', function (Activity $activity) {
 
-                $viewLink = '<a href="' . route('activity.logs.show', $activity->id) . '" class="ml-2"><i class="fa-solid fa fa-eye"></i></a>';
+                $viewLink = '<a href="' . route('activity.logs.show', encrypt($activity->id)) . '" class="ml-2"><i class="fa-solid fa fa-eye"></i></a>';
                 return $viewLink;
             })
             ->addColumn('created_at', function (Activity $activity) {

@@ -34,7 +34,7 @@ class DeveloperUserSeeder extends Seeder
 
         $user->assignRole([$role->id]);
 
-        User::create([
+        $user_2 = User::create([
             'name' => 'Hisham Basheer',
             'email' => 'hisham.hsbr@gmail.com',
             'gender' => 'male',
@@ -43,5 +43,19 @@ class DeveloperUserSeeder extends Seeder
             'updated_by' => '1',
             'status' => '1'
         ]);
+        $role = Role::create(['name' => 'admin', 'status' => '1', 'created_by' => '1', 'updated_by' => '1']);
+
+        $permissions = Permission::whereIn('name', [
+            'User Profile Edit',
+            'User Read',
+            'User Create',
+        ])
+            ->pluck('id', 'id')
+            ->all();
+
+
+        $role->syncPermissions($permissions);
+
+        $user_2->assignRole([$role->id]);
     }
 }

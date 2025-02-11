@@ -269,6 +269,8 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->find(id: decrypt($user));
         $timeZones = TimeZone::where('status', 1)->get();
+        // dd(Auth::user()->roles[1]->name);
+
         if (Auth::user()->hasRole('Developer')) {
             $roles = Role::all();
         } else {
@@ -427,6 +429,7 @@ class UserController extends Controller
             'name' => 'required',
             'time_zone_id' => 'required',
             'gender' => 'required',
+            'date_of_birth' => 'required',
             'email' => "required|email|unique:users,email,$id",
         ]);
 
@@ -443,6 +446,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->time_zone_id = $request->time_zone_id;
         $user->gender = $request->gender;
+        $user->date_of_birth = $request->date_of_birth;
         $user->email = $request->email;
 
         // Update password if needed
